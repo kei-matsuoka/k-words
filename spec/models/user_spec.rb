@@ -46,6 +46,7 @@ RSpec.describe User, type: :model do
     end
     it 'emailに一意性があること' do
       duplicate_user = user.dup
+      duplicate_user.email = user.email.upcase
       user.save
       expect(duplicate_user).to_not be_valid
     end
