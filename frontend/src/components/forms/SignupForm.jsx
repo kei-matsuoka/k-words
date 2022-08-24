@@ -1,29 +1,119 @@
-import { useState } from 'react';
+import { useForm } from "react-hook-form";
 import { Signup } from '../../apis/signup';
+import styles from './SignupForm.module.css';
 
 export default function SignupForm() {
-  const initialState = { name: '', email: '', password: '', password_confirmation: '' };
-  const [state, setState] = useState(initialState);
-
-  const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.value });
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    mode: 'onBlur',
+    criteriaMode: 'all',
+  });
+  const onSubmit = data => {
+    data.preventDefault();
+    Signup(data.name, data.email, data.password, data.password_confirmation);
   }
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    Signup(state.name, state.email, state.password, state.password_confirmation);
-  }
+  var regex = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]+.[A-Za-z0-9]+$/;
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <h2>アカウントを作成</h2>
+        <p>アカウントを作成することにより、利用規約およびプライバシポリシーに同意するものとします。</p>
         <div>
-          <input type="text" name="name" placeholder="ユーザー名" value={state.name} onChange={handleChange} />
-          <input type="email" name="email" placeholder="メールアドレス" onChange={handleChange} />
-          <input type="password" name="password" placeholder="パスワード" onChange={handleChange} />
-          <input type="password" name="password_confirmation" placeholder="パスワード確認" onChange={handleChange} />
+          <input
+            className={styles.test}
+            type="text"
+            placeholder="ユーザー名"
+            {...register("name", {
+              required: {
+                value: true,
+                message: '入力してください'
+              },
+              maxLength: {
+                value: 20,
+                message: '20文字以内で入力してください'
+              },
+            })}
+          />
+
+          {errors.name?.types.required && (
+            <div>{errors.name.message}</div>
+          )}
+          {errors.name?.types.maxLength && (
+            <div>{errors.name.message}</div>
+          )}
+
+          <input
+            className={styles.test}
+            type="email"
+            placeholder="メールアドレス"
+            {...register("email", {
+              required: {
+                value: true,
+                message: '入力してください'
+              },
+              pattern: {
+                value: { regex },
+                message: '有効なメールアドレスを入力してください'
+              }
+            })}
+          />
+
+          {errors.email?.types.required && (
+            <div>{errors.email.message}</div>
+          )}
+          {errors.email?.types.pattern && (
+            <div>{errors.email.message}</div>
+          )}
+
+          <input
+            className={styles.test}
+            type="password"
+            placeholder="パスワード"
+            {...register("password", {
+              required: {
+                value: true,
+                message: '入力してください'
+              },
+              minLength: {
+                value: 6,
+                message: '6文字以上で入力してください'
+              }
+            })}
+          />
+
+          {errors.password?.types.required && (
+            <div>{errors.password.message}</div>
+          )}
+          {errors.password?.types.minLength && (
+            <div>{errors.password.message}</div>
+          )}
+
+          <input
+            className={styles.test}
+            type="password"
+            placeholder="パスワード確認"
+            {...register("password_confirmation", {
+              required: {
+                value: true,
+                message: '入力してください'
+              },
+              minLength: {
+                value: 6,
+                message: '6文字以上で入力してください'
+              }
+            })}
+          />
+
+          {errors.password_confirmation?.types.required && (
+            <div>{errors.password_confirmation.message}</div>
+          )}
+          {errors.password_confirmation?.types.minLength && (
+            <div>{errors.password_confirmation.message}</div>
+          )}
+
         </div>
         <div>
-          <input type="submit" value="新規登録" />
+          <input className={styles.test} type="submit" value="新規登録" />
         </div>
       </form>
     </div>
