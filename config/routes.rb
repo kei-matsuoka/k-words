@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  get '/', to: 'users#create'
+  post '/signup', to: 'users#create'
 end

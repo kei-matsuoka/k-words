@@ -1,20 +1,24 @@
 import { useState } from 'react';
-import SignupForm from '../modals/SignupForm';
+import SignUpModal from '../modals/SignUpModal';
 
-function Header() {
-  const [state, setState] = useState({isOpen: false});
-  return(
-    <header class="site-header">
-      <a href="#" class="brand">CodeFlash</a>
-      <nav class="nav">
-        <ul class="nav__wrapper">
-          <li class="nav__item"><a href="#">ログイン</a></li>
-          <li class="nav__item" onClick={() => setState({isOpen: true})}>無料会員登録</li>
+export default function Header() {
+  const initialState = { isOpen: false };
+  const [state, setState] = useState(initialState);
+
+  const handleClick = () => {
+    state.isOpen ? setState({ isOpen: false }) : setState({ isOpen: true });
+  };
+
+  return (
+    <header>
+      <a href="#">CodeFlash</a>
+      <div>
+        <ul>
+          <li><a href="#">ログイン</a></li>
+          <li onClick={handleClick}>無料会員登録</li>
         </ul>
-      </nav>
-      { state.isOpen && <SignupForm/> }
+      </div>
+      {state.isOpen ? <SignUpModal /> : ""}
     </header>
   );
 }
-
-export default Header;
