@@ -1,24 +1,29 @@
 import { useState } from 'react';
-import SignUpModal from '../modals/SignUpModal';
+import SignupModal from '../modals/SignupModal';
+import LoginModal from '../modals/LoginModal';
 
 export default function Header() {
-  const initialState = { isOpen: false };
+  const initialState = { signupModalIsOpen: false, loginModalIsOpen: false };
   const [state, setState] = useState(initialState);
 
-  const handleClick = () => {
-    state.isOpen ? setState({ isOpen: false }) : setState({ isOpen: true });
+  const handleClickSignup = () => {
+    state.signupModalIsOpen ? setState({ signupModalIsOpen: false }) : setState({ signupModalIsOpen: true });
+  };
+  const handleClickLogin = () => {
+    state.loginModalIsOpen ? setState({ loginModalIsOpen: false }) : setState({ loginModalIsOpen: true });
   };
 
   return (
     <header>
-      <a href="#">CodeFlash</a>
+      <a href="/">CodeFlash</a>
       <div>
         <ul>
-          <li><a href="#">ログイン</a></li>
-          <li onClick={handleClick}>無料会員登録</li>
+          <li onClick={handleClickLogin}>ログイン</li>
+          <li onClick={handleClickSignup}>無料会員登録</li>
         </ul>
       </div>
-      {state.isOpen ? <SignUpModal /> : ""}
+      {state.signupModalIsOpen ? <SignupModal /> : ""}
+      {state.loginModalIsOpen ? <LoginModal /> : ""}
     </header>
   );
 }

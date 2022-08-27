@@ -1,46 +1,22 @@
 import { useForm } from "react-hook-form";
-import { Signup } from '../../apis/signup';
+import { Login } from '../../apis/login';
 import styles from './SignupForm.module.css';
 
-export default function SignupForm() {
+export default function LoginForm() {
   const { register, handleSubmit, formState: { errors } } = useForm({
     mode: 'onBlur',
     criteriaMode: 'all',
   });
-  const onSubmit = data => {
-    Signup(data.name, data.email, data.password, data.password_confirmation);
+  const onSubmit = (data) => {
+    Login(data.email, data.password, data.password_confirmation);
   }
   var regex = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]+.[A-Za-z0-9]+$/;
 
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <h2>アカウントを作成</h2>
-        <p>アカウントを作成することにより、利用規約およびプライバシポリシーに同意するものとします。</p>
+        <h2>ログイン</h2>
         <div>
-          <input
-            className={styles.test}
-            type="text"
-            placeholder="ユーザー名"
-            {...register("name", {
-              required: {
-                value: true,
-                message: '入力してください'
-              },
-              maxLength: {
-                value: 20,
-                message: '20文字以内で入力してください'
-              },
-            })}
-          />
-
-          {errors.name?.types.required && (
-            <div>{errors.name.message}</div>
-          )}
-          {errors.name?.types.maxLength && (
-            <div>{errors.name.message}</div>
-          )}
-
           <input
             className={styles.test}
             type="email"
@@ -112,7 +88,7 @@ export default function SignupForm() {
 
         </div>
         <div>
-          <input className={styles.test} type="submit" value="新規登録" />
+          <input className={styles.test} type="submit" value="ログイン" />
         </div>
       </form>
     </div>
