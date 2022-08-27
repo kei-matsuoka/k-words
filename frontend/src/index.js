@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Top from './components/pages/Top';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Top from './components/pages/Top';
+import Dashboard from './components/pages/Dashboard';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -12,6 +13,9 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route index element={<Top />} />
+      </Routes>
+      <Routes>
+        <Route path='/dashboard' element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

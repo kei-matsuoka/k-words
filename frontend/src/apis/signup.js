@@ -7,11 +7,10 @@ export const Signup = (name, email, password, password_confirmation) => {
     email: email,
     password: password,
     password_confirmation: password_confirmation
-  })
-  .then(function (response) {
+  },{ withCredentials: true }
+  ).then(function (response) {
     console.log(response);
-  })
-  .catch(function (error) {
+  }).catch(function (error) {
     console.log(error);
   });
 }

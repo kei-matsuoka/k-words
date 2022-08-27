@@ -1,6 +1,6 @@
 import SignupForm from "../forms/SignupForm";
 
-export default function () {
+export default function SignupModal() {
   return (
     <div>
       <SignupForm />
