@@ -4,10 +4,10 @@ class UsersController < ApplicationController
   def create
     user = User.new(user_params)
     if user.save!
-      login(user)
-      render json: { status: :created, user: user }
+      log_in(user)
+      render json: { logged_in: true, user: user }
     else 
-      render json: { status: 500 }
+      render json: { logged_in: false }
     end
   end
 
