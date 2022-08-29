@@ -1,11 +1,11 @@
 import Header from "../groups/Header";
 
-function Top() {
-  return(
+export default function Top() {
+
+  return (
     <div>
-      <Header/>
+      <Header />
+      <h1>Top</h1>
     </div>
   );
 }
-
-export default Top

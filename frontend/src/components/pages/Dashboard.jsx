@@ -1,12 +1,12 @@
-import Header from "../groups/Header";
+import { useContext } from 'react';
+import { AuthContext } from '../../AuthProvider';
 
-function Dashboard() {
-  return(
+export default function Dashboard() {
+  const { currentUser } = useContext(AuthContext);
+  return (
     <div>
-      <Header/>
-      ログインした人だけ見れます。
+      <h1>Dashboard</h1>
+      <p>{currentUser.name}さんのダッシュボード</p>
     </div>
   );
 }
-
-export default Dashboard
