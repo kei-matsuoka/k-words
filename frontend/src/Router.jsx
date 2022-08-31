@@ -5,7 +5,6 @@ import { getCurrentUser } from './apis/login';
 import Top from './components/pages/Top';
 import Dashboard from './components/pages/Dashboard';
 
-
 export default function Router() {
   const { loading, setLoading, isSignedIn, setIsSignedIn, setCurrentUser } = useContext(AuthContext);
 
