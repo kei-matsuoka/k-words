@@ -11,6 +11,7 @@ export default async function Signup(name, email, password, password_confirmatio
 
   return await axios.post(url, user, { withCredentials: true }
   ).then(function (response) {
+    console.log(response);
     return response;
   }).catch(function (error) {
     console.log(error);
