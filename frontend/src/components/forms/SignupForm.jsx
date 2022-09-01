@@ -3,7 +3,6 @@ import { AuthContext } from '../../AuthProvider';
 import { useForm } from "react-hook-form";
 import { Navigate } from 'react-router-dom';
 import Signup from '../../apis/signup';
-import styles from './SignupForm.module.css';
 
 export default function SignupForm() {
   const { register, handleSubmit, formState: { errors } } = useForm({
@@ -29,15 +28,17 @@ export default function SignupForm() {
   };
 
   return (
-    <div>
+    <div className='flex flex-col items-center'>
       {isSignedIn ? <Navigate to='/dashboard' />
         :
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <h2>アカウントを作成</h2>
-          <p>アカウントを作成することにより、利用規約およびプライバシポリシーに同意するものとします。</p>
-          <div>
+        <form onSubmit={handleSubmit(onSubmit)}  className="flex flex-col items-center w-80 p-6 border rounded-md">
+          <div className='text-center'>
+            <h2 className='text-2xl font-bold'>アカウントを作成</h2>
+            <p className='mt-4'>アカウントを作成することにより、利用規約およびプライバシポリシーに同意するものとします。</p>
+          </div>
+          <div className='flex flex-col items-center mt-8'>
             <input
-              className={styles.test}
+              className="text-center border"
               type="text"
               placeholder="ユーザー名"
               {...register("name", {
@@ -53,14 +54,14 @@ export default function SignupForm() {
             />
 
             {errors.name?.types.required && (
-              <div>{errors.name.message}</div>
+              <div className='text-red-500'>{errors.name.message}</div>
             )}
             {errors.name?.types.maxLength && (
-              <div>{errors.name.message}</div>
+              <div className='text-red-500'>{errors.name.message}</div>
             )}
 
             <input
-              className={styles.test}
+              className="text-center border mt-2"
               type="email"
               placeholder="メールアドレス"
               {...register("email", {
@@ -76,14 +77,14 @@ export default function SignupForm() {
             />
 
             {errors.email?.types.required && (
-              <div>{errors.email.message}</div>
+              <div className='text-red-500'>{errors.email.message}</div>
             )}
             {errors.email?.types.pattern && (
-              <div>{errors.email.message}</div>
+              <div className='text-red-500'>{errors.email.message}</div>
             )}
 
             <input
-              className={styles.test}
+              className="text-center border mt-2"
               type="password"
               placeholder="パスワード"
               {...register("password", {
@@ -99,14 +100,14 @@ export default function SignupForm() {
             />
 
             {errors.password?.types.required && (
-              <div>{errors.password.message}</div>
+              <div className='text-red-500'>{errors.password.message}</div>
             )}
             {errors.password?.types.minLength && (
-              <div>{errors.password.message}</div>
+              <div className='text-red-500'>{errors.password.message}</div>
             )}
 
             <input
-              className={styles.test}
+              className="text-center border mt-2"
               type="password"
               placeholder="パスワード確認"
               {...register("password_confirmation", {
@@ -122,15 +123,23 @@ export default function SignupForm() {
             />
 
             {errors.password_confirmation?.types.required && (
-              <div>{errors.password_confirmation.message}</div>
+              <div className='text-red-500'>{errors.password_confirmation.message}</div>
             )}
             {errors.password_confirmation?.types.minLength && (
-              <div>{errors.password_confirmation.message}</div>
+              <div className='text-red-500'>{errors.password_confirmation.message}</div>
             )}
 
           </div>
           <div>
-            <input className={styles.test} type="submit" value="新規登録" />
+            <input className="button-color
+                              button-color:hover
+                               text-white
+                              py-3 
+                              px-12
+                              rounded-md
+                              duration-300
+                              mt-4"
+                   type="submit" value="新規登録" />
           </div>
         </form>
       }
