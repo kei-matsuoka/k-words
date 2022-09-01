@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import SignupModal from '../modals/SignupModal';
-import LoginModal from '../modals/LoginModal';
+import Modal from '../modals/Modal';
+import SignupForm from '../forms/SignupForm';
+import LoginForm from '../forms/LoginForm';
 import HeaderSignupButton from '../buttons/HeaderSignupButton';
 import HeaderLoginButton from '../buttons/HeaderLoginButton';
 
@@ -32,8 +33,8 @@ export default function Header() {
         </div>
       </nav>
 
-      {state.signupModalIsOpen ? <div onClick={handleClickSignup}><SignupModal /></div> : null}
-      {state.loginModalIsOpen ? <div onClick={handleClickLogin}><LoginModal /></div> : null}
+      {state.signupModalIsOpen ? <Modal child={<SignupForm />} onClick={handleClickSignup} /> : null}
+      {state.loginModalIsOpen ? <Modal child={<LoginForm />} onClick={handleClickLogin} /> : null}
     </>
   );
 }

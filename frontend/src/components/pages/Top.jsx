@@ -1,8 +1,9 @@
 import { useState } from "react";
 import Header from "../groups/Header";
+import Modal from "../modals/Modal";
+import SignupForm from "../forms/SignupForm";
 import TopSignupButton from "../buttons/TopSignupButton";
 import '../../index.css';
-import SignupModal from "../modals/SignupModal";
 
 export default function Top() {
   const initialState = { signupModalIsOpen: false };
@@ -25,7 +26,7 @@ export default function Top() {
           </div>
         </div>
       </div>
-      {state.signupModalIsOpen ? <div onClick={handleClickSignup}><SignupModal /></div> : null}
+      {state.signupModalIsOpen ? <Modal child={<SignupForm />} onClick={handleClickSignup} /> : null}
     </div>
   );
 }

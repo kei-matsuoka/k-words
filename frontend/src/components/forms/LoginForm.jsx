@@ -37,29 +37,6 @@ export default function LoginForm() {
           </div>
           <div className='flex flex-col items-center mt-8'>
             <input
-              className="text-center border"
-              type="email"
-              placeholder="メールアドレス"
-              {...register("email", {
-                required: {
-                  value: true,
-                  message: '入力してください'
-                },
-                pattern: {
-                  value: { regex },
-                  message: '有効なメールアドレスを入力してください'
-                }
-              })}
-            />
-
-            {errors.email?.types.required && (
-              <div>{errors.email.message}</div>
-            )}
-            {errors.email?.types.pattern && (
-              <div>{errors.email.message}</div>
-            )}
-
-            <input
               className="text-center border mt-2"
               type="password"
               placeholder="パスワード"
