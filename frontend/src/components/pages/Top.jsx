@@ -25,7 +25,7 @@ export default function Top() {
           </div>
         </div>
       </div>
-      {state.signupModalIsOpen ? <SignupModal /> : null}
+      {state.signupModalIsOpen ? <div onClick={handleClickSignup}><SignupModal /></div> : null}
     </div>
   );
 }

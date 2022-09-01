@@ -3,7 +3,6 @@ import { AuthContext } from '../../AuthProvider';
 import { useForm } from "react-hook-form";
 import { Navigate } from 'react-router-dom';
 import { Login } from '../../apis/login';
-import styles from './SignupForm.module.css';
 
 export default function LoginForm() {
   const { register, handleSubmit, formState: { errors } } = useForm({
@@ -32,11 +31,13 @@ export default function LoginForm() {
     <div>
       {isSignedIn ? <Navigate to='/dashboard' />
         :
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <h2>ログイン</h2>
-          <div>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center w-80 p-6 rounded-md bg-white">
+          <div className='text-center'>
+            <h2 className='text-2xl font-bold'>ログイン</h2>
+          </div>
+          <div className='flex flex-col items-center mt-8'>
             <input
-              className={styles.test}
+              className="text-center border"
               type="email"
               placeholder="メールアドレス"
               {...register("email", {
@@ -59,7 +60,7 @@ export default function LoginForm() {
             )}
 
             <input
-              className={styles.test}
+              className="text-center border mt-2"
               type="password"
               placeholder="パスワード"
               {...register("password", {
@@ -82,7 +83,7 @@ export default function LoginForm() {
             )}
 
             <input
-              className={styles.test}
+              className="text-center border mt-2"
               type="password"
               placeholder="パスワード確認"
               {...register("password_confirmation", {
@@ -106,7 +107,15 @@ export default function LoginForm() {
 
           </div>
           <div>
-            <input className={styles.test} type="submit" value="ログイン" />
+            <input className="button-color
+                              button-color:hover
+                               text-white
+                              py-3 
+                              px-12
+                              rounded-md
+                              duration-300
+                              mt-4"
+                   type="submit" value="ログイン" />
           </div>
         </form>
       }

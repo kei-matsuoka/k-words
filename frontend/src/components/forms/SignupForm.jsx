@@ -28,10 +28,10 @@ export default function SignupForm() {
   };
 
   return (
-    <div className='flex flex-col items-center'>
+    <div>
       {isSignedIn ? <Navigate to='/dashboard' />
         :
-        <form onSubmit={handleSubmit(onSubmit)}  className="flex flex-col items-center w-80 p-6 border rounded-md">
+        <form onSubmit={handleSubmit(onSubmit)}  className="flex flex-col items-center w-80 p-6 rounded-md bg-white">
           <div className='text-center'>
             <h2 className='text-2xl font-bold'>アカウントを作成</h2>
             <p className='mt-4'>アカウントを作成することにより、利用規約およびプライバシポリシーに同意するものとします。</p>
