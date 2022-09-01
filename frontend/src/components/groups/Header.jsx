@@ -32,8 +32,8 @@ export default function Header() {
         </div>
       </nav>
 
-      {state.signupModalIsOpen ? <SignupModal /> : null}
-      {state.loginModalIsOpen ? <LoginModal /> : null}
+      {state.signupModalIsOpen ? <div onClick={handleClickSignup}><SignupModal /></div> : null}
+      {state.loginModalIsOpen ? <div onClick={handleClickLogin}><LoginModal /></div> : null}
     </>
   );
 }
