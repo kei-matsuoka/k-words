@@ -7,6 +7,11 @@ RSpec.describe User, type: :model do
   it 'userが有効であること' do
     expect(user).to be_valid
   end
+  it 'userが削除されると関連するcardも削除されること' do
+    user.save
+    user.cards.create!(title: "HTML", text: "HTMLタグを覚えよう。")
+    expect{user.destroy}.to change(Card, :count).by -1 
+  end
 
   describe 'name' do
     it 'nameが必須であること' do

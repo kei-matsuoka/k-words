@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
+  # 新規登録
   post '/signup', to: 'users#create'
-  get '/login', to: 'sessions#show'
+
+  # ログイン
   post '/login', to: 'sessions#create'
+  get '/login', to: 'sessions#show'
 end

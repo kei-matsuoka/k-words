@@ -8,6 +8,7 @@ export const AuthProvider = (props) => {
   const [loading, setLoading] = useState(true)
   const [isSignedIn, setIsSignedIn] = useState(false)
   const [currentUser, setCurrentUser] = useState()
+  const [cards, setCards] = useState([])
 
   return (
     // コンテクストの値を設定して返す
@@ -18,7 +19,9 @@ export const AuthProvider = (props) => {
         isSignedIn,
         setIsSignedIn,
         currentUser,
-        setCurrentUser
+        setCurrentUser,
+        cards,
+        setCards
       }}
     >
       {props.children}

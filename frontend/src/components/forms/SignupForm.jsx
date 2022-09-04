@@ -9,7 +9,7 @@ export default function SignupForm() {
     mode: 'onBlur',
     criteriaMode: 'all',
   });
-  const { setLoading, isSignedIn, setIsSignedIn, setCurrentUser } = useContext(AuthContext);
+  const { setLoading, isSignedIn, setIsSignedIn, setCurrentUser, setCards } = useContext(AuthContext);
   const regex = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]+.[A-Za-z0-9]+$/;
 
   const onSubmit = async (data) => {
@@ -18,6 +18,7 @@ export default function SignupForm() {
       if (res?.data.logged_in === true) {
         setIsSignedIn(true);
         setCurrentUser(res?.data.user);
+        setCards(res?.data.cards);
       } else {
         console.log('no current user');
       }
@@ -31,7 +32,7 @@ export default function SignupForm() {
     <div>
       {isSignedIn ? <Navigate to='/dashboard' />
         :
-        <form onSubmit={handleSubmit(onSubmit)}  className="flex flex-col items-center w-80 p-6 rounded-md bg-white">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center w-80 p-6 rounded-md bg-white">
           <div className='text-center'>
             <h2 className='text-2xl font-bold'>アカウントを作成</h2>
             <p className='mt-4'>アカウントを作成することにより、利用規約およびプライバシポリシーに同意するものとします。</p>
@@ -139,7 +140,7 @@ export default function SignupForm() {
                               rounded-md
                               duration-300
                               mt-4"
-                   type="submit" value="新規登録" />
+              type="submit" value="新規登録" />
           </div>
         </form>
       }
