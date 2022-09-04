@@ -1,13 +1,6 @@
 # ユーザーを2人作成する
-User.create!(name: "Kei",
-  email: "a@a.a",
-  password:"aaaaaa",
-  password_confirmation: "aaaaaa")
-
-User.create!(name: "Test",
-  email: "t@t.t",
-  password: "tttttt",
-  password_confirmation: "tttttt")
+User.create!(name: "Kei", email: "a@a.a", password:"aaaaaa", password_confirmation: "aaaaaa")
+User.create!(name: "Test", email: "t@t.t", password: "tttttt", password_confirmation: "tttttt")
 
 # カードを4つ作成する
 card = Card.create!(title: "HTML", text: "よく使われるHTMLのタグと属性を覚えよう!")
