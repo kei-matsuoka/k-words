@@ -9,7 +9,7 @@ export default function LoginForm() {
     mode: 'onBlur',
     criteriaMode: 'all',
   });
-  const { setLoading, isSignedIn, setIsSignedIn, setCurrentUser } = useContext(AuthContext);
+  const { setLoading, isSignedIn, setIsSignedIn, setCurrentUser, setCards } = useContext(AuthContext);
   const regex = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]+.[A-Za-z0-9]+$/;
 
   const onSubmit = async (data) => {
@@ -18,6 +18,7 @@ export default function LoginForm() {
       if (res?.data.logged_in === true) {
         setIsSignedIn(true);
         setCurrentUser(res?.data.user);
+        setCards(res?.data.cards)
       } else {
         console.log('no current user');
       }
@@ -36,6 +37,29 @@ export default function LoginForm() {
             <h2 className='text-2xl font-bold'>ログイン</h2>
           </div>
           <div className='flex flex-col items-center mt-8'>
+            <input
+              className="text-center border mt-2"
+              type="email"
+              placeholder="メールアドレス"
+              {...register("email", {
+                required: {
+                  value: true,
+                  message: '入力してください'
+                },
+                pattern: {
+                  value: { regex },
+                  message: '有効なメールアドレスを入力してください'
+                }
+              })}
+            />
+
+            {errors.email?.types.required && (
+              <div className='text-red-500'>{errors.email.message}</div>
+            )}
+            {errors.email?.types.pattern && (
+              <div className='text-red-500'>{errors.email.message}</div>
+            )}
+
             <input
               className="text-center border mt-2"
               type="password"
@@ -92,7 +116,7 @@ export default function LoginForm() {
                               rounded-md
                               duration-300
                               mt-4"
-                   type="submit" value="ログイン" />
+              type="submit" value="ログイン" />
           </div>
         </form>
       }

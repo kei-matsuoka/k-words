@@ -6,14 +6,15 @@ import Top from './components/pages/Top';
 import Dashboard from './components/pages/Dashboard';
 
 export default function Router() {
-  const { loading, setLoading, isSignedIn, setIsSignedIn, setCurrentUser } = useContext(AuthContext);
+  const { loading, setLoading, isSignedIn, setIsSignedIn, setCurrentUser, setCards } = useContext(AuthContext);
 
   const handleGetCurrentUser = async () => {
     try {
-      const res = await getCurrentUser();//login中のuserがいるか確認する
+      const res = await getCurrentUser();
       if (res?.data.logged_in === true) {
-        setIsSignedIn(true);//ログインuserがいたらtrue
-        setCurrentUser(res?.data.user);//ログインuserをセット
+        setIsSignedIn(true);
+        setCurrentUser(res?.data.user);
+        setCards(res?.data.cards);
       } else {
         console.log('no current user');
       }

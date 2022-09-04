@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :cards, dependent: :destroy
   #emailをチェックするための正規表現
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
 
