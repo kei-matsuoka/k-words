@@ -1,16 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:user) { User.new(name: 'Example User', email: 'user@example.com',
-                        password: 'password', password_confirmation: 'password') }
+  let(:user) { FactoryBot.create(:user) }
 
   it 'userが有効であること' do
     expect(user).to be_valid
-  end
-  it 'userが削除されると関連するcardも削除されること' do
-    user.save
-    user.cards.create!(title: "HTML", text: "HTMLタグを覚えよう。")
-    expect{user.destroy}.to change(Card, :count).by -1 
   end
 
   describe 'name' do

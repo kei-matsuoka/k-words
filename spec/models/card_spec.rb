@@ -1,15 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe Card, type: :model do
-  let(:user) { FactoryBot.create(:user) }
-  let(:card) { user.cards.build(title: 'HTML', text: 'よく使うhtmlのタグを覚えよう。') }
+  let(:card) { FactoryBot.build(:html) }
 
   it 'cardが有効であること' do 
     expect(card).to be_valid
   end
-  it 'user_idが無い場合はcardが無効であること' do
-    card.user_id = nil
-    expect(card).to_not be_valid
+  it 'cardが削除されると関連のwordも削除されること' do
+    card.save
+    card.words.create!(question: "コメント", answer: "<!-- -->", text: "")
+    expect{card.destroy}.to change(Word, :count).by -1
   end
   
   describe 'title' do
@@ -28,9 +28,5 @@ RSpec.describe Card, type: :model do
       card.text = 'a' * 256
       expect(card).to_not be_valid
     end
-  end
-  it '作成日時が新しい順に並ぶこと' do
-    FactoryBot.send(:user_with_posts)
-    expect(FactoryBot.create(:most_recent)).to eq Card.first
   end
 end
