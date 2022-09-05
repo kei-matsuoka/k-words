@@ -16,15 +16,18 @@ export default function Top() {
   return (
     <div>
       <Header />
-      <div className="flex justify-center items-center h-64">
+      <div className="flex justify-center items-center h-96 top-color">
         <div className="flex flex-col items-center">
           <div>
-            <h2 className="text-center leading-normal text-4xl font-bold">プログラミングで<br />人生の可能性を広げよう</h2>
+            <h2 className="text-center leading-normal text-5xl font-bold text-color">プログラミングで<br />人生の可能性を広げよう</h2>
           </div>
-          <div onClick={handleClickSignup} className='mt-8'>
-            <TopSignupButton text="今すぐ始める" />
+          <div onClick={handleClickSignup} className='mt-14'>
+            <TopSignupButton text="今すぐはじめる" />
           </div>
         </div>
+      </div>
+      <div className="flex justify-center items-center h-72 top-color-yellow">
+
       </div>
       {state.signupModalIsOpen ? <Modal child={<SignupForm />} onClick={handleClickSignup} /> : null}
     </div>

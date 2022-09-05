@@ -3,8 +3,9 @@ export default function TopSignupButton(props) {
     <button className="button-color
                        button-color:hover
                        text-white
-                       font-bold
-                       py-3
+                       text-sm
+                       font-semibold
+                       py-3.5
                        px-12
                        rounded-md
                        duration-300
