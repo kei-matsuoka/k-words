@@ -7,7 +7,7 @@ export default function HeaderSignupButton(props) {
                        text-xs
                        py-3
                        px-5
-                       rounded
+                       rounded-md
                        duration-300
                        ">{props.text}
     </button>
