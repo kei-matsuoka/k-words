@@ -4,6 +4,7 @@ import { AuthContext } from './AuthProvider';
 import { getCurrentUser } from './apis/login';
 import Top from './components/pages/Top';
 import Dashboard from './components/pages/Dashboard';
+import { Words } from './components/pages/Words';
 
 export default function Router() {
   const { loading, setLoading, isSignedIn, setIsSignedIn, setCurrentUser, setCards } = useContext(AuthContext);
@@ -58,6 +59,7 @@ export default function Router() {
       <Routes>
         <Route index element={<LoggedInRoute><Top /></LoggedInRoute>} />
         <Route path='/dashboard' element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+        <Route path='/cards/:id' element={<PrivateRoute><Words /></PrivateRoute>} />
       </Routes>
     </BrowserRouter>
   );
