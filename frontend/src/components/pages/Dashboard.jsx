@@ -15,8 +15,8 @@ export default function Dashboard() {
         </div>
         <div className='flex flex-wrap'>
           {cards.map((card) =>
-            <Link to="#">
-              <div key={card.id} className='flex flex-col items-center w-60 p-6 m-2 rounded-md border hover:bg-gray-100 bg-white'>
+            <Link key={card.id} to={`/cards/${card.id}`}>
+              <div className='flex flex-col items-center w-60 p-6 m-2 rounded-md border hover:bg-gray-100 bg-white'>
                 <div>{card.title}</div>
                 <div className='mt-3 text-sm'>{card.text}</div>
               </div>

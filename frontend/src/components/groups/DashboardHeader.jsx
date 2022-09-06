@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import dashboard_icon from '../../dashboard_icon.png'
 import { Dropdown } from './Dropdown';
+import dashboard_icon from '../../dashboard_icon.png'
 
 export default function DashboardHeader() {
   return (

@@ -7,5 +7,5 @@ Rails.application.routes.draw do
   get '/login', to: 'sessions#show'
 
   # ワード一覧
-  get 'cards/:id/words', to: 'words#index'
+  get '/cards/:id', to: 'words#index'
 end
