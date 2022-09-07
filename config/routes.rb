@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   # ログイン
   post '/login', to: 'sessions#create'
   get '/login', to: 'sessions#show'
+  delete '/logout', to: 'sessions#destroy'
 
   # ワード一覧
   get '/cards/:id', to: 'words#index'
