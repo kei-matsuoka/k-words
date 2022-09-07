@@ -42,6 +42,7 @@ export default function SignupForm() {
               className="text-center border"
               type="text"
               placeholder="ユーザー名"
+              autoComplete='username'
               {...register("name", {
                 required: {
                   value: true,
@@ -65,6 +66,7 @@ export default function SignupForm() {
               className="text-center border mt-2"
               type="email"
               placeholder="メールアドレス"
+              autoComplete='email'
               {...register("email", {
                 required: {
                   value: true,
@@ -88,6 +90,7 @@ export default function SignupForm() {
               className="text-center border mt-2"
               type="password"
               placeholder="パスワード"
+              autoComplete='new-password'
               {...register("password", {
                 required: {
                   value: true,
@@ -111,6 +114,7 @@ export default function SignupForm() {
               className="text-center border mt-2"
               type="password"
               placeholder="パスワード確認"
+              autoComplete='new-password'
               {...register("password_confirmation", {
                 required: {
                   value: true,

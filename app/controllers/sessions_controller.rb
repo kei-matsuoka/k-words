@@ -18,4 +18,13 @@ class SessionsController < ApplicationController
       render json: { status: 401, errors: ['認証に失敗しました。', '正しいメールアドレス・パスワードを入力し直すか、新規登録を行ってください。'] }
     end
   end
+
+  def destroy
+    logout
+    if !@current_user
+      render json: { logged_in: false }
+    else
+      render json: { status: 401, errors: '認証に失敗しました。' }
+    end
+  end
 end
