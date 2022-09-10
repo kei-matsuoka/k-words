@@ -6,16 +6,31 @@
   .top-color {
     background-color: #F9FBFE
   }
+
   .top-color-yellow {
     background-color: #F7EDAD
   }
+
   .button-color {
     background-color: rgb(48, 200, 214);
   }
+
   .button-color:hover {
     background-color: #23A4B0
   }
+
   .text-color {
     color: #2B546A
   }
+
+  .transition-none {}
+
+  .transition-right {
+    transform: translateX(-100%);
+  }
+
+  .transition-left {
+    transform: translateX(50px);
+  }
+
 }

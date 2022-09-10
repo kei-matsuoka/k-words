@@ -1,31 +1,30 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useReducer } from 'react';
 import { AuthContext } from '../../AuthProvider';
+import { initialState, wordsActionTypes, wordsReducer } from '../../reducers/words'
 import { Link, useParams } from 'react-router-dom';
+import { fetchWords } from '../../apis/words';
 import DashboardHeader from "../groups/DashboardHeader";
-import { getWords } from '../../apis/getWords';
+import LearningButton from '../buttons/LearningButton';
+import { getNewWords } from '../../helper';
 
 export const Words = () => {
+  const { cards } = useContext(AuthContext);
+  const [state, dispatch] = useReducer(wordsReducer, initialState);
   const { id } = useParams();
-  const { setLoading, cards } = useContext(AuthContext);
-  const [words, setWords] = useState([]);
   const card = cards[id - 1].title;
 
-  const handleGetWords = async () => {
-    try {
-      const res = await getWords(id);
-      if (res?.data.status === 200) {
-        setWords(res?.data.words);
-      } else {
-        console.log('no words');
-      }
-    } catch (err) {
-      console.log(err);
-    }
-    setLoading(false);
-  };
-
   useEffect(() => {
-    handleGetWords();
+    dispatch({ type: wordsActionTypes.FETCHING });
+    fetchWords(id)
+      .then((data) => {
+        const new_words = getNewWords(data);
+        dispatch({
+          type: wordsActionTypes.FETCH_SUCCESS,
+          payload: {
+            words: new_words
+          }
+        })
+      })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -33,24 +32,21 @@ export const Words = () => {
     <div>
       <DashboardHeader />
       <div className="flex flex-col items-center top-color h-96">
-        <div className='m-8 text-color'>
-          カード名: {card}<br/>
+        <div className='mt-6 text-color'>
+          カード名: {card}<br />
           id: {id}
         </div>
-        { words ?
-        <div className='flex flex-wrap'>
-          {words.map((word) =>
-            <Link key={word.id} to="#">
-              <div className='flex flex-col items-center w-60 p-6 m-2 rounded-md border hover:bg-gray-100 bg-white'>
-                <div className='text-sm'>{word.question}</div>
-                <div className='mt-3 text-sm'>{word.answer}</div>
-                <div className='mt-3 text-sm'>{word.text}</div>
-              </div>
-            </Link>
+        <div className='m-6'>
+          <Link to={`/cards/${id}/learning`}><LearningButton text="暗記する" /></Link>
+        </div>
+        <div className='flex flex-col'>
+          {state.wordsList.map((word) =>
+            <div key={word.id} className='flex flex-col items-center w-60 p-6 m-2 rounded-md border bg-white'>
+              <div className="">{word.title}</div>
+              <div className='text-sm'>{word.text}</div>
+            </div>
           )}
         </div>
-        :
-        <></> }
       </div>
     </div>
   );
