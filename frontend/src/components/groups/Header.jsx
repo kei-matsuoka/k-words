@@ -7,7 +7,7 @@ import HeaderSignupButton from '../buttons/HeaderSignupButton';
 import HeaderLoginButton from '../buttons/HeaderLoginButton';
 import logo from '../../logo.png'
 
-export default function Header() {
+export const Header = () => {
   const initialState = { signupModalIsOpen: false, loginModalIsOpen: false };
   const [state, setState] = useState(initialState);
 
@@ -20,7 +20,7 @@ export default function Header() {
 
   return (
     <>
-      <nav className='flex items-center justify-between sticky top-0 z-10 p-5 pr-8 pl-8 top-color'>
+      <nav className='flex items-center justify-between sticky top-0 left-0 z-10 p-5 pr-8 pl-8 top-color'>
         <div>
           <Link to="/">
             <img className="h-14" src={logo} alt="ロゴ" />

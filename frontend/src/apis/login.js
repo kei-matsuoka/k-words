@@ -1,13 +1,12 @@
 import axios from 'axios';
+import { loginUrl } from '../urls';
 
-const url = 'http://localhost:3000/login';
-
-export const Login = async(email, password, password_confirmation) => {
-  return await axios.post(url, {
+export const Login = async (email, password, password_confirmation) => {
+  return await axios.post(loginUrl, {
     email: email,
     password: password,
     password_confirmation: password_confirmation
-  },{ withCredentials: true })
+  }, { withCredentials: true })
     .then(function (response) {
       return response;
     })
@@ -17,12 +16,12 @@ export const Login = async(email, password, password_confirmation) => {
 }
 
 // セッションのあるユーザーを返す
-export const getCurrentUser = async() => {
-  return await axios.get(url,{ withCredentials: true })
-    .then(function (response) {
-      return response;
+export const getCurrentUser = () => {
+  return axios.get(loginUrl, { withCredentials: true })
+    .then(res => {
+      return res
     })
-    .catch(function (error) {
-      console.log(error);
+    .catch(e => {
+      console.log(e);
     });
 }

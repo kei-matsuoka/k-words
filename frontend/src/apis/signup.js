@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { signupUrl } from '../urls';
 
 export default async function Signup(name, email, password, password_confirmation) {
-  const url = 'http://localhost:3000/signup';
+  const url = signupUrl;
   const user = {
     name: name,
     email: email,
