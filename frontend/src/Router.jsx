@@ -6,6 +6,9 @@ import Top from './components/pages/Top';
 import Dashboard from './components/pages/Dashboard';
 import { Words } from './components/pages/Words';
 import { Learning } from './components/pages/Learning';
+import Settings from './components/pages/Settings';
+import ProfileForm from "./components/forms/ProfileForm";
+import PasswordForm from "./components/forms/PasswordForm";
 
 export default function Router() {
   const { loading, setLoading, isSignedIn, setIsSignedIn, setCurrentUser, setCards } = useContext(AuthContext);
@@ -62,6 +65,11 @@ export default function Router() {
         <Route path='/dashboard' element={<PrivateRoute><Dashboard /></PrivateRoute>} />
         <Route path='/cards/:id' element={<PrivateRoute><Words /></PrivateRoute>} />
         <Route path='/cards/:id/learning' element={<PrivateRoute><Learning /></PrivateRoute>} />
+        <Route path='/settings' element={<PrivateRoute><Settings /></PrivateRoute>} >
+          <Route path='' element={<ProfileForm />} />
+          <Route path='profile' element={<ProfileForm />} />
+          <Route path='password' element={<PasswordForm />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

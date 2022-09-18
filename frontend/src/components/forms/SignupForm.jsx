@@ -10,11 +10,10 @@ export default function SignupForm() {
     criteriaMode: 'all',
   });
   const { setLoading, isSignedIn, setIsSignedIn, setCurrentUser, setCards } = useContext(AuthContext);
-  const regex = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]+.[A-Za-z0-9]+$/;
 
   const onSubmit = async (data) => {
     try {
-      const res = await Signup(data.name, data.email, data.password, data.password_confirmation);
+      const res = await Signup(data.name, data.email, data.password);
       if (res?.data.logged_in === true) {
         setIsSignedIn(true);
         setCurrentUser(res?.data.user);
@@ -73,7 +72,7 @@ export default function SignupForm() {
                   message: '入力してください'
                 },
                 pattern: {
-                  value: { regex },
+                  value: /[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+/i,
                   message: '有効なメールアドレスを入力してください'
                 }
               })}
@@ -108,30 +107,6 @@ export default function SignupForm() {
             )}
             {errors.password?.types.minLength && (
               <div className='text-red-500'>{errors.password.message}</div>
-            )}
-
-            <input
-              className="text-center border mt-2"
-              type="password"
-              placeholder="パスワード確認"
-              autoComplete='new-password'
-              {...register("password_confirmation", {
-                required: {
-                  value: true,
-                  message: '入力してください'
-                },
-                minLength: {
-                  value: 6,
-                  message: '6文字以上で入力してください'
-                }
-              })}
-            />
-
-            {errors.password_confirmation?.types.required && (
-              <div className='text-red-500'>{errors.password_confirmation.message}</div>
-            )}
-            {errors.password_confirmation?.types.minLength && (
-              <div className='text-red-500'>{errors.password_confirmation.message}</div>
             )}
 
           </div>

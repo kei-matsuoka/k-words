@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   # 新規登録
   post '/signup', to: 'users#create'
+  
+  # ユーザー
+  patch '/users/:id', to: 'users#update'
 
   # ログイン
   post '/login', to: 'sessions#create'

@@ -19,10 +19,10 @@ export default function Top() {
       <div className="flex justify-center items-center h-96 top-color">
         <div className="flex flex-col items-center">
           <div>
-            <h2 className="text-center leading-normal text-5xl font-bold text-color">プログラミングで<br />人生の可能性を広げよう</h2>
+            <h2 className="text-center leading-normal text-5xl font-bold text-color">無駄な知識で<br />人生を豊かにする</h2>
           </div>
           <div onClick={handleClickSignup} className='mt-14'>
-            <TopSignupButton text="今すぐはじめる" />
+            <TopSignupButton text="はじめる" />
           </div>
         </div>
       </div>

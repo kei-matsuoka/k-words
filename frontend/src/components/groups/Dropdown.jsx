@@ -34,7 +34,7 @@ export const Dropdown = () => {
       {state.isOpen ?
         <div className='text-xs bg-white rounded absolute drop-shadow top-12 right-0'>
           <Link to="/dashboard"><div className='p-4 hover:bg-gray-100'>ダッシュボード</div></Link>
-          <Link to="#"><div className='p-4 hover:bg-gray-100'>アカウント設定</div></Link>
+          <Link to="/settings"><div className='p-4 hover:bg-gray-100'>アカウント設定</div></Link>
           <Link to="#"><div className='p-4 hover:bg-gray-100' onClick={handleLogout}>ログアウト</div></Link>
         </div>
       : null}
