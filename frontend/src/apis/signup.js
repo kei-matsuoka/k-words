@@ -1,13 +1,15 @@
 import axios from 'axios';
 import { signupUrl } from '../urls';
 
-export default async function Signup(name, email, password, password_confirmation) {
+export default async function Signup(name, email, password) {
   const url = signupUrl;
   const user = {
-    name: name,
-    email: email,
-    password: password,
-    password_confirmation: password_confirmation
+    user: {
+      name: name,
+      email: email,
+      password: password,
+      password_confirmation: password
+    }
   }
 
   return await axios.post(url, user, { withCredentials: true }
