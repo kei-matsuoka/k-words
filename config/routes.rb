@@ -11,5 +11,6 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
 
   # ワード一覧
-  get '/cards/:id', to: 'words#index'
+  get '/words', to: 'words#index'
+  get '/cards/:id', to: 'words#show'
 end

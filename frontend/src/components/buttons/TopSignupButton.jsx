@@ -1,6 +1,7 @@
 export default function TopSignupButton(props) {
   return (
-    <button className="button-color
+    <button className="bg-gray-600
+                     hover:bg-gray-900
                        button-color:hover
                        text-white
                        text-sm

@@ -1,7 +1,7 @@
 export default function HeaderLoginButton(props) {
   return (
     <button className="text-sm
-                       text-color
+                       text-gray-600
                        font-medium
                        py-3
                        px-4

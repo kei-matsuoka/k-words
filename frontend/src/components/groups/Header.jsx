@@ -5,7 +5,7 @@ import SignupForm from '../forms/SignupForm';
 import LoginForm from '../forms/LoginForm';
 import HeaderSignupButton from '../buttons/HeaderSignupButton';
 import HeaderLoginButton from '../buttons/HeaderLoginButton';
-import logo from '../../logo.png'
+// import logo from '../../logo.png'
 
 export const Header = () => {
   const initialState = { signupModalIsOpen: false, loginModalIsOpen: false };
@@ -23,7 +23,7 @@ export const Header = () => {
       <nav className='flex items-center justify-between sticky top-0 left-0 z-10 p-5 pr-8 pl-8 top-color'>
         <div>
           <Link to="/">
-            <img className="h-14" src={logo} alt="ロゴ" />
+            <div className='font-bold text-gray-600'>霞が関用語辞典</div>
           </Link>
         </div>
         <div className='flex'>
@@ -31,7 +31,7 @@ export const Header = () => {
             <HeaderLoginButton text="ログイン" />
           </div>
           <div onClick={handleClickSignup}>
-            <HeaderSignupButton text="無料会員登録" />
+            <HeaderSignupButton text="新規登録" />
           </div>
         </div>
       </nav>

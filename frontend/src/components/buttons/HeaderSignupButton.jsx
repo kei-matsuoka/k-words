@@ -1,7 +1,7 @@
 export default function HeaderSignupButton(props) {
   return (
-    <button className="button-color
-                       button-color:hover
+    <button className="bg-gray-600
+                       hover:bg-gray-900
                        text-white
                        font-bold
                        text-xs
