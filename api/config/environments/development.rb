@@ -24,7 +24,7 @@ Rails.application.configure do
     
     # redis_cash_storeを使用する
     config.cache_store = :redis_cache_store, {
-      url: 'redis://localhost:6379',
+      url: 'redis://redis:6379',
       expires_in: 30.minutes,
     }
     config.session_store :cache_store, key: "foo_session",
