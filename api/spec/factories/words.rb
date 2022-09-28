@@ -1,8 +1,8 @@
 FactoryBot.define do
-  # factory :word do
-  #   question { "コメント" }
-  #   answer { "<!-- コメント -->" }
-  #   text { "" }
-  #   card { nil }
-  # end
+  factory :word do
+    title { "レク" }
+    kana { "れく" }
+    meaning { "偉い人に説明すること。" }
+    text { "最初は結構怖い。" }
+  end
 end

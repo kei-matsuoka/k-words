@@ -6,11 +6,11 @@ RSpec.describe Card, type: :model do
   it 'cardが有効であること' do 
     expect(card).to be_valid
   end
-  it 'cardが削除されると関連のwordも削除されること' do
-    card.save
-    card.words.create!(question: "コメント", answer: "<!-- -->", text: "")
-    expect{card.destroy}.to change(Word, :count).by -1
-  end
+  # it 'cardが削除されると関連のwordも削除されること' do
+  #   card.save
+  #   card.words.create!(question: "コメント", answer: "<!-- -->", text: "")
+  #   expect{card.destroy}.to change(Word, :count).by -1
+  # end
   
   describe 'title' do
     it 'titleが必須であること' do
