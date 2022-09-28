@@ -1,35 +1,46 @@
 require 'rails_helper'
 
 RSpec.describe Word, type: :model do
-  let(:card) { FactoryBot.create(:html) }
-  let(:word) { card.words.build(question: "コメント", answer: "<!-- コメント -->", text: "")}
+  let(:user) { FactoryBot.create(:user) }
+  let(:word) { user.words.build(title: "レク", kana: "れく", meaning: "偉い人に説明すること。", text: "最初は結構怖い。")}
 
   it 'wordが有効であること' do 
     expect(word).to be_valid
   end
-  it 'card_idが無い場合はwordが無効であること' do 
-    word.card_id = nil
+  it 'user_idが無い場合はwordが無効であること' do 
+    word.user_id = nil
     expect(word).to_not be_valid
   end
   
-  describe 'question' do
-    it 'questionが必須であること' do
-      word.question = ' '
+  describe 'title' do
+    it 'titleが必須であること' do
+      word.title = ' '
       expect(word).to_not be_valid
     end
-    it 'questionが20文字以内であること' do
-      word.question = 'a' * 21
+    it 'titleが20文字以内であること' do
+      word.title = 'a' * 21
       expect(word).to_not be_valid
     end
   end
 
-  describe 'answer' do
-    it 'answerが必須であること' do
-      word.answer = ' '
+  describe 'kana' do
+    it 'kanaが必須であること' do
+      word.kana = ' '
       expect(word).to_not be_valid
     end
-    it 'answerが20文字以内であること' do
-      word.answer = 'a' * 21
+    it 'kanaが30文字以内であること' do
+      word.kana = 'a' * 31
+      expect(word).to_not be_valid
+    end
+  end
+
+  describe 'meaning' do
+    it 'meaningが必須であること' do
+      word.meaning = ' '
+      expect(word).to_not be_valid
+    end
+    it 'meaningが50文字以内であること' do
+      word.meaning = 'a' * 51
       expect(word).to_not be_valid
     end
   end
