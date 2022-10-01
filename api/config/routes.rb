@@ -12,5 +12,4 @@ Rails.application.routes.draw do
 
   # ワード一覧
   get '/words', to: 'words#index'
-  get '/cards/:id', to: 'words#show'
 end

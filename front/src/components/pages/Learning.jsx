@@ -5,7 +5,7 @@ import { AuthContext } from '../../AuthProvider';
 import { initialState, wordsActionTypes, wordsReducer } from '../../reducers/words'
 import { fetchWords } from '../../apis/words';
 import { getNewWords } from '../../helper';
-import DashboardHeader from "../groups/DashboardHeader";
+import { Header } from "../groups/Header";
 
 export const Learning = () => {
   const { cards } = useContext(AuthContext);
@@ -53,7 +53,7 @@ export const Learning = () => {
 
   return (
     <div>
-      <DashboardHeader />
+      <Header />
       <div className="flex flex-col items-center top-color">
         <div className='mt-6 text-color'>
           カード名: {card}<br />

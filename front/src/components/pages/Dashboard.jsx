@@ -1,14 +1,14 @@
 import { useContext } from 'react';
 import { AuthContext } from '../../AuthProvider';
 import { Link } from 'react-router-dom';
-import DashboardHeader from "../groups/DashboardHeader";
+import { Header } from "../groups/Header";
 
 export default function Dashboard() {
   const { currentUser, cards } = useContext(AuthContext);
 
   return (
     <div>
-      <DashboardHeader />
+      <Header />
       <div className="flex flex-col items-center top-color h-96">
         <div className='m-8 text-color'>
           {currentUser.name}

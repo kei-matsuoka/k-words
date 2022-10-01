@@ -1,17 +1,10 @@
-export const Word = (props) => {
+export const Word = ({word}) => {
   return (
-    <div className="flex flex-col justify-center relative h-64 border bg-white">
-      <div className="absolute right-0 h-64 w-1/2 hover:cursor-pointer" onClick={props.onClick.handleRightClick}></div>
-      <div className="absolute left-0 h-64 w-1/2 hover:cursor-pointer" onClick={props.onClick.handleLeftClick}></div>
-      <div className='flex flex-col items-center relative'>
-        {props.word.id % 2 === 0 ?
-          <div className="text-3xl">{props.word.title}</div>
-          : <>
-            <div className="text-3xl text-red-500">{props.word.title}</div>
-            <div className="absolute top-14 text-red-500">{props.word.text}</div>
-          </>
-        }
-      </div>
+    <div className='flex flex-col items-center w-1/2 p-6 m-2 rounded-md border bg-white'>
+      <div>{word.kana}</div>
+      <div>{word.title}</div>
+      <div className='mt-3 text-sm'>{word.meaning}</div>
+      <div className='mt-3 text-sm'>{word.text}</div>
     </div>
   );
 }
