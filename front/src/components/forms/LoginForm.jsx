@@ -1,15 +1,14 @@
 import { useContext } from 'react';
 import { AuthContext } from '../../AuthProvider';
 import { useForm } from "react-hook-form";
-import { Navigate } from 'react-router-dom';
 import { Login } from '../../apis/login';
 
-export default function LoginForm() {
+export default function LoginForm({handleClickLogin}) {
   const { register, handleSubmit, formState: { errors } } = useForm({
     mode: 'onBlur',
     criteriaMode: 'all',
   });
-  const { setLoading, isSignedIn, setIsSignedIn, setCurrentUser, setCards } = useContext(AuthContext);
+  const { setLoading, isSignedIn, setIsSignedIn, setCurrentUser } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
     try {
@@ -17,7 +16,7 @@ export default function LoginForm() {
       if (res?.data.logged_in === true) {
         setIsSignedIn(true);
         setCurrentUser(res?.data.user);
-        setCards(res?.data.cards)
+        // handleClickLogin();
       } else {
         console.log('no current user');
       }
@@ -29,7 +28,6 @@ export default function LoginForm() {
 
   return (
     <div>
-      {isSignedIn ? <Navigate to='/dashboard' /> : null }
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center w-80 p-6 rounded-md bg-white">
         <div className='text-center'>
           <h2 className='text-2xl font-bold'>ログイン</h2>

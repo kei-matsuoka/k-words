@@ -3,7 +3,7 @@ import { AuthContext } from '../../AuthProvider';
 import { initialState, wordsActionTypes, wordsReducer } from '../../reducers/words'
 import { Link, useParams } from 'react-router-dom';
 import { fetchWords } from '../../apis/words';
-import DashboardHeader from "../groups/DashboardHeader";
+import { Header } from "../groups/Header";
 import LearningButton from '../buttons/LearningButton';
 import { getNewWords } from '../../helper';
 
@@ -30,7 +30,7 @@ export const Words = () => {
 
   return (
     <div>
-      <DashboardHeader />
+      <Header />
       <div className="flex flex-col items-center top-color h-96">
         <div className='mt-6 text-color'>
           カード名: {card}<br />

@@ -2,7 +2,7 @@ import { useEffect, useContext } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthContext } from './AuthProvider';
 import { getCurrentUser } from './apis/login';
-import Top from './components/pages/Top';
+import { Top } from './components/pages/Top';
 import Dashboard from './components/pages/Dashboard';
 import { Words } from './components/pages/Words';
 import { Learning } from './components/pages/Learning';
@@ -11,7 +11,7 @@ import ProfileForm from "./components/forms/ProfileForm";
 import PasswordForm from "./components/forms/PasswordForm";
 
 export default function Router() {
-  const { loading, setLoading, isSignedIn, setIsSignedIn, setCurrentUser, setCards } = useContext(AuthContext);
+  const { loading, setLoading, isSignedIn, setIsSignedIn, setCurrentUser } = useContext(AuthContext);
 
   const handleGetCurrentUser = async () => {
     try {
@@ -19,7 +19,6 @@ export default function Router() {
       if (res?.data.logged_in === true) {
         setIsSignedIn(true);
         setCurrentUser(res?.data.user);
-        setCards(res?.data.cards);
       } else {
         console.log('no current user');
       }
@@ -49,7 +48,7 @@ export default function Router() {
   const LoggedInRoute = ({ children }) => {
     if (!loading) {
       if (isSignedIn) {
-        return <Navigate to='/dashboard' />;
+        return <Navigate to='/' />;
       } else {
         return children;
       }
@@ -61,7 +60,7 @@ export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<LoggedInRoute><Top /></LoggedInRoute>} />
+        <Route index element={<Top />} />
         <Route path='/dashboard' element={<PrivateRoute><Dashboard /></PrivateRoute>} />
         <Route path='/cards/:id' element={<PrivateRoute><Words /></PrivateRoute>} />
         <Route path='/cards/:id/learning' element={<PrivateRoute><Learning /></PrivateRoute>} />

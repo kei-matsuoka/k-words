@@ -7,5 +7,4 @@ export const passwordUrl = (id) => `${LOCALHOST}/password/${id}`
 export const loginUrl = `${LOCALHOST}/login`
 export const logoutUrl = `${LOCALHOST}/logout`
 
-export const wordsUrl = (id) => `${LOCALHOST}/cards/${id}`
-export const allWordsUrl = `${LOCALHOST}/words`
+export const wordsUrl = `${LOCALHOST}/words`
