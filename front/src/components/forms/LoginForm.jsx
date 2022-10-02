@@ -16,7 +16,7 @@ export default function LoginForm({handleClickLogin}) {
       if (res?.data.logged_in === true) {
         setIsSignedIn(true);
         setCurrentUser(res?.data.user);
-        // handleClickLogin();
+        handleClickLogin();
       } else {
         console.log('no current user');
       }

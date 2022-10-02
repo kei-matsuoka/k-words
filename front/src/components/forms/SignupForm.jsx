@@ -3,7 +3,7 @@ import { AuthContext } from '../../AuthProvider';
 import { useForm } from "react-hook-form";
 import Signup from '../../apis/signup';
 
-export default function SignupForm({handleClickSignup}) {
+export default function SignupForm({ handleClickSignup }) {
   const { register, handleSubmit, formState: { errors } } = useForm({
     mode: 'onBlur',
     criteriaMode: 'all',

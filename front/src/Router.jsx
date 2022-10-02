@@ -11,7 +11,7 @@ import ProfileForm from "./components/forms/ProfileForm";
 import PasswordForm from "./components/forms/PasswordForm";
 
 export default function Router() {
-  const { loading, setLoading, isSignedIn, setIsSignedIn, setCurrentUser } = useContext(AuthContext);
+  const { loading, setLoading, isSignedIn, setIsSignedIn, setCurrentUser, setCards } = useContext(AuthContext);
 
   const handleGetCurrentUser = async () => {
     try {
@@ -48,7 +48,7 @@ export default function Router() {
   const LoggedInRoute = ({ children }) => {
     if (!loading) {
       if (isSignedIn) {
-        return <Navigate to='/' />;
+        return <Navigate to='/dashboard' />;
       } else {
         return children;
       }
