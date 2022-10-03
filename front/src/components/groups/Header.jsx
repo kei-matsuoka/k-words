@@ -8,7 +8,7 @@ import LoginForm from '../forms/LoginForm';
 import HeaderSignupButton from '../buttons/HeaderSignupButton';
 import HeaderLoginButton from '../buttons/HeaderLoginButton';
 
-export const Header = () => {
+export const Header = ({handleOnInput, searchKeyword ,resetWords}) => {
   const initialState = { signupModalIsOpen: false, loginModalIsOpen: false };
   const [state, setState] = useState(initialState);
   const { isSignedIn } = useContext(AuthContext);
@@ -23,7 +23,15 @@ export const Header = () => {
   return (
     <>
       <nav className='flex items-center justify-between sticky top-0 left-0 z-10 p-5 pr-8 pl-8 bg-white shadow-sm'>
-        <Link to="/" className='font-bold text-gray-600'>霞が関用語辞典</Link>
+        <Link to="/" className='font-bold text-gray-600' onClick={resetWords}>霞が関用語辞典</Link>
+        <input
+          id="search-keyword"
+          type="text"
+          onInput={handleOnInput}
+          value={searchKeyword}
+          placeholder={"検索"}
+          className="border rounded"
+        />
         { isSignedIn ? <Dropdown /> : 
           <div className='flex'>
             <div onClick={handleClickLogin} className="mr-2">

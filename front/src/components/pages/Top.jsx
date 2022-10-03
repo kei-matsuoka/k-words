@@ -9,6 +9,7 @@ export const Top = () => {
   const [words, setWords] = useState([]);
   const [filtered, setFiltered] = useState(false);
   const [filteredWords, setFilteredWords] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState("");
   const { setLoading } = useContext(AuthContext);
   const aiueo = ["あ", "か", "さ", "た", "な", "は", "ま", "や", "ら", "わ"]
   const reg_list = ["^あ|^い|^う|^え|^お|^ぁ|^ぃ|^ぅ|^ぇ|^ぉ",
@@ -27,7 +28,6 @@ export const Top = () => {
       const res = await fetchWords();
       if (res?.status === 200) {
         setWords(res?.words);
-        console.log(res?.words);
       } else {
         console.log('no words');
       }
@@ -38,6 +38,7 @@ export const Top = () => {
   }
 
   const handleOnClick = (num) => {
+    setSearchKeyword("");
     filterWords(num);
     setFiltered(true);
   };
@@ -56,6 +57,32 @@ export const Top = () => {
     }
   };
 
+  const escapeStringRegexp = (string) => {
+    if (typeof string !== 'string') {
+      throw new TypeError('Expected a string');
+    }
+    return string
+      .replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
+      .replace(/-/g, '\\x2d');
+  };
+
+  const searchWords = words.filter((word) => {
+    const escapedText = escapeStringRegexp(searchKeyword);
+    const searchReg = new RegExp(escapedText)
+    return searchReg.test(word.kana) || searchReg.test(word.title);
+  });
+
+  const handleOnInput = (e) => {
+    setSearchKeyword(e.currentTarget.value);
+    setFiltered(false);
+  };
+
+  const resetWords = () => {
+    setFilteredWords();
+    setSearchKeyword("");
+    setFiltered(false);
+  }
+
   useEffect(() => {
     handleFetchWords();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -63,16 +90,18 @@ export const Top = () => {
 
   return (
     <>
-      <Header />
+      <Header handleOnInput={handleOnInput} searchKeyword={searchKeyword} resetWords={resetWords}/>
       <ul className="flex">
-        <li className="border" onClick={() => setFiltered(false)}><a>全て</a></li>
+        <li className="border" onClick={resetWords}><a>全て</a></li>
         {aiueo.map((row) =>
           <li key={aiueo.indexOf(row)}>
             <a onClick={() => handleOnClick(aiueo.indexOf(row))}>{row}</a>
           </li>)}
       </ul>
-      {!filtered ? <Words words={words} /> :
-        filteredWords ? <Words words={filteredWords} /> : <p>用語がありません。</p>}
+      { !filtered && searchWords.length !== 0 ? <Words words={searchWords} /> : null }
+      { !filtered && searchWords.length === 0 ? <p>用語がありません。</p> : null }
+      { filtered && filteredWords ? <Words words={filteredWords} /> : null }
+      { filtered && !filteredWords ? <p>用語がありません。</p> : null }
     </>
   );
 }
