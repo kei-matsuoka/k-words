@@ -3,7 +3,7 @@ import { AuthContext } from '../../AuthProvider';
 import { useForm } from "react-hook-form";
 import patchUser from '../../apis/patchUser';
 
-export default function ProfileForm() {
+export const ProfileForm = () => {
   const { setLoading, setCurrentUser, currentUser } = useContext(AuthContext);
   const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
     mode: 'onBlur',

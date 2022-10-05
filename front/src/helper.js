@@ -1,3 +1,4 @@
+// 単語帳用の配列を返す
 export const getNewWords = (data) => {
   const question_words = data.words.map(question_word => { return { title: question_word.question } });
   const answer_words = data.words.map(answer_word => { return { title: answer_word.answer, text: answer_word.text } });
@@ -11,4 +12,14 @@ export const getNewWords = (data) => {
     }
   }
   return new_words
-}
+};
+
+// 文字列に含まれる特殊文字をエスケープする
+export const escapeStringRegexp = (string) => {
+  if (typeof string !== 'string') {
+    throw new TypeError('Expected a string');
+  }
+  return string
+    .replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
+    .replace(/-/g, '\\x2d');
+};

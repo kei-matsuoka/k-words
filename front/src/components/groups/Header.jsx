@@ -2,16 +2,16 @@ import { useState, useContext } from 'react';
 import { AuthContext } from '../../AuthProvider';
 import { Link } from 'react-router-dom';
 import { Dropdown } from './Dropdown';
-import Modal from '../modals/Modal';
-import SignupForm from '../forms/SignupForm';
-import LoginForm from '../forms/LoginForm';
-import HeaderSignupButton from '../buttons/HeaderSignupButton';
-import HeaderLoginButton from '../buttons/HeaderLoginButton';
+import { Modal } from '../modals/Modal';
+import { SignupForm } from '../forms/SignupForm';
+import { LoginForm } from '../forms/LoginForm';
+import { HeaderSignupButton } from '../buttons/HeaderSignupButton';
+import { HeaderLoginButton } from '../buttons/HeaderLoginButton';
 
-export const Header = ({handleOnInput, searchKeyword ,resetWords}) => {
+export const Header = ({ handleOnInput, searchKeyword, resetWords }) => {
   const initialState = { signupModalIsOpen: false, loginModalIsOpen: false };
-  const [state, setState] = useState(initialState);
   const { isSignedIn } = useContext(AuthContext);
+  const [state, setState] = useState(initialState);
 
   const handleClickSignup = () => {
     state.signupModalIsOpen ? setState({ signupModalIsOpen: false }) : setState({ signupModalIsOpen: true });
@@ -32,7 +32,7 @@ export const Header = ({handleOnInput, searchKeyword ,resetWords}) => {
           placeholder={"検索"}
           className="border rounded"
         />
-        { isSignedIn ? <Dropdown /> : 
+        {isSignedIn ? <Dropdown /> :
           <div className='flex'>
             <div onClick={handleClickLogin} className="mr-2">
               <HeaderLoginButton text="ログイン" />

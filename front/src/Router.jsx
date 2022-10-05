@@ -3,12 +3,12 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthContext } from './AuthProvider';
 import { getCurrentUser } from './apis/login';
 import { Top } from './components/pages/Top';
-import Dashboard from './components/pages/Dashboard';
+import { Dashboard } from './components/pages/Dashboard';
 import { Words } from './components/pages/Words';
 import { Learning } from './components/pages/Learning';
-import Settings from './components/pages/Settings';
-import ProfileForm from "./components/forms/ProfileForm";
-import PasswordForm from "./components/forms/PasswordForm";
+import { Settings } from './components/pages/Settings';
+import { ProfileForm } from "./components/forms/ProfileForm";
+import { PasswordForm } from "./components/forms/PasswordForm";
 
 export default function Router() {
   const { loading, setLoading, isSignedIn, setIsSignedIn, setCurrentUser, setCards } = useContext(AuthContext);

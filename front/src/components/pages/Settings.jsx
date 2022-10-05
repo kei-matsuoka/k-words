@@ -1,7 +1,7 @@
 import { Link, Outlet } from 'react-router-dom';
 import { Header } from "../groups/Header";
 
-export default function Settings() {
+export const Settings = () => {
 
   return (
     <div>

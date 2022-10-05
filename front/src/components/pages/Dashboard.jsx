@@ -3,7 +3,7 @@ import { AuthContext } from '../../AuthProvider';
 import { Link } from 'react-router-dom';
 import { Header } from "../groups/Header";
 
-export default function Dashboard() {
+export const Dashboard = () => {
   const { currentUser, cards } = useContext(AuthContext);
 
   return (
