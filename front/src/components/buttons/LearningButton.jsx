@@ -1,4 +1,4 @@
-export default function LearningButton(props) {
+export const LearningButton = ({text}) => {
   return (
     <button className="button-color
                        button-color:hover
@@ -9,7 +9,7 @@ export default function LearningButton(props) {
                        px-12
                        rounded-md
                        duration-300
-                       ">{props.text}
+                       ">{text}
     </button>
   )
 }

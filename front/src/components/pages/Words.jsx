@@ -4,7 +4,7 @@ import { initialState, wordsActionTypes, wordsReducer } from '../../reducers/wor
 import { Link, useParams } from 'react-router-dom';
 import { fetchWords } from '../../apis/words';
 import { Header } from "../groups/Header";
-import LearningButton from '../buttons/LearningButton';
+import { LearningButton } from '../buttons/LearningButton';
 import { getNewWords } from '../../helper';
 
 export const Words = () => {

@@ -3,7 +3,7 @@ import { AuthContext } from '../../AuthProvider';
 import { useForm } from "react-hook-form";
 import patchPassword from '../../apis/patchPassword';
 
-export default function PasswordForm() {
+export const PasswordForm = () => {
   const { setLoading, setCurrentUser, currentUser } = useContext(AuthContext);
   const { register, handleSubmit, formState: { errors, isDirty, isValid }, getValues } = useForm({
     mode: 'onBlur',

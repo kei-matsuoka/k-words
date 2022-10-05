@@ -1,4 +1,4 @@
-export default function HeaderLoginButton(props) {
+export const HeaderLoginButton = ({text}) => {
   return (
     <button className="text-sm
                        text-gray-600
@@ -8,7 +8,7 @@ export default function HeaderLoginButton(props) {
                        rounded-md
                        duration-300
                        hover:bg-gray-100
-                       ">{props.text}
+                       ">{text}
     </button>
   )
 }
