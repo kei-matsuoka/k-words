@@ -12,4 +12,7 @@ Rails.application.routes.draw do
 
   # ワード一覧
   get '/words', to: 'words#index'
+
+  # アカウントの有効化
+  resources :account_activations, only: [:edit]
 end
