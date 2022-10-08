@@ -13,10 +13,11 @@ export const SignupForm = ({ handleClickSignup }) => {
   const onSubmit = async (data) => {
     try {
       const res = await Signup(data.name, data.email, data.password);
-      if (res?.data.logged_in === true) {
-        setIsSignedIn(true);
-        setCurrentUser(res?.data.user);
+      if (res?.data.logged_in === "wait") {
+        // setIsSignedIn(true);
+        // setCurrentUser(res?.data.user);
         handleClickSignup();
+        alert("confirm email");
       } else {
         console.log('no current user');
       }

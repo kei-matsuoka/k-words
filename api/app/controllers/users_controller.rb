@@ -2,8 +2,8 @@ class UsersController < ApplicationController
   def create
     user = User.new(user_params)
     if user.save!
-      login(user)
-      render json: { logged_in: true, user: user }
+      user.send_activation_email
+      render json: { logged_in: "wait" }
     else 
       render json: { logged_in: false }
     end

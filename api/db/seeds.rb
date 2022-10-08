@@ -1,6 +1,16 @@
 # ユーザーを2人作成する
-user = User.create!(name: "Kei", email: "a@a.a", password:"aaaaaa", password_confirmation: "aaaaaa")
-User.create!(name: "Test", email: "t@t.t", password: "tttttt", password_confirmation: "tttttt")
+user = User.create!(name: "Kei",
+                    email: "a@a.a",
+                    password:"aaaaaa",
+                    password_confirmation: "aaaaaa",
+                    activated: true,
+                    activated_at: Time.zone.now)
+User.create!(name: "Test",
+             email: "t@t.t",
+             password: "tttttt",
+             password_confirmation: "tttttt",
+             activated: true,
+             activated_at: Time.zone.now)
 
 # カードを3つ作成する
 # card = Card.create!(title: "基礎", text: "よく使われる霞が関用語を覚えよう！")
