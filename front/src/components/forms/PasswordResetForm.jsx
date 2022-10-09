@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 import { AuthContext } from '../../AuthProvider';
 import { useForm } from "react-hook-form";
-import patchPassword from '../../apis/patchPassword';
+import { patchPassword } from '../../apis/resetPassword';
 
-export const PasswordForm = () => {
-  const { setLoading, setCurrentUser, currentUser } = useContext(AuthContext);
+export const PasswordResetForm = ({id, email}) => {
+  const { setLoading, setIsSignedIn ,setCurrentUser } = useContext(AuthContext);
   const { register, handleSubmit, formState: { errors, isDirty, isValid }, getValues } = useForm({
     mode: 'onBlur',
     criteriaMode: 'all',
@@ -12,14 +12,13 @@ export const PasswordForm = () => {
 
   const onSubmit = async (data) => {
     try {
-      if (currentUser.password_digest === data.current_password) {
-        const res = await patchPassword(currentUser.id, data.password);
-        if (res?.data.status === 200) {
-          setCurrentUser(res?.data.user);
-        } else {
-          console.log('no current user');
-        }
-      } else { console.log('パスワード不一致'); }
+      const res = await patchPassword(id, email, data.password);
+      if (res?.status === 200) {
+        setIsSignedIn(true);
+        setCurrentUser(res?.user);
+      } else {
+        console.log('no current user');
+      }
     } catch (err) {
       console.log(err);
     }
@@ -34,29 +33,6 @@ export const PasswordForm = () => {
         </div>
         <div className='flex flex-col items-center mt-8'>
           <input hidden autoComplete='username' />
-          <input
-            className="text-center border mt-2"
-            type="password"
-            placeholder="現在のパスワード"
-            autoComplete='current-password'
-            {...register("current_password", {
-              required: {
-                value: true,
-                message: '入力してください'
-              },
-              minLength: {
-                value: 6,
-                message: '6文字以上で入力してください'
-              }
-            })}
-          />
-          {errors.current_password?.types.required && (
-            <div className='text-red-500'>{errors.current_password.message}</div>
-          )}
-          {errors.current_password?.types.minLength && (
-            <div className='text-red-500'>{errors.current_password.message}</div>
-          )}
-
           <input
             className="text-center border mt-2"
             type="password"

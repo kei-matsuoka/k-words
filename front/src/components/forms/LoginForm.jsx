@@ -1,6 +1,7 @@
 import { useContext } from 'react';
-import { AuthContext } from '../../AuthProvider';
+import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
+import { AuthContext } from '../../AuthProvider';
 import { Login } from '../../apis/login';
 
 export const LoginForm = ({handleClickLogin}) => {
@@ -81,7 +82,9 @@ export const LoginForm = ({handleClickLogin}) => {
             <div>{errors.password.message}</div>
           )}
           
-          <span>次回から自動でログインする</span>
+          <p>パスワードを忘れた場合は<Link to='/password'>こちら</Link></p>
+
+          <p>次回から自動でログインする</p>
           <input
             className="mt-2"
             type="checkbox"

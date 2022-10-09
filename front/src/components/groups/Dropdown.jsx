@@ -4,7 +4,7 @@ import { AuthContext } from '../../AuthProvider';
 import { Logout } from '../../apis/logout';
 
 export const Dropdown = () => {
-  const { setLoading, setIsSignedIn, isSignedIn, currentUser } = useContext(AuthContext);
+  const { setLoading, setIsSignedIn, isSignedIn, currentUser, setCurrentUser } = useContext(AuthContext);
   const [state, setState] = useState({ isOpen: false });
 
   const handleClick = () => {
@@ -14,13 +14,14 @@ export const Dropdown = () => {
   const handleLogout = async () => {
     try {
       const res = await Logout();
-      if (res?.data.logged_in === false) {
+      if (res?.logged_in === false) {
         setIsSignedIn(false);
+        setCurrentUser(null);
       } else {
-        console.log('Can not logout');
+        console.log('ログアウトできません');
       }
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      console.log(e);
     }
     setLoading(false);
   };

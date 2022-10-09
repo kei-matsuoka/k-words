@@ -7,24 +7,25 @@ import { Dashboard } from './components/pages/Dashboard';
 import { Words } from './components/pages/Words';
 import { Learning } from './components/pages/Learning';
 import { Settings } from './components/pages/Settings';
-import { ProfileForm } from "./components/forms/ProfileForm";
-import { PasswordForm } from "./components/forms/PasswordForm";
 import { Valid } from './components/pages/Valid';
+import { Password } from './components/pages/Password';
+import { ProfileForm } from "./components/forms/ProfileForm";
+import { TokenResetForm } from './components/forms/TokenResetForm';
 
-export default function Router() {
-  const { loading, setLoading, isSignedIn, setIsSignedIn, setCurrentUser, setCards } = useContext(AuthContext);
+export const Router = () => {
+  const { loading, setLoading, isSignedIn, setIsSignedIn, setCurrentUser } = useContext(AuthContext);
 
-  const handleGetCurrentUser = async () => {
+  const handleGetCurrentUser = () => {
     try {
-      const res = await getCurrentUser();
+      const res = getCurrentUser();
       if (res?.logged_in === true) {
         setIsSignedIn(true);
         setCurrentUser(res?.user);
       } else {
         console.log('no current user');
       }
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      console.log(e);
     }
     setLoading(false);
   };
@@ -66,10 +67,12 @@ export default function Router() {
         <Route path='/cards/:id' element={<PrivateRoute><Words /></PrivateRoute>} />
         <Route path='/cards/:id/learning' element={<PrivateRoute><Learning /></PrivateRoute>} />
         <Route path='/valid' element={<PrivateRoute><Valid/></PrivateRoute>} />
+        <Route path='password' element={<Password />} />
+        <Route path='password/:id/:email' element={<Password />} />
         <Route path='/settings' element={<PrivateRoute><Settings /></PrivateRoute>} >
           <Route path='' element={<ProfileForm />} />
           <Route path='profile' element={<ProfileForm />} />
-          <Route path='password' element={<PasswordForm />} />
+          <Route path='password' element={<TokenResetForm />} />
         </Route>
       </Routes>
     </BrowserRouter>
