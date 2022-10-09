@@ -17,9 +17,9 @@ export default function Router() {
   const handleGetCurrentUser = async () => {
     try {
       const res = await getCurrentUser();
-      if (res?.data.logged_in === true) {
+      if (res?.logged_in === true) {
         setIsSignedIn(true);
-        setCurrentUser(res?.data.user);
+        setCurrentUser(res?.user);
       } else {
         console.log('no current user');
       }

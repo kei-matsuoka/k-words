@@ -8,14 +8,14 @@ export const LoginForm = ({handleClickLogin}) => {
     mode: 'onBlur',
     criteriaMode: 'all',
   });
-  const { setLoading, isSignedIn, setIsSignedIn, setCurrentUser } = useContext(AuthContext);
+  const { setLoading, setIsSignedIn, setCurrentUser } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
     try {
-      const res = await Login(data.email, data.password, data.password_confirmation);
-      if (res?.data.logged_in === true) {
+      const res = await Login(data.email, data.password, data.remember_me);
+      if (res?.logged_in === true) {
         setIsSignedIn(true);
-        setCurrentUser(res?.data.user);
+        setCurrentUser(res?.user);
         handleClickLogin();
       } else {
         console.log('no current user');
@@ -80,6 +80,13 @@ export const LoginForm = ({handleClickLogin}) => {
           {errors.password?.types.minLength && (
             <div>{errors.password.message}</div>
           )}
+          
+          <span>次回から自動でログインする</span>
+          <input
+            className="mt-2"
+            type="checkbox"
+            {...register("remember_me")}
+          />
 
         </div>
         <div>

@@ -4,7 +4,6 @@ class AccountActivationsController < ApplicationController
     if user && !user.activated? && user.authenticated?(:activation, params[:id])
       user.activate
       login(user)
-      remember(user)
       redirect_to "http://localhost:3001/valid"
     else
       redirect_to "http://localhost:3001/"
