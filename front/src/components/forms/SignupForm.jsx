@@ -1,28 +1,26 @@
 import { useContext } from 'react';
 import { AuthContext } from '../../AuthProvider';
 import { useForm } from "react-hook-form";
-import Signup from '../../apis/signup';
+import { Signup } from '../../apis/signup';
 
 export const SignupForm = ({ handleClickSignup }) => {
   const { register, handleSubmit, formState: { errors } } = useForm({
     mode: 'onBlur',
     criteriaMode: 'all',
   });
-  const { setLoading, setIsSignedIn, setCurrentUser } = useContext(AuthContext);
+  const { setLoading } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
     try {
       const res = await Signup(data.name, data.email, data.password);
-      if (res?.data.logged_in === "wait") {
-        // setIsSignedIn(true);
-        // setCurrentUser(res?.data.user);
+      if (res?.logged_in === "wait") {
         handleClickSignup();
         alert("confirm email");
       } else {
         console.log('no current user');
       }
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      console.log(e);
     }
     setLoading(false);
   };
