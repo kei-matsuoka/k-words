@@ -1,17 +1,17 @@
 import axios from 'axios';
 import { loginUrl } from '../urls';
 
-export const Login = async (email, password, password_confirmation) => {
+export const Login = async (email, password, remember_me) => {
   return await axios.post(loginUrl, {
     email: email,
     password: password,
-    password_confirmation: password_confirmation
+    remember_me: remember_me
   }, { withCredentials: true })
-    .then(function (response) {
-      return response;
+    .then(res => {
+      return res.data
     })
-    .catch(function (error) {
-      console.log(error);
+    .catch((e)=> {
+      console.log(e);
     });
 }
 
@@ -19,7 +19,7 @@ export const Login = async (email, password, password_confirmation) => {
 export const getCurrentUser = () => {
   return axios.get(loginUrl, { withCredentials: true })
     .then(res => {
-      return res
+      return res.data
     })
     .catch(e => {
       console.log(e);

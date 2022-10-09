@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
     if user&.authenticate(params[:session][:password])
       if user.activated?
         login(user)
-        remember(user)
+        params[:session][:remember_me] == true ? remember(user) : forget(user)
         render json: { logged_in: true, user: user }
       else
         render json: { logged_in: false, errors: ['アカウントが有効ではありません', 'メールを確認してアカウントを有効にしてください。'] }
