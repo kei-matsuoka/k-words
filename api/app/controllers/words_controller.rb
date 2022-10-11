@@ -1,6 +1,6 @@
 class WordsController < ApplicationController
   def index
-    words = Word.order(:kana)
+    words = Word.all
     if words
       render json: { status: 200, words: words }
     else

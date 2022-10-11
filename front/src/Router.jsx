@@ -11,13 +11,14 @@ import { Valid } from './components/pages/Valid';
 import { Password } from './components/pages/Password';
 import { ProfileForm } from "./components/forms/ProfileForm";
 import { TokenResetForm } from './components/forms/TokenResetForm';
+import { MyPage } from './components/pages/MyPage';
 
 export const Router = () => {
   const { loading, setLoading, isSignedIn, setIsSignedIn, setCurrentUser } = useContext(AuthContext);
 
-  const handleGetCurrentUser = () => {
+  const handleGetCurrentUser = async () => {
     try {
-      const res = getCurrentUser();
+      const res = await getCurrentUser();
       if (res?.logged_in === true) {
         setIsSignedIn(true);
         setCurrentUser(res?.user);
@@ -65,6 +66,7 @@ export const Router = () => {
         <Route index element={<Top />} />
         <Route path='/dashboard' element={<PrivateRoute><Dashboard /></PrivateRoute>} />
         <Route path='/cards/:id' element={<PrivateRoute><Words /></PrivateRoute>} />
+        <Route path='/mypage' element={<PrivateRoute><MyPage /></PrivateRoute>} />
         <Route path='/cards/:id/learning' element={<PrivateRoute><Learning /></PrivateRoute>} />
         <Route path='/valid' element={<PrivateRoute><Valid/></PrivateRoute>} />
         <Route path='password' element={<Password />} />

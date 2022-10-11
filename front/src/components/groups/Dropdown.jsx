@@ -28,16 +28,17 @@ export const Dropdown = () => {
 
   return (
     <div>
-      { !isSignedIn ? <Navigate to='/' /> : null }
+      {!isSignedIn ? <Navigate to='/' /> : null}
       <button onClick={handleClick} className='hover:bg-gray-100 text-color text-sm p-3 w-32 relative'>
         {currentUser.name}
       </button>
       {state.isOpen ?
         <div className='text-xs bg-white rounded absolute drop-shadow top-12 right-0'>
+          <Link to="/mypage"><div className='p-4 hover:bg-gray-100'>マイページ</div></Link>
           <Link to="/settings"><div className='p-4 hover:bg-gray-100'>アカウント設定</div></Link>
           <Link to="#"><div className='p-4 hover:bg-gray-100' onClick={handleLogout}>ログアウト</div></Link>
         </div>
-      : null}
+        : null}
     </div>
   );
 }

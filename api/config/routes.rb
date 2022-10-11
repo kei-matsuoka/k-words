@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   post '/signup', to: 'users#create'
   
   # ユーザー
+  get 'users/:id', to: 'users#show'
   patch '/users/:id', to: 'users#update'
 
   # ログイン
