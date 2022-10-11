@@ -6,6 +6,7 @@ import { Words } from "../groups/Words";
 import { fetchWords } from '../../apis/words';
 import { escapeStringRegexp } from "../../helper";
 import { reg_list } from "../../constants";
+import { MdAddCircle } from 'react-icons/md';
 
 export const Top = () => {
   const [words, setWords] = useState([]);
@@ -68,7 +69,7 @@ export const Top = () => {
   useEffect(() => {
     handleFetchWords();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [setWords]);
 
   return (
     <>
@@ -78,6 +79,9 @@ export const Top = () => {
       {!filtered && searchWords.length === 0 && <p>用語がありません。</p>}
       {filtered && filteredWords && <Words words={filteredWords} />}
       {filtered && !filteredWords && <p>用語がありません。</p>}
+      <button >
+        <MdAddCircle size="60" className="text-gray-600 fixed right-6 bottom-6 z-10 hover:text-gray-800 drop-shadow-md duration-300" />
+      </button>
     </>
   );
 }

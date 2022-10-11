@@ -1,4 +1,10 @@
 class UsersController < ApplicationController
+  def show
+    @user = User.find(params[:id])
+    @words = @user.words
+    render json: { status: 200, words: @words }
+  end
+
   def create
     user = User.new(user_params)
     if user.save!

@@ -12,3 +12,12 @@ export const patchUser = (id, name, email) => {
     console.log(e);
   });
 };
+
+export const getUserWords = (id) => {
+  return axios.get(userUrl(id), { withCredentials: true }
+  ).then(res => {
+    return res.data
+  }).catch(e => {
+    console.log(e);
+  });
+};
