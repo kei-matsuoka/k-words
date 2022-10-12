@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { Signup } from '../../apis/signup';
 
 export const SignupForm = ({ handleClickSignup }) => {
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
     mode: 'onBlur',
     criteriaMode: 'all',
   });
@@ -108,13 +108,14 @@ export const SignupForm = ({ handleClickSignup }) => {
       <div>
         <input className="button-color
                           button-color:hover
-                            text-white
+                        text-white
                           py-3 
                           px-12
                           rounded-md
                           duration-300
-                          mt-4"
-          type="submit" value="新規登録" />
+                          mt-4
+                          disabled:bg-gray-200"
+          type="submit" value="新規登録" disabled={!isDirty || !isValid} />
       </div>
     </form>
   );

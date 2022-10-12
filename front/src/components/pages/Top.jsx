@@ -3,23 +3,26 @@ import { AuthContext } from '../../AuthProvider';
 import { Header } from "../groups/Header";
 import { JColumnBar } from "../groups/JColumnBar";
 import { Words } from "../groups/Words";
-import { fetchWords } from '../../apis/words';
+import { getWords } from '../../apis/words';
 import { escapeStringRegexp } from "../../helper";
 import { reg_list } from "../../constants";
 import { MdAddCircle } from 'react-icons/md';
+import { Modal } from "../modals/Modal";
+import { WordForm } from "../forms/WordForm";
 
 export const Top = () => {
   const [words, setWords] = useState([]);
   const [filtered, setFiltered] = useState(false);
   const [filteredWords, setFilteredWords] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
-  const { setLoading } = useContext(AuthContext);
+  const { setLoading, isSignedIn } = useContext(AuthContext);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const handleFetchWords = async () => {
+  const handleGetWords = async () => {
     try {
-      const res = await fetchWords();
+      const res = await getWords();
       if (res?.status === 200) {
-        setWords(res?.words);
+        setWords(res?.data);
       } else {
         console.log('no words');
       }
@@ -66,8 +69,16 @@ export const Top = () => {
     setFiltered(false);
   };
 
+  const handleIsOpen = () => {
+    if (isSignedIn) {
+      setIsOpen(isOpen ? false : true);
+    } else {
+      alert("ログインしてください")
+    }
+  };
+
   useEffect(() => {
-    handleFetchWords();
+    handleGetWords();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setWords]);
 
@@ -79,9 +90,10 @@ export const Top = () => {
       {!filtered && searchWords.length === 0 && <p>用語がありません。</p>}
       {filtered && filteredWords && <Words words={filteredWords} />}
       {filtered && !filteredWords && <p>用語がありません。</p>}
-      <button >
+      <button onClick={handleIsOpen}>
         <MdAddCircle size="60" className="text-gray-600 fixed right-6 bottom-6 z-10 hover:text-gray-800 drop-shadow-md duration-300" />
       </button>
+      {isOpen ? <Modal child={<WordForm handleGetWords={handleGetWords} handleIsOpen={handleIsOpen} />} onClick={handleIsOpen} /> : null}
     </>
   );
 }

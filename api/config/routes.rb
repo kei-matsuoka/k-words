@@ -11,8 +11,11 @@ Rails.application.routes.draw do
   get '/login', to: 'sessions#show'
   delete '/logout', to: 'sessions#destroy'
 
-  # ワード一覧
+  # ワード
   get '/words', to: 'words#index'
+  post '/words', to: 'words#create'
+  patch '/words/:id', to: 'words#update'
+  delete '/words/:id', to: 'words#destroy'
 
   # アカウントの有効化
   resources :account_activations, only: [:edit]

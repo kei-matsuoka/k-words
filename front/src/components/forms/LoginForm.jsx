@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from '../../AuthProvider';
 import { Login } from '../../apis/login';
 
-export const LoginForm = ({handleClickLogin}) => {
+export const LoginForm = ({ handleClickLogin }) => {
   const { register, handleSubmit, formState: { errors } } = useForm({
     mode: 'onBlur',
     criteriaMode: 'all',
@@ -76,12 +76,12 @@ export const LoginForm = ({handleClickLogin}) => {
           />
 
           {errors.password?.types.required && (
-            <div>{errors.password.message}</div>
+            <div className='text-red-500'>{errors.password.message}</div>
           )}
           {errors.password?.types.minLength && (
-            <div>{errors.password.message}</div>
+            <div className='text-red-500'>{errors.password.message}</div>
           )}
-          
+
           <p>パスワードを忘れた場合は<Link to='/password'>こちら</Link></p>
 
           <p>次回から自動でログインする</p>
