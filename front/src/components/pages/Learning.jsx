@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion'
 import { AuthContext } from '../../AuthProvider';
 import { initialState, wordsActionTypes, wordsReducer } from '../../reducers/words'
-import { fetchWords } from '../../apis/words';
+import { getWords } from '../../apis/words';
 import { getNewWords } from '../../helper';
 import { Header } from "../groups/Header";
 
@@ -38,7 +38,7 @@ export const Learning = () => {
 
   useEffect(() => {
     dispatch({ type: wordsActionTypes.FETCHING });
-    fetchWords(id)
+    getWords(id)
       .then((data) => {
         const new_words = getNewWords(data);
         dispatch({

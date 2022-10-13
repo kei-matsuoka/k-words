@@ -8,3 +8,4 @@ export const loginUrl = `${LOCALHOST}/login`
 export const logoutUrl = `${LOCALHOST}/logout`
 
 export const wordsUrl = `${LOCALHOST}/words`
+export const userWordUrl = (id) => `${LOCALHOST}/words/${id}`

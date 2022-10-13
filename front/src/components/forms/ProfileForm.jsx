@@ -11,12 +11,12 @@ export const ProfileForm = () => {
     defaultValues: {
       name: currentUser.name,
       email: currentUser.email,
-    },
+    }
   });
 
   const onSubmit = async (data) => {
     try {
-      const res = await patchUser(currentUser.id, data.name, data.email);
+      const res = await patchUser(currentUser.id, data);
       if (res?.status === 200) {
         setCurrentUser(res?.user);
       } else {
@@ -39,7 +39,7 @@ export const ProfileForm = () => {
             className="text-center border"
             type="text"
             placeholder="ユーザー名"
-            autoComplete='username'
+            autoComplete="username"
             {...register("name", {
               required: {
                 value: true,
@@ -70,7 +70,7 @@ export const ProfileForm = () => {
                 message: '入力してください'
               },
               pattern: {
-                value: /[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+/i,
+                value: /[\w+\-.]+@[a-z\d-]+(\.[a-z\d-]+)*\.[a-z]+/i,
                 message: '有効なメールアドレスを入力してください'
               }
             })}

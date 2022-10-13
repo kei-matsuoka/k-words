@@ -1,9 +1,12 @@
 import { UserWord } from "./UserWord";
 
-export const UserWords = ({ words }) => {
+export const UserWords = ({ words, handleIsOpen , handleDestroyWord }) => {
   return (
-    <div className="flex flex-col items-center p-6 top-color pb-24">
-      {words.map((word) => <UserWord word={word} key={word.id} />)}
+    <div className="flex flex-col items-center top-color">
+      {words.map((word) => <UserWord word={word}
+        key={word.id}
+        handleDestroyWord={handleDestroyWord}
+        handleIsOpen={handleIsOpen} />)}
     </div>
   );
 }

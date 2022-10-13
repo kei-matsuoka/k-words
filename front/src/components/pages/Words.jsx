@@ -2,7 +2,7 @@ import { useContext, useEffect, useReducer } from 'react';
 import { AuthContext } from '../../AuthProvider';
 import { initialState, wordsActionTypes, wordsReducer } from '../../reducers/words'
 import { Link, useParams } from 'react-router-dom';
-import { fetchWords } from '../../apis/words';
+import { getWords } from '../../apis/words';
 import { Header } from "../groups/Header";
 import { LearningButton } from '../buttons/LearningButton';
 import { getNewWords } from '../../helper';
@@ -15,7 +15,7 @@ export const Words = () => {
 
   useEffect(() => {
     dispatch({ type: wordsActionTypes.FETCHING });
-    fetchWords(id)
+    getWords(id)
       .then((data) => {
         const new_words = getNewWords(data);
         dispatch({
