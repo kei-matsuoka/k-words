@@ -20,7 +20,9 @@ export const wordsReducer = (state, action) => {
     case wordsActionTypes.FETCH_SUCCESS:
       return {
         fetchState: REQUEST_STATE.OK,
-        wordsList: action.payload.words
+        card: action.payload.card,
+        wordsList: action.payload.words,
+        length: action.payload.length
       };
     default:
       throw new Error();

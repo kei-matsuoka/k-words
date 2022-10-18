@@ -5,6 +5,12 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    screens: {
+      'jb': { 'max': '444px' },
+      'sp': { 'max': '520px' },
+      'sb': { 'max': '640px' },
+      'tb': { 'max': '960px' },
+    },
   },
   plugins: [],
 }

@@ -1,29 +1,33 @@
-import { useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../../AuthProvider';
-import { Link } from 'react-router-dom';
-import { Header } from "../groups/Header";
+import { getCards } from '../../apis/cards';
+import { Cards } from '../groups/Cards';
 
 export const Dashboard = () => {
-  const { currentUser, cards } = useContext(AuthContext);
+  const { setLoading } = useContext(AuthContext);
+  const [cards, setCards] = useState();
+  const handleGetCards = async () => {
+    try {
+      const res = await getCards();
+      if (res?.status === 200) {
+        setCards(res?.cards);
+      } else {
+        console.log('no words');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    handleGetCards();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setCards]);
 
   return (
-    <div>
-      <Header />
-      <div className="flex flex-col items-center top-color h-96">
-        <div className='m-8 text-color'>
-          {currentUser.name}
-        </div>
-        <div className='flex flex-wrap'>
-          {cards.map((card) =>
-            <Link key={card.id} to={`/cards/${card.id}`}>
-              <div className='flex flex-col items-center w-60 p-6 m-2 rounded-md border hover:bg-gray-100 bg-white'>
-                <div>{card.title}</div>
-                <div className='mt-3 text-sm'>{card.text}</div>
-              </div>
-            </Link>
-          )}
-        </div>
-      </div>
+    <div className="pt-[11px] h-full bg-gray-50">
+      {cards ? <Cards cards={cards} /> : null}
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { AuthContext } from '../../AuthProvider';
 import { useForm } from "react-hook-form";
 import { createWord } from '../../apis/words';
 
-export const WordForm = ({ handleGetWords, handleIsOpen }) => {
+export const WordForm = ({ handleGetWords, handleClickWord }) => {
   const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
     mode: 'onBlur',
     criteriaMode: 'all',
@@ -16,7 +16,7 @@ export const WordForm = ({ handleGetWords, handleIsOpen }) => {
       if (res?.status === 200) {
         alert("wordが追加されました");
         handleGetWords();
-        handleIsOpen();
+        handleClickWord();
       } else {
         console.log('no current user');
       }

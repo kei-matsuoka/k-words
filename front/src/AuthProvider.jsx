@@ -6,8 +6,6 @@ export const AuthProvider = ({children}) => {
   const [loading, setLoading] = useState(true);
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState();
-  const [words, setWords] = useState();
-  const [cards, setCards] = useState();
 
   return (
     <AuthContext.Provider
@@ -17,11 +15,7 @@ export const AuthProvider = ({children}) => {
         isSignedIn,
         setIsSignedIn,
         currentUser,
-        setCurrentUser,
-        words,
-        setWords,
-        cards,
-        setCards
+        setCurrentUser
       }}
     >
       {children}

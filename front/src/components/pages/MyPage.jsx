@@ -1,15 +1,14 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from '../../AuthProvider';
-import { Header } from "../groups/Header";
-import { UserWords } from "../groups/UserWords";
 import { getUserWords } from '../../apis/users';
 import { destroyWord } from '../../apis/words';
 import { PatchWordForm } from "../forms/PatchWordForm";
 import { Modal } from "../modals/Modal";
+import { Words } from "../groups/Words";
 
 export const MyPage = () => {
   const [userWords, setUserWords] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
+  const [patchModalIsOpen, setPatchModalIsOpen] = useState(false);
   const [word, setWord] = useState();
   const { setLoading, currentUser } = useContext(AuthContext);
 
@@ -27,7 +26,7 @@ export const MyPage = () => {
     setLoading(false);
   };
 
-  const handleDestroyWord = async (id) => {
+  const handleClickDestroy = async (id) => {
     try {
       const res = await destroyWord(id);
       if (res?.status === 200) {
@@ -42,12 +41,12 @@ export const MyPage = () => {
     setLoading(false);
   };
 
-  const handleIsOpen = (word) => {
-    if (!isOpen) {
-      setIsOpen(true);
+  const handleClickPatch = (word) => {
+    if (!patchModalIsOpen) {
+      setPatchModalIsOpen(true);
       setWord(word);
     } else {
-      setIsOpen(false);
+      setPatchModalIsOpen(false);
     }
   };
 
@@ -57,14 +56,13 @@ export const MyPage = () => {
   }, [setUserWords]);
 
   return (
-    <>
-      <Header />
-      <h1>マイ用語</h1>
-      {userWords ? <UserWords words={userWords}
-        handleIsOpen={handleIsOpen}
-        handleDestroyWord={handleDestroyWord} />
-        : <p>用語がありません。</p>}
-      {isOpen ? <Modal child={<PatchWordForm handleGetUserWords={handleGetUserWords} handleIsOpen={handleIsOpen} word={word} />} onClick={handleIsOpen} /> : null}
-    </>
+    <div className="bg-gray-50">
+      <h1 className="p-6">マイ用語</h1>
+      {userWords ? <Words words={userWords}
+        handleClickPatch={handleClickPatch}
+        handleClickDestroy={handleClickDestroy} />
+        : <p>マイ用語がありません。</p>}
+      {patchModalIsOpen ? <Modal onClick={handleClickPatch}><PatchWordForm handleGetUserWords={handleGetUserWords} handleClickPatch={handleClickPatch} word={word} /></Modal> : null}
+    </div>
   );
 }

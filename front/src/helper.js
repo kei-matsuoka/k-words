@@ -1,14 +1,14 @@
 // 単語帳用の配列を返す
-export const getNewWords = (data) => {
-  const question_words = data.words.map(question_word => { return { title: question_word.question } });
-  const answer_words = data.words.map(answer_word => { return { title: answer_word.answer, text: answer_word.text } });
-  const length = question_words.length * 2 - 1;
+export const getNewWords = (words) => {
+  const title_words = words.map(title_word => { return { title: title_word.title } });
+  const meaning_words = words.map(meaning_word => { return { title: meaning_word.meaning, meaning: meaning_word.meaning } });
+  const length = title_words.length * 2 - 1;
   const new_words = [];
   for (let i = 0; i <= length; i++) {
     if (i % 2 === 0) {
-      new_words.push({ id: i, title: question_words[i / 2].title, text: '' });
+      new_words.push({ id: i, title: title_words[i / 2].title, meaning: '' });
     } else {
-      new_words.push({ id: i, title: answer_words[(i - 1) / 2].title, text: answer_words[(i - 1) / 2].text });
+      new_words.push({ id: i, title: meaning_words[(i - 1) / 2].title, meaning: meaning_words[(i - 1) / 2].meaning });
     }
   }
   return new_words
