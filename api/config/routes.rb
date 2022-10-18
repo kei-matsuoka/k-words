@@ -17,6 +17,10 @@ Rails.application.routes.draw do
   patch '/words/:id', to: 'words#update'
   delete '/words/:id', to: 'words#destroy'
 
+  # カード
+  get '/cards', to: 'cards#index'
+  get '/cards/:id', to: 'cards#show'
+
   # アカウントの有効化
   resources :account_activations, only: [:edit]
 

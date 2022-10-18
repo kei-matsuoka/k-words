@@ -3,7 +3,7 @@ import { AuthContext } from '../../AuthProvider';
 import { useForm } from "react-hook-form";
 import { patchWord } from '../../apis/words';
 
-export const PatchWordForm = ({ handleGetUserWords, handleIsOpen, word }) => {
+export const PatchWordForm = ({ handleGetUserWords, handleClickPatch, word }) => {
   const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
     mode: 'onBlur',
     criteriaMode: 'all',
@@ -20,7 +20,7 @@ export const PatchWordForm = ({ handleGetUserWords, handleIsOpen, word }) => {
       const res = await patchWord(data, word.id);
       if (res?.status === 200) {
         handleGetUserWords();
-        handleIsOpen();
+        handleClickPatch();
         alert("編集しました。")
       } else {
         console.log('no current user');

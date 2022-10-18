@@ -9,3 +9,6 @@ export const logoutUrl = `${LOCALHOST}/logout`
 
 export const wordsUrl = `${LOCALHOST}/words`
 export const userWordUrl = (id) => `${LOCALHOST}/words/${id}`
+
+export const cardsUrl = `${LOCALHOST}/cards`
+export const cardUrl = (id) => `${LOCALHOST}/cards/${id}`

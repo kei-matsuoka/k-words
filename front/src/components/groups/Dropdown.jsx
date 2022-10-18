@@ -1,15 +1,10 @@
-import { useState, useContext } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { AuthContext } from '../../AuthProvider';
 import { Logout } from '../../apis/logout';
 
-export const Dropdown = () => {
-  const { setLoading, setIsSignedIn, isSignedIn, currentUser, setCurrentUser } = useContext(AuthContext);
-  const [state, setState] = useState({ isOpen: false });
-
-  const handleClick = () => {
-    state.isOpen ? setState({ isOpen: false }) : setState({ isOpen: true })
-  }
+export const DropDown = ({handleClickDropDown}) => {
+  const { setLoading, setIsSignedIn, setCurrentUser } = useContext(AuthContext);
 
   const handleLogout = async () => {
     try {
@@ -17,6 +12,7 @@ export const Dropdown = () => {
       if (res?.logged_in === false) {
         setIsSignedIn(false);
         setCurrentUser(null);
+        handleClickDropDown();
       } else {
         console.log('ログアウトできません');
       }
@@ -27,18 +23,14 @@ export const Dropdown = () => {
   };
 
   return (
-    <div>
-      {!isSignedIn ? <Navigate to='/' /> : null}
-      <button onClick={handleClick} className='hover:bg-gray-100 text-color text-sm p-3 w-32 relative'>
-        {currentUser.name}
-      </button>
-      {state.isOpen ?
-        <div className='text-xs bg-white rounded absolute drop-shadow top-12 right-0'>
-          <Link to="/mypage"><div className='p-4 hover:bg-gray-100'>マイページ</div></Link>
-          <Link to="/settings"><div className='p-4 hover:bg-gray-100'>アカウント設定</div></Link>
-          <Link to="#"><div className='p-4 hover:bg-gray-100' onClick={handleLogout}>ログアウト</div></Link>
+    <div className="fixed top-0 z-20 left-0 w-full h-full" onClick={handleClickDropDown}>
+      <div onClick={(e) => e.stopPropagation()}>
+        <div className='text-xs bg-white rounded absolute drop-shadow top-12 right-0 z-20'>
+          <Link to="/mypage" onClick={handleClickDropDown}><div className='p-4 hover:bg-gray-100 z-30'>マイページ</div></Link>
+          <Link to="/settings" onClick={handleClickDropDown}><div className='p-4 hover:bg-gray-100'>アカウント設定</div></Link>
+          <Link to="#" onClick={handleClickDropDown}><div className='p-4 hover:bg-gray-100' onClick={handleLogout}>ログアウト</div></Link>
         </div>
-        : null}
+      </div>
     </div>
   );
 }

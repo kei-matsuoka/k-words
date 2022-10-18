@@ -6,17 +6,13 @@ import { Words } from "../groups/Words";
 import { getWords } from '../../apis/words';
 import { escapeStringRegexp } from "../../helper";
 import { reg_list } from "../../constants";
-import { MdAddCircle } from 'react-icons/md';
-import { Modal } from "../modals/Modal";
-import { WordForm } from "../forms/WordForm";
 
 export const Top = () => {
   const [words, setWords] = useState([]);
   const [filtered, setFiltered] = useState(false);
   const [filteredWords, setFilteredWords] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
-  const { setLoading, isSignedIn } = useContext(AuthContext);
-  const [isOpen, setIsOpen] = useState(false);
+  const { setLoading } = useContext(AuthContext);
 
   const handleGetWords = async () => {
     try {
@@ -69,14 +65,6 @@ export const Top = () => {
     setFiltered(false);
   };
 
-  const handleIsOpen = () => {
-    if (isSignedIn) {
-      setIsOpen(isOpen ? false : true);
-    } else {
-      alert("ログインしてください")
-    }
-  };
-
   useEffect(() => {
     handleGetWords();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -84,16 +72,19 @@ export const Top = () => {
 
   return (
     <>
-      <Header handleOnInput={handleOnInput} searchKeyword={searchKeyword} resetWords={resetWords} />
-      <JColumnBar resetWords={resetWords} handleOnClick={handleOnClick} />
-      {!filtered && searchWords.length !== 0 && <Words words={searchWords} />}
-      {!filtered && searchWords.length === 0 && <p>用語がありません。</p>}
-      {filtered && filteredWords && <Words words={filteredWords} />}
-      {filtered && !filteredWords && <p>用語がありません。</p>}
-      <button onClick={handleIsOpen}>
-        <MdAddCircle size="60" className="text-gray-600 fixed right-6 bottom-6 z-10 hover:text-gray-800 drop-shadow-md duration-300" />
-      </button>
-      {isOpen ? <Modal child={<WordForm handleGetWords={handleGetWords} handleIsOpen={handleIsOpen} />} onClick={handleIsOpen} /> : null}
+      <Header
+        handleGetWords={handleGetWords}
+        handleOnInput={handleOnInput}
+        searchKeyword={searchKeyword}
+        resetWords={resetWords}
+      />
+      <JColumnBar handleOnClick={handleOnClick} resetWords={resetWords} />
+      <div className="pt-[109px] ml-[76px] sp:ml-0 jb:pt-[150px] h-full bg-gray-50">
+        {!filtered && searchWords.length !== 0 && <Words words={searchWords} />}
+        {!filtered && searchWords.length === 0 && <p className="p-4">該当する用語がありません。</p>}
+        {filtered && filteredWords ? <Words words={filteredWords} /> : null}
+        {filtered && !filteredWords && <p className="pl-3.5 pb-3">該当する用語がありません。</p>}
+      </div>
     </>
   );
 }

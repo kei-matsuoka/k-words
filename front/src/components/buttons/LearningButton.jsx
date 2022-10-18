@@ -3,7 +3,7 @@ export const LearningButton = ({text}) => {
     <button className="button-color
                        button-color:hover
                        text-white
-                       text-sm
+                       text-xs
                        font-semibold
                        py-3.5
                        px-12

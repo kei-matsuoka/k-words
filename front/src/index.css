@@ -1,6 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@font-face {
+  font-family: 'Noto Serif JP';
+  src: url(./NotoSerifJP-Regular.otf) format('opentype');
+  font-display: swap;
+}
+
+html {
+  /* font-family: ; */
+  font-family: 'Noto Serif JP', 'Times New Roman', Times, serif
+}
 
 @layer utilities {
   .top-color {
@@ -31,6 +41,14 @@
 
   .transition-left {
     transform: translateX(50px);
+  }
+
+  .w-learn {
+    width: calc(100% - 76px) ;
+  }
+
+  .w-learn-half {
+    width: calc((100% - 76px)/2);
   }
 
 }
