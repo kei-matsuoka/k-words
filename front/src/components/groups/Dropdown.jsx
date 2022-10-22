@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../../AuthProvider';
 import { Logout } from '../../apis/logout';
 
-export const DropDown = ({handleClickDropDown}) => {
+export const DropDown = ({ handleClickDropDown }) => {
   const { setLoading, setIsSignedIn, setCurrentUser } = useContext(AuthContext);
 
   const handleLogout = async () => {

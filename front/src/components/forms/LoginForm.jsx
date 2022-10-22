@@ -99,10 +99,15 @@ export const LoginForm = ({ handleClickLogin, handleClickSignup }) => {
                         rounded-sm
                         duration-300"
         type="submit" value="ログイン" />
-      <div className='flex justify-center text-sm sp:text-xs mt-6'>
-        <Link to='/password'>パスワードを忘れた</Link>
-        <p className='mx-2'>or</p>
-        <button onClick={handleClickSignup}>アカウントを作成する</button>
+      <div className='flex flex-col items-center justify-center text-sm mt-6'>
+        <p>パスワードを忘れた場合 <Link to='/password' className='text-sky-600'>こちら</Link></p>
+        <p className='my-1'>or</p>
+        <p>
+          <span>アカウントをお持ちでない場合 </span>
+          <button className='text-sky-600' onClick={handleClickSignup}>
+            新規登録
+          </button>
+        </p>
       </div>
     </form>
   );

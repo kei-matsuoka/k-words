@@ -113,7 +113,16 @@ export const SignupForm = ({ handleClickSignup, handleClickLogin }) => {
                       duration-300
                       disabled:bg-gray-200"
         type="submit" value="新規登録" disabled={!isDirty || !isValid} />
-      <button className='text-sm sp:text-xs mt-6' onClick={handleClickLogin}>ログインする</button>
+        <div className='flex justify-center mt-6'>
+          <p className='text-sm'>
+            <span>既にアカウントをお持ちの場合 </span>
+            <button
+              className='text-sky-600'
+              onClick={handleClickLogin}>
+              ログイン
+            </button>
+          </p>
+        </div>
     </form>
   );
 }

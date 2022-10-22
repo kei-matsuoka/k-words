@@ -49,7 +49,6 @@ export const Header = ({ handleGetWords, handleOnInput, searchKeyword, resetWord
   const handleClickWord = () => {
     setState(state.wordModalIsOpen ? { wordModalIsOpen: false } : { wordModalIsOpen: true });
   };
-  console.log(state.searchInputIsOpen)
 
   return (
     <>
