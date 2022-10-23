@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useState } from 'react';
-import { Navigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion'
 import { initialState, wordsActionTypes, wordsReducer } from '../../reducers/words'
 import { getCardWords } from '../../apis/cards';

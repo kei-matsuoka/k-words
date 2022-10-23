@@ -60,21 +60,21 @@ export const Header = ({ handleGetWords, handleOnInput, searchKeyword, resetWord
           </div>
         </div>
         {location.pathname === '/' &&
-          <div className='sp:hidden ml-10 mr-4 w-full'>
-            <SearchInput handleOnInput={handleOnInput} searchKeyword={searchKeyword} />
-          </div>
-        }
-        {location.pathname === '/' &&
-          <div className='hidden sp:flex items-center ml-2'>
-            <SearchButton handleClickSearchInput={handleClickSearchInput} />
-          </div>
+          <>
+            <div className='sp:hidden ml-10 mr-4 w-full'>
+              <SearchInput handleOnInput={handleOnInput} searchKeyword={searchKeyword} />
+            </div>
+            <div className='hidden sp:flex items-center'>
+              <SearchButton handleClickSearchInput={handleClickSearchInput} />
+            </div>
+          </>
         }
         {isSignedIn ?
           <div className='flex'>
             {location.pathname === '/' &&
               <AddButton handleClickWord={handleClickWord} />
             }
-            <DropDownButton user={currentUser} handleSeahandleClickSearchInputDropDown={handleClickDropDown} />
+            <DropDownButton user={currentUser} handleClickDropDown={handleClickDropDown} />
           </div>
           :
           <div className='flex items-center'>
@@ -90,22 +90,34 @@ export const Header = ({ handleGetWords, handleOnInput, searchKeyword, resetWord
 
       {state.signupModalIsOpen &&
         <Modal onClick={handleClickSignup}>
-          <SignupForm handleClickSignup={handleClickSignup} handleClickLogin={handleClickLogin} />
+          <SignupForm
+            handleClickSignup={handleClickSignup}
+            handleClickLogin={handleClickLogin}
+          />
         </Modal>
       }
       {state.loginModalIsOpen &&
         <Modal onClick={handleClickLogin}>
-          <LoginForm handleClickLogin={handleClickLogin} handleClickSignup={handleClickSignup} />
+          <LoginForm
+            handleClickLogin={handleClickLogin}
+            handleClickSignup={handleClickSignup}
+          />
         </Modal>
       }
       {state.searchInputIsOpen &&
         <SearchInputModal handleClickSearchInput={handleClickSearchInput}>
-          <SearchInput handleOnInput={handleOnInput} searchKeyword={searchKeyword} />
+          <SearchInput
+            handleOnInput={handleOnInput}
+            searchKeyword={searchKeyword}
+          />
         </SearchInputModal>
       }
       {state.wordModalIsOpen &&
         <Modal onClick={handleClickWord}>
-          <WordForm handleGetWords={handleGetWords} handleClickWord={handleClickWord} />
+          <WordForm
+            handleGetWords={handleGetWords}
+            handleClickWord={handleClickWord}
+          />
         </Modal>
       }
       {state.sideBarIsOpen &&

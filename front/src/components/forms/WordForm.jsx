@@ -2,21 +2,22 @@ import { useContext } from 'react';
 import { AuthContext } from '../../AuthProvider';
 import { useForm } from "react-hook-form";
 import { createWord } from '../../apis/words';
+import { ValidationError } from '../parts/ValidationError';
 
 export const WordForm = ({ handleGetWords, handleClickWord }) => {
   const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
     mode: 'onBlur',
     criteriaMode: 'all',
   });
-  const { setLoading } = useContext(AuthContext);
+  const { setLoading, setFlashMessage } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
     try {
       const res = await createWord(data);
       if (res?.status === 200) {
-        alert("wordが追加されました");
         handleGetWords();
         handleClickWord();
+        setFlashMessage({message: "用語を追加しました"});
       } else {
         console.log('no current user');
       }
@@ -27,108 +28,112 @@ export const WordForm = ({ handleGetWords, handleClickWord }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center w-80 p-6 rounded-md bg-white">
-      <div className='text-center'>
-        <h2 className='text-2xl font-bold'>新しい用語を作成</h2>
-        <p className='mt-4'>用語を作成することにより、利用規約およびプライバシポリシーに同意するものとします。</p>
-      </div>
-      <div className='flex flex-col items-center mt-8'>
-        <input
-          className="text-center border"
-          type="text"
-          placeholder="用語名"
-          {...register("title", {
-            required: {
-              value: true,
-              message: '入力してください'
-            },
-            maxLength: {
-              value: 20,
-              message: '20文字以内で入力してください'
-            },
-          })}
-        />
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col w-[480px] sp:w-full px-8 py-10 rounded-sm bg-white">
+      <h2 className='text-lg font-bold mb-8'>用語を作成する</h2>
+      <input
+        className="border p-3 text-sm"
+        type="text"
+        placeholder="用語名"
+        {...register("title", {
+          required: {
+            value: true,
+            message: '入力してください'
+          },
+          maxLength: {
+            value: 20,
+            message: '20文字以内で入力してください'
+          },
+        })}
+      />
 
+      <div className='flex'>
         {errors.title?.types.required && (
-          <div className='text-red-500'>{errors.title.message}</div>
+          <ValidationError message={errors.title.message} />
         )}
-        {errors.title?.types.maxLength && (
-          <div className='text-red-500'>{errors.title.message}</div>
+        {errors.title?.types.pattern && (
+          <ValidationError message={errors.title.message} />
         )}
-
-        <input
-          className="text-center border"
-          type="text"
-          placeholder="かな"
-          {...register("kana", {
-            required: {
-              value: true,
-              message: '入力してください'
-            },
-            maxLength: {
-              value: 30,
-              message: '30文字以内で入力してください'
-            },
-          })}
-        />
-
-        {errors.kana?.types.required && (
-          <div className='text-red-500'>{errors.kana.message}</div>
-        )}
-        {errors.kana?.types.maxLength && (
-          <div className='text-red-500'>{errors.kana.message}</div>
-        )}
-
-        <input
-          className="text-center border"
-          type="textarea"
-          placeholder="意味"
-          {...register("meaning", {
-            required: {
-              value: true,
-              message: '入力してください'
-            },
-            maxLength: {
-              value: 50,
-              message: '50文字以内で入力してください'
-            },
-          })}
-        />
-
-        {errors.meaning?.types.required && (
-          <div className='text-red-500'>{errors.meaning.message}</div>
-        )}
-        {errors.meaning?.types.maxLength && (
-          <div className='text-red-500'>{errors.meaning.message}</div>
-        )}
-
-        <input
-          className="text-center border"
-          type="textarea"
-          placeholder="用例・補足"
-          {...register("text", {
-            maxLength: {
-              value: 50,
-              message: '50文字以内で入力してください'
-            },
-          })}
-        />
-
-        {errors.text?.types.maxLength && (
-          <div className='text-red-500'>{errors.text.message}</div>
-        )}
-
       </div>
+
+      <input
+        className="border p-3 text-sm mt-4"
+        type="text"
+        placeholder="かな"
+        {...register("kana", {
+          required: {
+            value: true,
+            message: '入力してください'
+          },
+          maxLength: {
+            value: 30,
+            message: '30文字以内で入力してください'
+          },
+        })}
+      />
+
+      <div className='flex'>
+        {errors.kana?.types.required && (
+          <ValidationError message={errors.kana.message} />
+        )}
+        {errors.kana?.types.pattern && (
+          <ValidationError message={errors.kana.message} />
+        )}
+      </div>
+
+      <input
+        className="border p-3 text-sm mt-4"
+        type="textarea"
+        placeholder="意味"
+        {...register("meaning", {
+          required: {
+            value: true,
+            message: '入力してください'
+          },
+          maxLength: {
+            value: 50,
+            message: '50文字以内で入力してください'
+          },
+        })}
+      />
+
+      <div className='flex'>
+        {errors.meaning?.types.required && (
+          <ValidationError message={errors.meaning.message} />
+        )}
+        {errors.meaning?.types.pattern && (
+          <ValidationError message={errors.meaning.message} />
+        )}
+      </div>
+
+      <input
+        className="border p-3 text-sm mt-4"
+        type="textarea"
+        placeholder="用例・補足"
+        {...register("text", {
+          maxLength: {
+            value: 50,
+            message: '50文字以内で入力してください'
+          },
+        })}
+      />
+
+      <div className='flex'>
+        {errors.text?.types.maxLength && (
+          <ValidationError message={errors.text.message} />
+        )}
+      </div>
+
       <div>
         <input className="button-color
-                          button-color:hover
+                          hover:button-color
                         text-white
-                          py-3 
-                          px-12
-                          rounded-md
-                          duration-300
-                          mt-4
-                          disabled:bg-gray-200"
+                          w-full
+                          py-3
+                          mt-6
+                          rounded-sm
+                          duration-300"
           type="submit" value="新規作成" disabled={!isDirty || !isValid} />
       </div>
     </form>

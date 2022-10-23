@@ -49,18 +49,6 @@ export const Router = () => {
     }
   };
 
-  const LoggedInRoute = ({ children }) => {
-    if (!loading) {
-      if (isSignedIn) {
-        return <Navigate to='/dashboard' />;
-      } else {
-        return children;
-      }
-    } else {
-      return <></>;
-    }
-  };
-
   return (
     <BrowserRouter>
       <Routes>

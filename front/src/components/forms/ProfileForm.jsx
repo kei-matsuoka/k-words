@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { patchUser } from '../../apis/users';
 
 export const ProfileForm = () => {
-  const { setLoading, setCurrentUser, currentUser } = useContext(AuthContext);
+  const { setLoading, setCurrentUser, currentUser, setFlashMessage } = useContext(AuthContext);
   const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
     mode: 'onBlur',
     criteriaMode: 'all',
@@ -19,6 +19,7 @@ export const ProfileForm = () => {
       const res = await patchUser(currentUser.id, data);
       if (res?.status === 200) {
         setCurrentUser(res?.user);
+        setFlashMessage({message: "プロフィールを修正しました"});
       } else {
         console.log('no current user');
       }
@@ -32,7 +33,7 @@ export const ProfileForm = () => {
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center w-80 p-6 rounded-md bg-white">
         <div className='text-center'>
-          <h2 className='text-2xl font-bold'>プロフィール</h2>
+          <h2 className='text-2xl font-bold'>プロフィール編集</h2>
         </div>
         <div className='flex flex-col items-center mt-8'>
           <input
@@ -94,7 +95,7 @@ export const ProfileForm = () => {
                               duration-300
                               mt-4
                               disabled:bg-gray-200"
-            type="submit" value="更新" disabled={!isDirty || !isValid} />
+            type="submit" value="修正" disabled={!isDirty || !isValid} />
         </div>
       </form>
     </div>
