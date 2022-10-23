@@ -52,13 +52,9 @@ export const Learning = () => {
 
   return (
     <>
-      {state.card ?
-        <div className=''>
-          <LearningBar id={id} title={state.card.title}/>
-        </div>
-        : null}
       {state.wordsList[0] ?
-      <div className='relative top-[41px] sp:left-0'>
+      <div className='h-full w-full'>
+        <LearningBar id={id} title={state.card.title}/>
         <AnimatePresence initial={false} custom={direction}>
           <motion.div
             key={state.wordsList[word_id].id}
@@ -67,7 +63,8 @@ export const Learning = () => {
             custom={direction}
             animate="center"
             exit="exit"
-            transition={{ type: "tween", duration: 0.4 }}>
+            transition={{ type: "tween", duration: 0.4 }}
+            className='top-[40px] sp:left-0 relative'>
             <LearningWord
               title={state.wordsList[word_id].title}
               handleOnClick={handleOnClick} />

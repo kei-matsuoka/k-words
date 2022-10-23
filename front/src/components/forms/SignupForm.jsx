@@ -29,7 +29,8 @@ export const SignupForm = ({ handleClickSignup, handleClickLogin }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col w-[480px] sp:w-full px-8 py-10 rounded-sm bg-white">
+      className="flex flex-col w-[480px] sp:w-full px-8 py-10 rounded-sm bg-white relative">
+      <p className='absolute top-3 right-4 text-sm' onClick={handleClickSignup}>×</p>
       <h2 className='text-lg font-bold mb-6'>アカウント作成</h2>
       <p className='text-xs mb-6'>アカウントを作成することにより、利用規約およびプライバシポリシーに同意するものとします。</p>
       <input
@@ -113,16 +114,16 @@ export const SignupForm = ({ handleClickSignup, handleClickLogin }) => {
                       duration-300
                       disabled:bg-gray-200"
         type="submit" value="新規登録" disabled={!isDirty || !isValid} />
-        <div className='flex justify-center mt-6'>
-          <p className='text-sm'>
-            <span>既にアカウントをお持ちの場合 </span>
-            <button
-              className='text-sky-600'
-              onClick={handleClickLogin}>
-              ログイン
-            </button>
-          </p>
-        </div>
+      <div className='flex justify-center mt-6'>
+        <p className='text-sm'>
+          <span>既にアカウントをお持ちの場合 </span>
+          <span
+            className='text-sky-600 hover:cursor-pointer'
+            onClick={() => { handleClickSignup(); handleClickLogin(); }}>
+            ログイン
+          </span>
+        </p>
+      </div>
     </form>
   );
 }

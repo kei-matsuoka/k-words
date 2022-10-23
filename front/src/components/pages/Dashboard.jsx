@@ -26,7 +26,7 @@ export const Dashboard = () => {
   }, [setCards]);
 
   return (
-    <div className="pt-[11px] h-full bg-gray-50">
+    <div className="pt-[12px]">
       {cards ? <Cards cards={cards} /> : null}
     </div>
   );

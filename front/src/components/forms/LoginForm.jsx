@@ -1,11 +1,10 @@
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { AuthContext } from '../../AuthProvider';
 import { Login } from '../../apis/login';
 import { ValidationError } from '../parts/ValidationError';
 
-export const LoginForm = ({ handleClickLogin, handleClickSignup }) => {
+export const LoginForm = ({ handleClickLogin, handleClickSignup, handleClickPassword }) => {
   const { register, handleSubmit, formState: { errors } } = useForm({
     mode: 'onBlur',
     criteriaMode: 'all',
@@ -18,7 +17,7 @@ export const LoginForm = ({ handleClickLogin, handleClickSignup }) => {
       if (res?.logged_in === true) {
         setIsSignedIn(true);
         setCurrentUser(res?.user);
-        setFlashMessage({message: "ログインしました"});
+        setFlashMessage({ message: "ログインしました" });
         handleClickLogin();
       } else {
         console.log('no current user');
@@ -32,8 +31,9 @@ export const LoginForm = ({ handleClickLogin, handleClickSignup }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col w-[480px] sp:w-full px-8 py-10 rounded-sm bg-white">
+      className="flex flex-col w-[480px] sp:w-full px-8 py-10 rounded-sm bg-white relative">
       <h2 className='text-lg font-bold mb-8'>ログイン</h2>
+      <p className='absolute top-3 right-4 text-sm hover:cursor-pointer' onClick={handleClickLogin}>×</p>
       <input
         className="border p-3 text-sm"
         type="email"
@@ -101,13 +101,18 @@ export const LoginForm = ({ handleClickLogin, handleClickSignup }) => {
                         duration-300"
         type="submit" value="ログイン" />
       <div className='flex flex-col items-center justify-center text-sm mt-6'>
-        <p>パスワードを忘れた場合 <Link to='/password' className='text-sky-600'>こちら</Link></p>
+        <p>
+          <span>パスワードを忘れた場合 </span>
+          <span className='text-sky-600 hover:cursor-pointer' onClick={() => { handleClickLogin(); handleClickPassword(); }}>
+            こちら
+          </span>
+        </p>
         <p className='my-1'>or</p>
         <p>
           <span>アカウントをお持ちでない場合 </span>
-          <button className='text-sky-600' onClick={handleClickSignup}>
+          <span className='text-sky-600 hover:cursor-pointer' onClick={() => { handleClickLogin(); handleClickSignup(); }}>
             新規登録
-          </button>
+          </span>
         </p>
       </div>
     </form>

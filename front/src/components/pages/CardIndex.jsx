@@ -19,7 +19,7 @@ export const CardIndex = () => {
           type: wordsActionTypes.FETCH_SUCCESS,
           payload: {
             card: data.card,
-            words: new_words
+            words: data.words
           }
         })
       })
@@ -27,18 +27,18 @@ export const CardIndex = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center top-color h-full">
-      { state.card ? 
-      <div className='mt-6 text-color'>
-        {state.card.title}
-      </div>
-      : null}
-      <div className='m-6'>
-        <Link to={`/cards/${id}/learning`}><LearningButton text="暗記する" /></Link>
-      </div>
-      { state.wordsList[0] ?
+    <>
+      { state.wordsList[0] &&
+      <>
+        <div className='mt-6 text-gray-800'>
+          {state.card.title}
+        </div>
+        <div className='m-6'>
+          <Link to={`/cards/${id}/learning`}><LearningButton text="暗記する" /></Link>
+        </div>
         <Words words={state.wordsList} />
-      : null }
-    </div>
+      </>
+      }
+    </>
   );
 }

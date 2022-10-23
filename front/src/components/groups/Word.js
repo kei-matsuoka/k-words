@@ -13,7 +13,7 @@ export const Word = ({ word, handleClickPatch, handleClickDestroy }) => {
 
   return (
     <article className='flex flex-col w-full px-8 py-6 mb-3 bg-white relative shadow rounded-sm'>
-      {location.pathname !== '/' &&
+      {location.pathname == '/mypage' &&
         <div className='flex absolute top-4 right-6'>
           <div className='mr-1'><PatchButton handleOnClickPatch={handleOnClickPatch} /></div>
           <div><DestroyButton handleOnClickDestroy={handleOnClickDestroy} /></div>

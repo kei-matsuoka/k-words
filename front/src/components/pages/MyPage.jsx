@@ -56,13 +56,13 @@ export const MyPage = () => {
   }, [setUserWords]);
 
   return (
-    <div className="bg-gray-50">
+    <>
       <h1 className="p-6">マイ用語</h1>
       {userWords ? <Words words={userWords}
         handleClickPatch={handleClickPatch}
         handleClickDestroy={handleClickDestroy} />
         : <p>マイ用語がありません。</p>}
       {patchModalIsOpen ? <Modal onClick={handleClickPatch}><PatchWordForm handleGetUserWords={handleGetUserWords} handleClickPatch={handleClickPatch} word={word} /></Modal> : null}
-    </div>
+    </>
   );
 }

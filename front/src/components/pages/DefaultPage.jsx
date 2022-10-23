@@ -8,7 +8,7 @@ export const DefaultPage = ({children}) => {
   return (
     <>
       <Header/>
-      <div className="mt-[61px] ml-[76px] sp:ml-0">{children}</div>
+      <div className="flex flex-col items-center mt-[57px] ml-[76px] sp:ml-0 bg-gray-50 p-4">{children}</div>
       {flashMessage.message && <FlashMessage />}
     </>
   );

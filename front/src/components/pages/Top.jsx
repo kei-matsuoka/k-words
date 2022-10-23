@@ -59,6 +59,7 @@ export const Top = () => {
 
   const handleOnInput = (e) => {
     setSearchKeyword(e.currentTarget.value);
+    setIndex(20);
     setFiltered(false);
   };
 
@@ -85,9 +86,9 @@ export const Top = () => {
       <JColumnBar handleOnClick={handleOnClick} resetWords={resetWords} index={index}/>
       <div className="pt-[109px] ml-[76px] sp:ml-0 jb:pt-[150px] h-full bg-gray-50">
         {!filtered && searchWords.length !== 0 && <Words words={searchWords} />}
-        {!filtered && searchWords.length === 0 && <p className="p-4">該当する用語がありません。</p>}
+        {!filtered && searchWords.length === 0 && <p className="pl-3.5 pb-3.5">該当する用語がありません。</p>}
         {filtered && filteredWords && <Words words={filteredWords} />}
-        {filtered && !filteredWords && <p className="pl-3.5 pb-3">該当する用語がありません。</p>}
+        {filtered && !filteredWords && <p className="pl-3.5 pb-3.5">該当する用語がありません。</p>}
       </div>
       <FlashMessage />
     </>

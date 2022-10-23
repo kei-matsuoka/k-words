@@ -17,6 +17,7 @@ import { DropDownButton } from '../buttons/DropDownButton';
 import { SideBarModal } from '../modals/SideBarModal';
 import { SearchButton } from '../buttons/SearchButton';
 import { SearchInputModal } from '../modals/SearchInputModal';
+import { TokenResetForm } from '../forms/TokenResetForm';
 
 export const Header = ({ handleGetWords, handleOnInput, searchKeyword, resetWords }) => {
   const initialState = {
@@ -25,6 +26,7 @@ export const Header = ({ handleGetWords, handleOnInput, searchKeyword, resetWord
     searchInputIsOpen: false,
     signupModalIsOpen: false,
     loginModalIsOpen: false,
+    passwordModalIsOpen: false,
     wordModalIsOpen: false,
   };
   const { isSignedIn, currentUser } = useContext(AuthContext);
@@ -45,6 +47,9 @@ export const Header = ({ handleGetWords, handleOnInput, searchKeyword, resetWord
   };
   const handleClickLogin = () => {
     setState(state.loginModalIsOpen ? { loginModalIsOpen: false } : { loginModalIsOpen: true });
+  };
+  const handleClickPassword = () => {
+    setState(state.passwordModalIsOpen ? { passwordModalIsOpen: false } : { passwordModalIsOpen: true });
   };
   const handleClickWord = () => {
     setState(state.wordModalIsOpen ? { wordModalIsOpen: false } : { wordModalIsOpen: true });
@@ -88,22 +93,27 @@ export const Header = ({ handleGetWords, handleOnInput, searchKeyword, resetWord
         }
       </nav>
 
-      {state.signupModalIsOpen &&
-        <Modal onClick={handleClickSignup}>
-          <SignupForm
-            handleClickSignup={handleClickSignup}
-            handleClickLogin={handleClickLogin}
-          />
-        </Modal>
-      }
-      {state.loginModalIsOpen &&
-        <Modal onClick={handleClickLogin}>
-          <LoginForm
-            handleClickLogin={handleClickLogin}
-            handleClickSignup={handleClickSignup}
-          />
-        </Modal>
-      }
+      <Modal onClick={handleClickSignup} isOpen={state.signupModalIsOpen}>
+        <SignupForm
+          handleClickSignup={handleClickSignup}
+          handleClickLogin={handleClickLogin}
+        />
+      </Modal>
+
+      <Modal onClick={handleClickLogin} isOpen={state.loginModalIsOpen}>
+        <LoginForm
+          handleClickLogin={handleClickLogin}
+          handleClickSignup={handleClickSignup}
+          handleClickPassword={handleClickPassword}
+        />
+      </Modal>
+
+      <Modal onClick={handleClickPassword} isOpen={state.passwordModalIsOpen}>
+        <TokenResetForm
+          handleClickPassword={handleClickPassword}
+        />
+      </Modal>
+
       {state.searchInputIsOpen &&
         <SearchInputModal handleClickSearchInput={handleClickSearchInput}>
           <SearchInput
@@ -112,14 +122,14 @@ export const Header = ({ handleGetWords, handleOnInput, searchKeyword, resetWord
           />
         </SearchInputModal>
       }
-      {state.wordModalIsOpen &&
-        <Modal onClick={handleClickWord}>
-          <WordForm
-            handleGetWords={handleGetWords}
-            handleClickWord={handleClickWord}
-          />
-        </Modal>
-      }
+
+      <Modal onClick={handleClickWord} isOpen={state.wordModalIsOpen}>
+        <WordForm
+          handleGetWords={handleGetWords}
+          handleClickWord={handleClickWord}
+        />
+      </Modal>
+
       {state.sideBarIsOpen &&
         <SideBarModal handleClickSideBar={handleClickSideBar}>
           <SideBar handleClickSideBar={handleClickSideBar} />

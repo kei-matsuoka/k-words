@@ -10,7 +10,7 @@ export const FlashMessage = () => {
     <AnimatePresence>
       {flashMessage.message &&
         <motion.div 
-          className={`fixed top-0 right-4 button-color text-white text-sm px-3.5 py-2.5 z-30`}
+          className={`fixed top-0 right-4 button-color text-white text-sm rounded-sm px-3.5 py-2.5 z-30`}
           initial={{x:100, opacity: 0}}
           animate={{x:0, opacity: 1}}
           exit={{x: 100, opacity: 0}}

@@ -1,10 +1,13 @@
 import { useContext } from 'react';
+import { useLocation } from "react-router-dom";
 import { AuthContext } from '../../AuthProvider';
 import { useForm } from "react-hook-form";
 import { createResetToken } from '../../apis/resetPassword';
+import { ValidationError } from '../parts/ValidationError';
 
-export const TokenResetForm = () => {
+export const TokenResetForm = ({handleClickPassword}) => {
   const { setLoading } = useContext(AuthContext);
+  const location = useLocation();
   const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
     mode: 'onBlur',
     criteriaMode: 'all',
@@ -14,6 +17,7 @@ export const TokenResetForm = () => {
     try {
         const res = await createResetToken(data.email);
         if (res?.status === 200) {
+          handleClickPassword();
           alert("パスワード再設定用のメールを送信しました。");
         } else {
           console.log('アカウントがありません。');
@@ -26,48 +30,45 @@ export const TokenResetForm = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center w-80 p-6 rounded-md bg-white">
-        <div className='text-center'>
-          <h2 className='text-2xl font-bold'>パスワード変更</h2>
-        </div>
-        <div className='flex flex-col items-center mt-8'>
-          <input hidden autoComplete='username' />
-          <input
-            className="text-center border mt-2"
-            type="email"
-            placeholder="メールアドレス"
-            autoComplete="email"
-            {...register("email", {
-              required: {
-                value: true,
-                message: '入力してください'
-              },
-              pattern: {
-                value: /[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+/i,
-                message: '有効なメールアドレスを入力してください'
-              }
-            })}
-          />
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-[480px] sb:w-full px-8 py-10 rounded-sm bg-white relative">
+        <h2 className='text-lg font-bold mb-8'>パスワード変更</h2>
+        {location.pathname === '/' &&
+        <p className='absolute top-3 right-4 text-sm hover:cursor-pointer' onClick={handleClickPassword}>×</p>}
+        <input hidden autoComplete='username' />
+        <input
+          className="border p-3 text-sm"
+          type="email"
+          placeholder="メールアドレス"
+          autoComplete="email"
+          {...register("email", {
+            required: {
+              value: true,
+              message: '入力してください'
+            },
+            pattern: {
+              value: /[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+/i,
+              message: '有効なメールアドレスを入力してください'
+            }
+          })}
+        />
 
-          {errors.email?.types.required && (
-            <div className='text-red-500'>{errors.email.message}</div>
-          )}
-          {errors.email?.types.pattern && (
-            <div className='text-red-500'>{errors.email.message}</div>
-          )}
-        </div>
-        <div>
-          <input className="button-color
-                              button-color:hover
-                               text-white
-                              py-3 
-                              px-12
-                              rounded-md
-                              duration-300
-                              mt-4
-                              disabled:bg-gray-200"
-            type="submit" value="送信" disabled={!isDirty || !isValid} />
-        </div>
+        {errors.email?.types.required && (
+          <ValidationError message={errors.email.message} />
+        )}
+        {errors.email?.types.pattern && (
+          <ValidationError message={errors.email.message} />
+        )}
+
+      <input className="button-color
+                        button-color:hover
+                      text-white
+                        w-full
+                        py-3
+                        mt-6
+                        rounded-sm
+                        duration-300
+                      disabled:bg-gray-200"
+        type="submit" value="送信" disabled={!isDirty || !isValid} />
       </form>
     </div>
   );

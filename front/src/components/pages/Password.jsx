@@ -5,8 +5,8 @@ import { TokenResetForm } from "../forms/TokenResetForm";
 export const Password = () => {
   const { id, email } = useParams();
   return (
-    <>
-      { email ? <PasswordResetForm id={id} email={email} /> : <TokenResetForm /> }
-    </>
+    <div className='flex justify-center'>
+      { id && email ? <PasswordResetForm id={id} email={email} /> : <TokenResetForm /> }
+    </div>
   );
 }

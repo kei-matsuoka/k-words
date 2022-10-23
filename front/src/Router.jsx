@@ -58,7 +58,6 @@ export const Router = () => {
         <Route path='/cards/:id/learning' element={<PrivateRoute><Learning /></PrivateRoute>} />
         <Route path='/mypage' element={<PrivateRoute><MyPage /></PrivateRoute>} />
         <Route path='/valid' element={<PrivateRoute><Valid/></PrivateRoute>} />
-        <Route path='password' element={<DefaultPage><Password /></DefaultPage>} />
         <Route path='password/:id/:email' element={<DefaultPage><Password /></DefaultPage>} />
         <Route path='/settings' element={<PrivateRoute><Settings /></PrivateRoute>} >
           <Route path='' element={<ProfileForm />} />

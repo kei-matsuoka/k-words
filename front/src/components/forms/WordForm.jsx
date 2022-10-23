@@ -30,8 +30,9 @@ export const WordForm = ({ handleGetWords, handleClickWord }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col w-[480px] sp:w-full px-8 py-10 rounded-sm bg-white">
+      className="flex flex-col w-[480px] sp:w-full px-8 py-10 rounded-sm bg-white relative">
       <h2 className='text-lg font-bold mb-8'>用語を作成する</h2>
+      <p className='absolute top-3 right-4 text-sm hover:cursor-pointer' onClick={handleClickWord}>×</p>
       <input
         className="border p-3 text-sm"
         type="text"
