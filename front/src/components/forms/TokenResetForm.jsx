@@ -28,7 +28,7 @@ export const TokenResetForm = () => {
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center w-80 p-6 rounded-md bg-white">
         <div className='text-center'>
-          <h2 className='text-2xl font-bold'>パスワード更新</h2>
+          <h2 className='text-2xl font-bold'>パスワード変更</h2>
         </div>
         <div className='flex flex-col items-center mt-8'>
           <input hidden autoComplete='username' />

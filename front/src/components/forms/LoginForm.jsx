@@ -10,7 +10,7 @@ export const LoginForm = ({ handleClickLogin, handleClickSignup }) => {
     mode: 'onBlur',
     criteriaMode: 'all',
   });
-  const { setLoading, setIsSignedIn, setCurrentUser } = useContext(AuthContext);
+  const { setLoading, setIsSignedIn, setCurrentUser, setFlashMessage } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
     try {
@@ -18,6 +18,7 @@ export const LoginForm = ({ handleClickLogin, handleClickSignup }) => {
       if (res?.logged_in === true) {
         setIsSignedIn(true);
         setCurrentUser(res?.user);
+        setFlashMessage({message: "ログインしました"});
         handleClickLogin();
       } else {
         console.log('no current user');

@@ -6,6 +6,7 @@ import { Words } from "../groups/Words";
 import { getWords } from '../../apis/words';
 import { escapeStringRegexp } from "../../helper";
 import { reg_list } from "../../constants";
+import { FlashMessage } from "../parts/FlashMessage";
 
 export const Top = () => {
   const [words, setWords] = useState([]);
@@ -13,6 +14,7 @@ export const Top = () => {
   const [filteredWords, setFilteredWords] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
   const { setLoading } = useContext(AuthContext);
+  const [index, setIndex] = useState(20);
 
   const handleGetWords = async () => {
     try {
@@ -28,9 +30,9 @@ export const Top = () => {
     setLoading(false);
   };
 
-  const filterWords = (num) => {
+  const filterWords = (i) => {
     const array = [];
-    const reg = new RegExp(reg_list[num]);
+    const reg = new RegExp(reg_list[i]);
     words.map((word) => {
       if (reg.test(word.kana)) {
         array.push(word);
@@ -48,10 +50,11 @@ export const Top = () => {
     return searchReg.test(word.kana) || searchReg.test(word.title);
   });
 
-  const handleOnClick = (num) => {
+  const handleOnClick = (i) => {
+    setIndex(i);
     setSearchKeyword("");
-    filterWords(num);
     setFiltered(true);
+    filterWords(i);
   };
 
   const handleOnInput = (e) => {
@@ -60,6 +63,7 @@ export const Top = () => {
   };
 
   const resetWords = () => {
+    setIndex(20);
     setFilteredWords();
     setSearchKeyword("");
     setFiltered(false);
@@ -78,13 +82,14 @@ export const Top = () => {
         searchKeyword={searchKeyword}
         resetWords={resetWords}
       />
-      <JColumnBar handleOnClick={handleOnClick} resetWords={resetWords} />
+      <JColumnBar handleOnClick={handleOnClick} resetWords={resetWords} index={index}/>
       <div className="pt-[109px] ml-[76px] sp:ml-0 jb:pt-[150px] h-full bg-gray-50">
         {!filtered && searchWords.length !== 0 && <Words words={searchWords} />}
         {!filtered && searchWords.length === 0 && <p className="p-4">該当する用語がありません。</p>}
-        {filtered && filteredWords ? <Words words={filteredWords} /> : null}
+        {filtered && filteredWords && <Words words={filteredWords} />}
         {filtered && !filteredWords && <p className="pl-3.5 pb-3">該当する用語がありません。</p>}
       </div>
+      <FlashMessage />
     </>
   );
 }

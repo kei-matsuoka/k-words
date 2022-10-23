@@ -14,14 +14,14 @@ export const PatchWordForm = ({ handleGetUserWords, handleClickPatch, word }) =>
       text: word.text
     }
   });
-  const { setLoading } = useContext(AuthContext);
+  const { setLoading, setFlashMessage } = useContext(AuthContext);
   const onSubmit = async (data) => {
     try {
       const res = await patchWord(data, word.id);
       if (res?.status === 200) {
         handleGetUserWords();
         handleClickPatch();
-        alert("編集しました。")
+        setFlashMessage({message: "用語を修正しました"});
       } else {
         console.log('no current user');
       }
@@ -32,10 +32,10 @@ export const PatchWordForm = ({ handleGetUserWords, handleClickPatch, word }) =>
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center w-80 p-6 rounded-md bg-white">
-      <div className='text-center'>
-        <h2 className='text-2xl font-bold'>用語を編集する</h2>
-      </div>
+    <form 
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col w-[480px] sp:w-full px-8 py-10 rounded-sm bg-white">
+      <h2 className='text-lg font-bold mb-8'>用語を編集する</h2>
       <div className='flex flex-col items-center mt-8'>
         <input
           className="text-center border"

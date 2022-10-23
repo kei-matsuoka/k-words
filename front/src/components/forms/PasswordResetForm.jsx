@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { patchPassword } from '../../apis/resetPassword';
 
 export const PasswordResetForm = ({id, email}) => {
-  const { setLoading, setIsSignedIn ,setCurrentUser } = useContext(AuthContext);
+  const { setLoading, setIsSignedIn ,setCurrentUser, setFlashMessage } = useContext(AuthContext);
   const { register, handleSubmit, formState: { errors, isDirty, isValid }, getValues } = useForm({
     mode: 'onBlur',
     criteriaMode: 'all',
@@ -16,6 +16,7 @@ export const PasswordResetForm = ({id, email}) => {
       if (res?.status === 200) {
         setIsSignedIn(true);
         setCurrentUser(res?.user);
+        setFlashMessage({message: "パスワードを更新しました"});
       } else {
         console.log('no current user');
       }
@@ -29,7 +30,7 @@ export const PasswordResetForm = ({id, email}) => {
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center w-80 p-6 rounded-md bg-white">
         <div className='text-center'>
-          <h2 className='text-2xl font-bold'>パスワード更新</h2>
+          <h2 className='text-2xl font-bold'>パスワード変更</h2>
         </div>
         <div className='flex flex-col items-center mt-8'>
           <input hidden autoComplete='username' />
