@@ -12,7 +12,7 @@ export const DropDown = ({ handleClickDropDown }) => {
       if (res?.logged_in === false) {
         setIsSignedIn(false);
         setCurrentUser(null);
-        setFlashMessage({message: "ログアウトしました"});
+        setFlashMessage({ message: "ログアウトしました" });
         handleClickDropDown();
       } else {
         // handleClickFlashMessage("ログアウトできません");
