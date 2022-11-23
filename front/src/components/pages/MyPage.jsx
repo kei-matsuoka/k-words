@@ -55,6 +55,8 @@ export const MyPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setUserWords]);
 
+  console.log(patchModalIsOpen);
+
   return (
     <>
       <h1 className="p-6">マイ用語</h1>
@@ -62,7 +64,7 @@ export const MyPage = () => {
         handleClickPatch={handleClickPatch}
         handleClickDestroy={handleClickDestroy} />
         : <p>マイ用語がありません。</p>}
-      {patchModalIsOpen ? <Modal onClick={handleClickPatch}><PatchWordForm handleGetUserWords={handleGetUserWords} handleClickPatch={handleClickPatch} word={word} /></Modal> : null}
+      {patchModalIsOpen ? <Modal onClick={handleClickPatch} isOpen={patchModalIsOpen}><PatchWordForm handleGetUserWords={handleGetUserWords} handleClickPatch={handleClickPatch} word={word} /></Modal> : null}
     </>
   );
 }

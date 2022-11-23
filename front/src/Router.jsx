@@ -13,6 +13,7 @@ import { ProfileForm } from "./components/forms/ProfileForm";
 import { TokenResetForm } from './components/forms/TokenResetForm';
 import { MyPage } from './components/pages/MyPage';
 import { DefaultPage } from './components/pages/DefaultPage';
+import { AccountDestroyForm } from './components/forms/AccountDestroyForm';
 
 export const Router = () => {
   const { loading, setLoading, isSignedIn, setIsSignedIn, setCurrentUser } = useContext(AuthContext);
@@ -63,6 +64,7 @@ export const Router = () => {
           <Route path='' element={<ProfileForm />} />
           <Route path='profile' element={<ProfileForm />} />
           <Route path='password' element={<TokenResetForm />} />
+          <Route path='account' element={<AccountDestroyForm />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -13,6 +13,15 @@ export const patchUser = (id, data) => {
   });
 };
 
+export const destroyUser = (id) => {
+  return axios.delete(userUrl(id), { withCredentials: true }
+  ).then(res => {
+    return res.data
+  }).catch(e => {
+    console.log(e);
+  });
+};
+
 export const getUserWords = (id) => {
   return axios.get(userUrl(id), { withCredentials: true }
   ).then(res => {
