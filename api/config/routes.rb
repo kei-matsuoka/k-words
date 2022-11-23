@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   # ユーザー
   get 'users/:id', to: 'users#show'
   patch '/users/:id', to: 'users#update'
+  delete '/users/:id', to: 'users#destroy'
 
   # ログイン
   post '/login', to: 'sessions#create'
