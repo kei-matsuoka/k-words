@@ -1,4 +1,5 @@
-const LOCALHOST = 'http://localhost:3000'
+const LOCALHOST = 'https://api.k-words.net'
+// const LOCALHOST = 'http://localhost:3000'
 
 export const signupUrl = `${LOCALHOST}/signup`
 export const userUrl = (id) => `${LOCALHOST}/users/${id}`
