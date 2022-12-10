@@ -28,4 +28,7 @@ Rails.application.routes.draw do
   # パスワードの再設定
   resources :password_resets, only: [:create, :edit]
   patch '/password_resets', to: 'password_resets#update'
+
+  #awsのヘルスチェック
+  get '/health_check', to: 'words#index'
 end
