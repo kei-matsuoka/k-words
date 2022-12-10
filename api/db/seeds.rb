@@ -12,10 +12,10 @@ User.create!(name: "Test",
              activated: true,
              activated_at: Time.zone.now)
 
-# カードを3つ作成する
-# card = Card.create!(title: "基礎", text: "よく使われる霞が関用語を覚えよう！")
-# Card.create!(title: "誰が使うねん", text: "めったに使われない霞が関用語を覚えよう!")
-# Card.create!(title: "農林水産省", text: "農林水産省でよく使われる霞が関用語を覚えよう！")
+カードを3つ作成する
+card = Card.create!(title: "基礎", text: "よく使われる霞が関用語を覚えよう！")
+Card.create!(title: "誰が使うねん", text: "めったに使われない霞が関用語を覚えよう!")
+Card.create!(title: "農林水産省", text: "農林水産省でよく使われる霞が関用語を覚えよう！")
 
 # 1人目のユーザーに関連するワードを4つ作成する
 user.words.create!(title: "レク", kana: "れく", meaning: "幹部や議員に担当施策を説明すること。", text: "初めてレクをするときは声が震える。")

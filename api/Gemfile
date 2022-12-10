@@ -16,7 +16,7 @@ gem "puma", "~> 5.0"
 
 # Use Redis adapter to run Action Cable in production
 gem "redis"
-gem 'hiredis'
+gem 'redis-actionpack'
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
@@ -41,8 +41,6 @@ group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem 'rspec-rails'
   gem 'factory_bot_rails'
-  gem 'pry-rails'
-  gem 'dotenv-rails'
 end
 
 group :development do
