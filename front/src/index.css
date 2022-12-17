@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @font-face {
   font-family: 'Noto Serif JP';
   src: url(./NotoSerifJP-Regular.otf) format('opentype');
@@ -44,7 +45,7 @@ html {
   }
 
   .w-learn {
-    width: calc(100% - 76px) ;
+    width: calc(100% - 76px);
   }
 
   .w-learn-half {

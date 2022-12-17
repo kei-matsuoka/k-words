@@ -1,15 +1,15 @@
-const LOCALHOST = 'https://api.k-words.net'
-// const LOCALHOST = 'http://localhost:3000'
+const HOST = process.env.REACT_APP_URL
 
-export const signupUrl = `${LOCALHOST}/signup`
-export const userUrl = (id) => `${LOCALHOST}/users/${id}`
-export const passwordUrl = `${LOCALHOST}/password_resets`
+export const signupUrl = `${HOST}/signup`
+export const userUrl = (id) => `${HOST}/users/${id}`
+export const passwordUrl = `${HOST}/password_resets`
+export const activationUrl = `${HOST}/account_activations`
 
-export const loginUrl = `${LOCALHOST}/login`
-export const logoutUrl = `${LOCALHOST}/logout`
+export const loginUrl = `${HOST}/login`
+export const logoutUrl = `${HOST}/logout`
 
-export const wordsUrl = `${LOCALHOST}/words`
-export const userWordUrl = (id) => `${LOCALHOST}/words/${id}`
+export const wordsUrl = `${HOST}/words`
+export const userWordUrl = (id) => `${HOST}/words/${id}`
 
-export const cardsUrl = `${LOCALHOST}/cards`
-export const cardUrl = (id) => `${LOCALHOST}/cards/${id}`
+export const cardsUrl = `${HOST}/cards`
+export const cardUrl = (id) => `${HOST}/cards/${id}`

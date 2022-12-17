@@ -15,13 +15,13 @@ class PasswordResetsController < ApplicationController
   end
 
   def edit
-    redirect_to "http://localhost:3001/password/#{params[:id]}/#{@user.email}"
+    redirect_to "#{Rails.application.credentials[:url]}/password/#{params[:id]}/#{@user.email}"
   end
 
   def update
     if params[:password].empty?
       render json: { status:401, errors: 'パスワードが空です'  }
-    elsif @user.update(user_params)
+    elsif @user.update!(user_params)
       login(@user)
       render json: { status: 200, user: @user }
     else
@@ -32,7 +32,7 @@ class PasswordResetsController < ApplicationController
   private
 
     def user_params
-      params.permit(:password, :password_confirmation)
+      params.require(:password_reset).permit(:password, :password_confirmation)
     end
 
     def get_user
@@ -43,14 +43,14 @@ class PasswordResetsController < ApplicationController
     def valid_user
       unless (@user && @user.activated? &&
               @user.authenticated?(:reset, params[:id]))
-        redirect_to "http://localhost:3001/"
+        render json: { status:401, errors: 'パスワードの更新に失敗しました。'  }
       end
     end
 
     # トークンが期限切れかどうか確認する
     def check_expiration
       if @user.password_reset_expired?
-        redirect_to "http://localhost:3001/password/"
+        render json: { status:401, errors: 'トークンの期限が切れています。'  }
       end
     end
 end
