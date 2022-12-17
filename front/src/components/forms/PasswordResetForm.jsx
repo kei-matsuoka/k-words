@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form";
 import { patchPassword } from '../../apis/resetPassword';
 import { ValidationError } from '../parts/ValidationError';
 
-export const PasswordResetForm = ({id, email}) => {
-  const { setLoading, setIsSignedIn ,setCurrentUser, setFlashMessage } = useContext(AuthContext);
+export const PasswordResetForm = ({ id, email }) => {
+  const { setLoading, setIsSignedIn, setCurrentUser, setFlashMessage } = useContext(AuthContext);
   const { register, handleSubmit, formState: { errors, isDirty, isValid }, getValues } = useForm({
     mode: 'onBlur',
     criteriaMode: 'all',
@@ -17,7 +17,7 @@ export const PasswordResetForm = ({id, email}) => {
       if (res?.status === 200) {
         setIsSignedIn(true);
         setCurrentUser(res?.user);
-        setFlashMessage({message: "パスワードを更新しました"});
+        setFlashMessage({ message: "パスワードを更新しました" });
       } else {
         console.log('no current user');
       }
@@ -70,7 +70,7 @@ export const PasswordResetForm = ({id, email}) => {
               value: 6,
               message: '6文字以上で入力してください'
             },
-            validate: { validate: value => value === getValues("password") || '入力したパスワードと一致していません'}
+            validate: { validate: value => value === getValues("password") || '入力したパスワードと一致していません' }
           })}
         />
 

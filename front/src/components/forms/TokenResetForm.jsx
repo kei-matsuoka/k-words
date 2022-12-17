@@ -17,7 +17,6 @@ export const TokenResetForm = ({handleClickPassword}) => {
     try {
         const res = await createResetToken(data.email);
         if (res?.status === 200) {
-          handleClickPassword();
           alert("パスワード再設定用のメールを送信しました。");
         } else {
           console.log('アカウントがありません。');
