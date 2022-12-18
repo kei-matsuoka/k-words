@@ -13,6 +13,6 @@ export const Signup = (name, email, password) => {
   ).then(res => {
     return res.data
   }).catch(e => {
-    console.log(e);
+    throw e;
   });
 };

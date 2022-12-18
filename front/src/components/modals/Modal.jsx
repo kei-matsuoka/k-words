@@ -4,7 +4,7 @@ export const Modal = ({children, onClick, isOpen}) => {
     <AnimatePresence>
       {isOpen &&
         <motion.div 
-          className="flex flex-col items-center justify-center fixed top-0 z-50 left-0 w-full h-full bg-black bg-opacity-50"
+          className="flex flex-col items-center justify-center fixed top-0 z-40 left-0 w-full h-full bg-black bg-opacity-50"
           initial={{opacity: 0}}
           animate={{opacity: 1}}
           exit={{opacity: 0}}

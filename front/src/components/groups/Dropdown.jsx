@@ -4,7 +4,7 @@ import { AuthContext } from '../../AuthProvider';
 import { Logout } from '../../apis/logout';
 
 export const DropDown = ({ handleClickDropDown }) => {
-  const { setLoading, setIsSignedIn, setCurrentUser, setFlashMessage } = useContext(AuthContext);
+  const { setLoading, setIsSignedIn, setCurrentUser, flashMessage, setFlashMessage } = useContext(AuthContext);
 
   const handleLogout = async () => {
     try {
@@ -12,13 +12,14 @@ export const DropDown = ({ handleClickDropDown }) => {
       if (res?.logged_in === false) {
         setIsSignedIn(false);
         setCurrentUser(null);
-        setFlashMessage({ message: "ログアウトしました" });
+        setFlashMessage({ color: "rgb(48, 200, 214)", message: "ログアウトしました" });
         handleClickDropDown();
       } else {
-        // handleClickFlashMessage("ログアウトできません");
+        setFlashMessage({ color: "red", message: "ログアウトできません。" });
       }
     } catch (e) {
-      console.log(e);
+      console.log(e.message);
+      setFlashMessage({ color: "red", message: e.message });
     }
     setLoading(false);
   };

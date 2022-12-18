@@ -16,7 +16,7 @@ import { DefaultPage } from './components/pages/DefaultPage';
 import { AccountDestroyForm } from './components/forms/AccountDestroyForm';
 
 export const Router = () => {
-  const { loading, setLoading, isSignedIn, setIsSignedIn, setCurrentUser } = useContext(AuthContext);
+  const { loading, setLoading, isSignedIn, setIsSignedIn, setCurrentUser, setFlashMessage } = useContext(AuthContext);
 
   const handleGetCurrentUser = async () => {
     try {
@@ -29,6 +29,7 @@ export const Router = () => {
       }
     } catch (e) {
       console.log(e);
+      setFlashMessage({ color: "red", message: e.message });
     }
     setLoading(false);
   };

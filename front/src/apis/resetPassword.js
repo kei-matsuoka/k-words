@@ -6,7 +6,7 @@ export const createResetToken = (email) => {
   ).then(res => {
     return res.data
   }).catch(e => { 
-    console.log(e);
+    throw e;
   });
 };
 
@@ -20,6 +20,6 @@ export const patchPassword = (id, email, password) => {
   ).then(res => {
     return res.data
   }).catch(e => { 
-    console.log(e);
+    throw e;
   });
 };

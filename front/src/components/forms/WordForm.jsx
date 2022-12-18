@@ -17,12 +17,13 @@ export const WordForm = ({ handleGetWords, handleClickWord }) => {
       if (res?.status === 200) {
         handleGetWords();
         handleClickWord();
-        setFlashMessage({message: "用語を追加しました"});
+        setFlashMessage({ color: "rgb(48, 200, 214)", message: "用語を追加しました" });
       } else {
-        console.log('no current user');
+        setFlashMessage({ color: "red", message: "用語の追加に失敗しました" });
       }
     } catch (e) {
       console.log(e);
+      setFlashMessage({ color: "red", message: e.message });
     }
     setLoading(false);
   };

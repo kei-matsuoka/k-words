@@ -14,10 +14,11 @@ export const Valid = () => {
         setCurrentUser(res?.user);
         setFlashMessage({ message: "アカウントを認証しました" });
       } else {
-        console.log('no current user');
+        setFlashMessage({ color: "red", message: "アカウントの認証に失敗しました" });
       }
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      console.log(e);
+      setFlashMessage({ color: "red", message: e.message });
     }
   };
 

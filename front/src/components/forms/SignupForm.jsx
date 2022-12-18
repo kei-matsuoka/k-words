@@ -9,19 +9,22 @@ export const SignupForm = ({ handleClickSignup, handleClickLogin }) => {
     mode: 'onBlur',
     criteriaMode: 'all',
   });
-  const { setLoading } = useContext(AuthContext);
+  const { setLoading, flashMessage, setFlashMessage } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
     try {
       const res = await Signup(data.name, data.email, data.password);
       if (res?.logged_in === "wait") {
         handleClickSignup();
-        alert("確認メールを送信しました。");
+        setFlashMessage({ color: "rgb(48, 200, 214)", message: "確認メールを送信しました" });
+      } else if (res?.logged_in === "email") {
+        setFlashMessage({ color: "red", message: "このメールアドレスは既に使われています" });
       } else {
-        console.log('no current user');
+        setFlashMessage({ color: "red", message: "アカウント作成に失敗しました" });
       }
     } catch (e) {
       console.log(e);
+      setFlashMessage({ color: "red", message: e.message });
     }
     setLoading(false);
   };

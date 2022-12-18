@@ -21,18 +21,19 @@ export const PatchWordForm = ({ handleGetUserWords, handleClickPatch, word }) =>
       if (res?.status === 200) {
         handleGetUserWords();
         handleClickPatch();
-        setFlashMessage({message: "用語を修正しました"});
+        setFlashMessage({ message: "用語を修正しました" });
       } else {
-        console.log('no current user');
+        setFlashMessage({ color: "red", message: "用語の修正に失敗しました" });
       }
     } catch (e) {
       console.log(e);
+      setFlashMessage({ color: "red", message: e.message });
     }
     setLoading(false);
   };
 
   return (
-    <form 
+    <form
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col w-[480px] sp:w-full px-8 py-10 rounded-sm bg-white">
       <h2 className='text-lg font-bold mb-8'>用語を編集する</h2>

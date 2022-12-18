@@ -10,7 +10,7 @@ export const MyPage = () => {
   const [userWords, setUserWords] = useState([]);
   const [patchModalIsOpen, setPatchModalIsOpen] = useState(false);
   const [word, setWord] = useState();
-  const { setLoading, currentUser } = useContext(AuthContext);
+  const { setLoading, currentUser, setFlashMessage } = useContext(AuthContext);
 
   const handleGetUserWords = async () => {
     try {
@@ -20,8 +20,8 @@ export const MyPage = () => {
       } else {
         console.log('no words');
       }
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      console.log(e);
     }
     setLoading(false);
   };
@@ -31,12 +31,13 @@ export const MyPage = () => {
       const res = await destroyWord(id);
       if (res?.status === 200) {
         handleGetUserWords();
-        alert("用語が削除されました")
+        setFlashMessage({ color: "rgb(48, 200, 214)", message: "用語を削除しました" });
       } else {
-        console.log('no words');
+        setFlashMessage({ color: "red", message: "用語の削除に失敗しました" });
       }
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      console.log(e);
+      setFlashMessage({ color: "red", message: e.message });
     }
     setLoading(false);
   };
