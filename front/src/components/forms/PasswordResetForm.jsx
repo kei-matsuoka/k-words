@@ -17,12 +17,13 @@ export const PasswordResetForm = ({ id, email }) => {
       if (res?.status === 200) {
         setIsSignedIn(true);
         setCurrentUser(res?.user);
-        setFlashMessage({ message: "パスワードを更新しました" });
+        setFlashMessage({ color: "rgb(48, 200, 214)", message: "パスワードを更新しました" });
       } else {
-        console.log('no current user');
+        setFlashMessage({ color: "red", message: "パスワードの更新に失敗しました" });
       }
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      console.log(e);
+      setFlashMessage({ color: "red", message: e.message });
     }
     setLoading(false);
   };

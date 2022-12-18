@@ -9,7 +9,7 @@ export const patchUser = (id, data) => {
   ).then(res => {
     return res.data
   }).catch(e => {
-    console.log(e);
+    throw e;
   });
 };
 
@@ -18,7 +18,7 @@ export const destroyUser = (id) => {
   ).then(res => {
     return res.data
   }).catch(e => {
-    console.log(e);
+    throw e;
   });
 };
 
@@ -27,6 +27,6 @@ export const getUserWords = (id) => {
   ).then(res => {
     return res.data
   }).catch(e => {
-    console.log(e);
+    throw e;
   });
 };

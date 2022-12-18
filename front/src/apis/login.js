@@ -9,8 +9,8 @@ export const Login = (email, password, remember_me) => {
   }, { withCredentials: true }
   ).then(res => {
     return res.data
-  }).catch((e) => {
-    console.log(e);
+  }).catch(e => {
+    throw e;
   });
 };
 
@@ -19,6 +19,6 @@ export const getCurrentUser = () => {
   ).then(res => {
     return res.data
   }).catch(e => {
-    console.log(e);
+    throw e;
   });
 };

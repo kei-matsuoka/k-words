@@ -8,12 +8,17 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = User.new(user_params)
-    if user.save!
-      user.send_activation_email
-      render json: { logged_in: "wait" }
-    else 
-      render json: { logged_in: false }
+    user = User.find_by(email: user_params[:email].downcase)
+    if user
+      render json: { logged_in: "email" } if user
+    else
+      user = User.new(user_params)
+      if user.save!
+        user.send_activation_email
+        render json: { logged_in: "wait" }
+      else 
+        render json: { logged_in: false }
+      end
     end
   end
 

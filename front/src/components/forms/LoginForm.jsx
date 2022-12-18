@@ -9,7 +9,7 @@ export const LoginForm = ({ handleClickLogin, handleClickSignup, handleClickPass
     mode: 'onBlur',
     criteriaMode: 'all',
   });
-  const { setLoading, setIsSignedIn, setCurrentUser, setFlashMessage } = useContext(AuthContext);
+  const { setLoading, setIsSignedIn, setCurrentUser, flashMessage, setFlashMessage } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
     try {
@@ -17,13 +17,18 @@ export const LoginForm = ({ handleClickLogin, handleClickSignup, handleClickPass
       if (res?.logged_in === true) {
         setIsSignedIn(true);
         setCurrentUser(res?.user);
-        setFlashMessage({ message: "ログインしました" });
+        setFlashMessage({ color: "rgb(48, 200, 214)", message: "ログインしました" });
         handleClickLogin();
+      } else if (res?.logged_in === false) {
+        setFlashMessage({ color: "red", message: "メールを確認してアカウントを有効にしてください" });
+      } else if (res?.status === 401) {
+        setFlashMessage({ color: "red", message: "正しいメールアドレスまたはパスワードを入力してください" });
       } else {
-        console.log('no current user');
+        setFlashMessage({ color: "red", message: "ログインに失敗しました" });
       }
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      console.log(e);
+      setFlashMessage({ color: "red", message: e.message });
     }
     setLoading(false);
   };

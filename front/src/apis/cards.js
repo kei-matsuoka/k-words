@@ -5,7 +5,9 @@ export const getCards = () => {
   return axios.get(cardsUrl, { withCredentials: true }
   ).then(res => {
     return res.data
-  }).catch(e => console.log(e))
+  }).catch(e => {
+    throw e;
+  })
 };
 
 export const getCardWords = (id) => {
@@ -13,6 +15,6 @@ export const getCardWords = (id) => {
   ).then(res => {
     return res.data
   }).catch(e => {
-    console.log(e);
+    throw e;
   });
 };

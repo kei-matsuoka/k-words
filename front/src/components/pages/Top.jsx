@@ -13,7 +13,7 @@ export const Top = () => {
   const [filtered, setFiltered] = useState(false);
   const [filteredWords, setFilteredWords] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
-  const { setLoading } = useContext(AuthContext);
+  const { setLoading, setFlashMessage } = useContext(AuthContext);
   const [index, setIndex] = useState(20);
 
   const handleGetWords = async () => {
@@ -22,10 +22,11 @@ export const Top = () => {
       if (res?.status === 200) {
         setWords(res?.data);
       } else {
-        console.log('no words');
+        setFlashMessage({ color: "red", message: "用語がありません" });
       }
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      console.log(e);
+      setFlashMessage({ color: "red", message: e.message });
     }
     setLoading(false);
   };
@@ -83,7 +84,7 @@ export const Top = () => {
         searchKeyword={searchKeyword}
         resetWords={resetWords}
       />
-      <JColumnBar handleOnClick={handleOnClick} resetWords={resetWords} index={index}/>
+      <JColumnBar handleOnClick={handleOnClick} resetWords={resetWords} index={index} />
       <div className="pt-[109px] ml-[76px] sp:ml-0 jb:pt-[150px] h-full bg-gray-50">
         {!filtered && searchWords.length !== 0 && <Words words={searchWords} />}
         {!filtered && searchWords.length === 0 && <p className="pl-3.5 pb-3.5">該当する用語がありません。</p>}

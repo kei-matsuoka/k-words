@@ -17,12 +17,13 @@ export const AccountDestroyForm = () => {
       if (res?.status === 200) {
         setCurrentUser(null);
         setIsSignedIn(false);
-        setFlashMessage({message: "アカウントを削除しました"});
+        setFlashMessage({color: "rgb(48, 200, 214)", message: "アカウントを削除しました"});
       } else {
-        console.log('no current user');
+        setFlashMessage({ color: "red", message: "アカウントの削除に失敗しました" });
       }
     } catch (e) {
       console.log(e);
+      setFlashMessage({ color: "red", message: e.message });
     }
     setLoading(false);
   };

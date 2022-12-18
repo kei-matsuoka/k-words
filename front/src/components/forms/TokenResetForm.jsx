@@ -5,8 +5,8 @@ import { useForm } from "react-hook-form";
 import { createResetToken } from '../../apis/resetPassword';
 import { ValidationError } from '../parts/ValidationError';
 
-export const TokenResetForm = ({handleClickPassword}) => {
-  const { setLoading } = useContext(AuthContext);
+export const TokenResetForm = ({ handleClickPassword }) => {
+  const { setLoading, flashMessage, setFlashMessage } = useContext(AuthContext);
   const location = useLocation();
   const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
     mode: 'onBlur',
@@ -15,14 +15,15 @@ export const TokenResetForm = ({handleClickPassword}) => {
 
   const onSubmit = async (data) => {
     try {
-        const res = await createResetToken(data.email);
-        if (res?.status === 200) {
-          alert("パスワード再設定用のメールを送信しました。");
-        } else {
-          console.log('アカウントがありません。');
-        }
+      const res = await createResetToken(data.email);
+      if (res?.status === 200) {
+        setFlashMessage({ message: "パスワード再設定用のメールを送信しました" });
+      } else {
+        setFlashMessage({ color: "red", message: "パスワード再設定用のメールの送信に失敗しました" });
+      }
     } catch (e) {
       console.log(e);
+      setFlashMessage({ color: "red", message: e.message });
     }
     setLoading(false);
   };
@@ -32,7 +33,7 @@ export const TokenResetForm = ({handleClickPassword}) => {
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-[480px] sb:w-full px-8 py-10 rounded-sm bg-white relative">
         <h2 className='text-lg font-bold mb-8'>パスワード変更</h2>
         {location.pathname === '/' &&
-        <p className='absolute top-3 right-4 text-sm hover:cursor-pointer' onClick={handleClickPassword}>×</p>}
+          <p className='absolute top-3 right-4 text-sm hover:cursor-pointer' onClick={handleClickPassword}>×</p>}
         <input hidden autoComplete='username' />
         <input
           className="border p-3 text-sm"
@@ -58,7 +59,7 @@ export const TokenResetForm = ({handleClickPassword}) => {
           <ValidationError message={errors.email.message} />
         )}
 
-      <input className="button-color
+        <input className="button-color
                         button-color:hover
                       text-white
                         w-full
@@ -67,7 +68,7 @@ export const TokenResetForm = ({handleClickPassword}) => {
                         rounded-sm
                         duration-300
                       disabled:bg-gray-200"
-        type="submit" value="送信" disabled={!isDirty || !isValid} />
+          type="submit" value="送信" disabled={!isDirty || !isValid} />
       </form>
     </div>
   );
