@@ -6,7 +6,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState();
-  const [flashMessage, setFlashMessage] = useState({color: "rgb(48, 200, 214)", message: ""});
+  const [logoutMessage, setLogoutMessage] = useState({color: "rgb(48, 200, 214)", message: ""});
 
   return (
     <AuthContext.Provider
@@ -17,8 +17,8 @@ export const AuthProvider = ({ children }) => {
         setIsSignedIn,
         currentUser,
         setCurrentUser,
-        flashMessage,
-        setFlashMessage,
+        logoutMessage,
+        setLogoutMessage,
       }}
     >
       {children}

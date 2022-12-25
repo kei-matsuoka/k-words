@@ -3,7 +3,7 @@ import { AuthContext } from '../../AuthProvider';
 import { useForm } from "react-hook-form";
 import { patchWord } from '../../apis/words';
 
-export const PatchWordForm = ({ handleGetUserWords, handleClickPatch, word }) => {
+export const PatchWordForm = ({ handleGetUserWords, handleClickPatch, handleFlashMessage, word }) => {
   const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
     mode: 'onBlur',
     criteriaMode: 'all',
@@ -14,20 +14,20 @@ export const PatchWordForm = ({ handleGetUserWords, handleClickPatch, word }) =>
       text: word.text
     }
   });
-  const { setLoading, setFlashMessage } = useContext(AuthContext);
+  const { setLoading } = useContext(AuthContext);
   const onSubmit = async (data) => {
     try {
       const res = await patchWord(data, word.id);
       if (res?.status === 200) {
         handleGetUserWords();
         handleClickPatch();
-        setFlashMessage({ message: "用語を修正しました" });
+        handleFlashMessage("rgb(48, 200, 214)", res.message);
       } else {
-        setFlashMessage({ color: "red", message: "用語の修正に失敗しました" });
+        handleFlashMessage("red", res.message);
       }
     } catch (e) {
-      console.log(e);
-      setFlashMessage({ color: "red", message: e.message });
+      console.error(e);
+      handleFlashMessage("red", e.message);
     }
     setLoading(false);
   };

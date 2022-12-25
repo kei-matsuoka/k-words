@@ -8,9 +8,9 @@ class PasswordResetsController < ApplicationController
     if @user
       @user.create_reset_digest
       @user.send_password_reset_email
-      render json: { status: 200 }
+      render json: { status: 201, message: 'パスワード再設定用のメールを送信しました' }
     else
-      render json: { status:401, errors: 'アカウントがありません'  }
+      render json: { status:401, message: 'アカウントがありません'  }
     end
   end
 
@@ -20,12 +20,12 @@ class PasswordResetsController < ApplicationController
 
   def update
     if params[:password].empty?
-      render json: { status:401, errors: 'パスワードが空です'  }
+      render json: { status: 400, message: 'パスワードが空です'  }
     elsif @user.update!(user_params)
       login(@user)
-      render json: { status: 200, user: @user }
+      render json: { status: 200, user: @user, message: 'パスワードを更新しました' }
     else
-      render json: { status:401, errors: 'パスワードの更新に失敗しました。'  }
+      render json: { status: 500, message: 'パスワードを更新できません'  }
     end
   end
 
@@ -43,14 +43,14 @@ class PasswordResetsController < ApplicationController
     def valid_user
       unless (@user && @user.activated? &&
               @user.authenticated?(:reset, params[:id]))
-        render json: { status:401, errors: 'パスワードの更新に失敗しました。'  }
+        render json: { status: 401, message: '正しいアカウントでログインしてください' }
       end
     end
 
     # トークンが期限切れかどうか確認する
     def check_expiration
       if @user.password_reset_expired?
-        render json: { status:401, errors: 'トークンの期限が切れています。'  }
+        render json: { status: 400, message: '更新期限が切れています'  }
       end
     end
 end

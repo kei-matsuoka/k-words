@@ -5,33 +5,38 @@ class WordsController < ApplicationController
   def index
     @words = Word.all
     if @words
-      render :json => @words.to_json(:include => { :user => { :only => :name} })
+      render json: { status: 200,
+                     words: @words.as_json(:include => { :user => { :only => :name } })
+                   }
     else
-      render json: { status: 401, errors: '認証に失敗しました。' }
+      render json: { status: 401, message: '用語がありません' }
     end
   end
 
   def create
     @word = current_user.words.build(word_params)
     if @word.save!
-      render json: { status: 200 }
+      render json: { status: 201, message: '用語を追加しました' }
     else
-      render json: { status: 401, errors: '認証に失敗しました。' }
+      render json: { status: 500, message: '用語を追加できません' }
     end
   end
 
   def update
     @word = Word.find(params[:id])
     if @word.update!(word_params)
-      render json: { status: 200 }
+      render json: { status: 200, message: '用語を修正しました' }
     else
-      render json: { status: 401, errors: '認証に失敗しました。' }
+      render json: { status: 500, message: '用語を修正できません' }
     end
   end
 
   def destroy
-    @word.destroy
-    render json: { status: 200 }
+    if @word.destroy
+      render json: { status: 200, message: '用語を削除しました' }
+    else
+      render json: { status: 500, message: '用語を削除できません' }
+    end
   end
 
   private
@@ -43,6 +48,6 @@ class WordsController < ApplicationController
     # 正しいユーザーかどうかを確認
     def correct_user
       @word = current_user.words.find_by(id: params[:id])
-      render json: { status: 401, errors: '認証に失敗しました。' } if @word.nil?
+      render json: { status: 401, message: '正しいアカウントでログインしてください' } if @word.nil?
     end
 end

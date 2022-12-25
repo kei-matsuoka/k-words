@@ -19,7 +19,7 @@ import { SearchButton } from '../buttons/SearchButton';
 import { SearchInputModal } from '../modals/SearchInputModal';
 import { TokenResetForm } from '../forms/TokenResetForm';
 
-export const Header = ({ handleGetWords, handleOnInput, searchKeyword, resetWords }) => {
+export const Header = ({ handleGetWords, handleOnInput, handleFlashMessage, searchKeyword, resetWords }) => {
   const initialState = {
     sideBarIsOpen: false,
     dropDownIsOpen: false,
@@ -97,6 +97,7 @@ export const Header = ({ handleGetWords, handleOnInput, searchKeyword, resetWord
         <SignupForm
           handleClickSignup={handleClickSignup}
           handleClickLogin={handleClickLogin}
+          handleFlashMessage={handleFlashMessage}
         />
       </Modal>
 
@@ -105,12 +106,14 @@ export const Header = ({ handleGetWords, handleOnInput, searchKeyword, resetWord
           handleClickLogin={handleClickLogin}
           handleClickSignup={handleClickSignup}
           handleClickPassword={handleClickPassword}
+          handleFlashMessage={handleFlashMessage}
         />
       </Modal>
 
       <Modal onClick={handleClickPassword} isOpen={state.passwordModalIsOpen}>
         <TokenResetForm
           handleClickPassword={handleClickPassword}
+          handleFlashMessage={handleFlashMessage}
         />
       </Modal>
 
@@ -127,6 +130,7 @@ export const Header = ({ handleGetWords, handleOnInput, searchKeyword, resetWord
         <WordForm
           handleGetWords={handleGetWords}
           handleClickWord={handleClickWord}
+          handleFlashMessage={handleFlashMessage}
         />
       </Modal>
 
@@ -136,7 +140,7 @@ export const Header = ({ handleGetWords, handleOnInput, searchKeyword, resetWord
         </SideBarModal>
       }
       <div className='sp:hidden'><SideBar /></div>
-      {state.dropDownIsOpen && <DropDown handleClickDropDown={handleClickDropDown} />}
+      {state.dropDownIsOpen && <DropDown handleClickDropDown={handleClickDropDown} handleFlashMessage={handleFlashMessage} />}
     </>
   );
 }

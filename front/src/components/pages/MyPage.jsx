@@ -6,22 +6,23 @@ import { PatchWordForm } from "../forms/PatchWordForm";
 import { Modal } from "../modals/Modal";
 import { Words } from "../groups/Words";
 
-export const MyPage = () => {
+export const MyPage = ({handleFlashMessage}) => {
   const [userWords, setUserWords] = useState([]);
   const [patchModalIsOpen, setPatchModalIsOpen] = useState(false);
   const [word, setWord] = useState();
-  const { setLoading, currentUser, setFlashMessage } = useContext(AuthContext);
+  const { setLoading, currentUser } = useContext(AuthContext);
 
   const handleGetUserWords = async () => {
     try {
       const res = await getUserWords(currentUser.id);
       if (res?.status === 200) {
-        setUserWords(res?.words);
+        setUserWords(res.words);
       } else {
-        console.log('no words');
+        console.log(res.message);
       }
     } catch (e) {
-      console.log(e);
+      console.error(e);
+      handleFlashMessage("red", e.message);
     }
     setLoading(false);
   };
@@ -31,13 +32,13 @@ export const MyPage = () => {
       const res = await destroyWord(id);
       if (res?.status === 200) {
         handleGetUserWords();
-        setFlashMessage({ color: "rgb(48, 200, 214)", message: "用語を削除しました" });
+        handleFlashMessage("rgb(48, 200, 214)", res.message);
       } else {
-        setFlashMessage({ color: "red", message: "用語の削除に失敗しました" });
+        handleFlashMessage("red", res.message);
       }
     } catch (e) {
-      console.log(e);
-      setFlashMessage({ color: "red", message: e.message });
+      console.error(e);
+      handleFlashMessage("red", e.message);
     }
     setLoading(false);
   };
@@ -51,12 +52,14 @@ export const MyPage = () => {
     }
   };
 
+  // const handleFlashMessage = (color, message) => {
+  //   ref.current?.stateChange(color, message)
+  // }
+
   useEffect(() => {
     handleGetUserWords();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setUserWords]);
-
-  console.log(patchModalIsOpen);
 
   return (
     <>
@@ -65,7 +68,7 @@ export const MyPage = () => {
         handleClickPatch={handleClickPatch}
         handleClickDestroy={handleClickDestroy} />
         : <p>マイ用語がありません。</p>}
-      {patchModalIsOpen ? <Modal onClick={handleClickPatch} isOpen={patchModalIsOpen}><PatchWordForm handleGetUserWords={handleGetUserWords} handleClickPatch={handleClickPatch} word={word} /></Modal> : null}
+      {patchModalIsOpen && <Modal onClick={handleClickPatch} isOpen={patchModalIsOpen}><PatchWordForm handleGetUserWords={handleGetUserWords} handleClickPatch={handleClickPatch} handleFlashMessage={handleFlashMessage} word={word} /></Modal>}
     </>
   );
 }

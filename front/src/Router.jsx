@@ -9,27 +9,26 @@ import { Learning } from './components/pages/Learning';
 import { Settings } from './components/pages/Settings';
 import { Valid } from './components/pages/Valid';
 import { Password } from './components/pages/Password';
-import { ProfileForm } from "./components/forms/ProfileForm";
-import { TokenResetForm } from './components/forms/TokenResetForm';
 import { MyPage } from './components/pages/MyPage';
 import { DefaultPage } from './components/pages/DefaultPage';
-import { AccountDestroyForm } from './components/forms/AccountDestroyForm';
+import { ProfileOutlet } from "./components/outlets/ProfileOutlet";
+import { AccountDestroyOutlet } from './components/outlets/AccountDestroyOutlet';
+import { TokenResetOutlet } from './components/outlets/TokenResetOutlet';
 
 export const Router = () => {
-  const { loading, setLoading, isSignedIn, setIsSignedIn, setCurrentUser, setFlashMessage } = useContext(AuthContext);
+  const { loading, setLoading, isSignedIn, setIsSignedIn, setCurrentUser } = useContext(AuthContext);
 
   const handleGetCurrentUser = async () => {
     try {
       const res = await getCurrentUser();
-      if (res?.logged_in === true) {
+      if (res?.status === 200) {
         setIsSignedIn(true);
         setCurrentUser(res?.user);
       } else {
-        console.log('no current user');
+        console.log(res?.message);
       }
     } catch (e) {
-      console.log(e);
-      setFlashMessage({ color: "red", message: e.message });
+      console.error(e);
     }
     setLoading(false);
   };
@@ -59,13 +58,13 @@ export const Router = () => {
         <Route path='/cards/:id' element={<PrivateRoute><CardIndex /></PrivateRoute>} />
         <Route path='/cards/:id/learning' element={<PrivateRoute><Learning /></PrivateRoute>} />
         <Route path='/mypage' element={<PrivateRoute><MyPage /></PrivateRoute>} />
-        <Route path='/valid/:id/:email' element={<DefaultPage><Valid/></DefaultPage>} />
+        <Route path='/valid/:id/:email' element={<DefaultPage><Valid /></DefaultPage>} />
         <Route path='/password/:id/:email' element={<DefaultPage><Password /></DefaultPage>} />
         <Route path='/settings' element={<PrivateRoute><Settings /></PrivateRoute>} >
-          <Route path='' element={<ProfileForm />} />
-          <Route path='profile' element={<ProfileForm />} />
-          <Route path='password' element={<TokenResetForm />} />
-          <Route path='account' element={<AccountDestroyForm />} />
+          <Route path='' element={<ProfileOutlet />} />
+          <Route path='profile' element={<ProfileOutlet />} />
+          <Route path='password' element={<TokenResetOutlet />} />
+          <Route path='account' element={<AccountDestroyOutlet />} />
         </Route>
       </Routes>
     </BrowserRouter>

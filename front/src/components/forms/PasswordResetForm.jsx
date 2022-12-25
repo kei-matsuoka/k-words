@@ -1,11 +1,13 @@
-import { useContext } from 'react';
+import { useState, useContext } from 'react';
 import { AuthContext } from '../../AuthProvider';
 import { useForm } from "react-hook-form";
 import { patchPassword } from '../../apis/resetPassword';
 import { ValidationError } from '../parts/ValidationError';
+import { Navigate } from 'react-router-dom';
 
 export const PasswordResetForm = ({ id, email }) => {
-  const { setLoading, setIsSignedIn, setCurrentUser, setFlashMessage } = useContext(AuthContext);
+  const [state, setState] = useState(false);
+  const { setLoading, setIsSignedIn, setCurrentUser, setLogoutMessage } = useContext(AuthContext);
   const { register, handleSubmit, formState: { errors, isDirty, isValid }, getValues } = useForm({
     mode: 'onBlur',
     criteriaMode: 'all',
@@ -17,19 +19,21 @@ export const PasswordResetForm = ({ id, email }) => {
       if (res?.status === 200) {
         setIsSignedIn(true);
         setCurrentUser(res?.user);
-        setFlashMessage({ color: "rgb(48, 200, 214)", message: "パスワードを更新しました" });
+        setState(true);
+        setLogoutMessage({ color: "rgb(48, 200, 214)", message: res.message });
       } else {
-        setFlashMessage({ color: "red", message: "パスワードの更新に失敗しました" });
+        setLogoutMessage({ color: "red", message: res.message });
       }
     } catch (e) {
-      console.log(e);
-      setFlashMessage({ color: "red", message: e.message });
+      console.error(e);
+      setLogoutMessage({ color: "red", message: e.message });
     }
     setLoading(false);
   };
 
   return (
     <div>
+      { state === true && <Navigate to='/' /> }
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-[480px] sp:w-full px-8 py-10 rounded-sm bg-white">
         <h2 className='text-lg font-bold mb-8'>パスワード変更</h2>
         <input hidden autoComplete='username' />

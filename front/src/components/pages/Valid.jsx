@@ -4,7 +4,7 @@ import { AuthContext } from '../../AuthProvider';
 import { patchActivation } from '../../apis/activation';
 
 export const Valid = () => {
-  const { isSignedIn, setIsSignedIn, setCurrentUser, setFlashMessage } = useContext(AuthContext);
+  const { isSignedIn, setIsSignedIn, setCurrentUser, setLogoutMessage } = useContext(AuthContext);
   const { id, email } = useParams();
   const handleSubmit = async () => {
     try {
@@ -12,13 +12,13 @@ export const Valid = () => {
       if (res?.status === 200) {
         setIsSignedIn(true);
         setCurrentUser(res?.user);
-        setFlashMessage({ message: "アカウントを認証しました" });
+        setLogoutMessage({ color: "rgb(48, 200, 214)", message: "アカウントを認証しました" });
       } else {
-        setFlashMessage({ color: "red", message: "アカウントの認証に失敗しました" });
+        setLogoutMessage({ color: "red", message: "アカウントの認証に失敗しました" });
       }
     } catch (e) {
-      console.log(e);
-      setFlashMessage({ color: "red", message: e.message });
+      console.error(e);
+      setLogoutMessage({ color: "red", message: e.message });
     }
   };
 

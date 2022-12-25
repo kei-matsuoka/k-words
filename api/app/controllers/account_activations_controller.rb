@@ -6,7 +6,7 @@ class AccountActivationsController < ApplicationController
       login(user)
       render json: { status: 200, user: user }
     else
-      render json: { status:401, errors: 'アカウントの認証に失敗しました。'  }
+      render json: { status: 500, errors: 'アカウントを認証できません'  }
     end
   end
 end

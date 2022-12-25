@@ -4,31 +4,29 @@ import { AuthContext } from '../../AuthProvider';
 import { Login } from '../../apis/login';
 import { ValidationError } from '../parts/ValidationError';
 
-export const LoginForm = ({ handleClickLogin, handleClickSignup, handleClickPassword }) => {
+export const LoginForm = ({ handleClickLogin, handleClickSignup, handleClickPassword, handleFlashMessage }) => {
   const { register, handleSubmit, formState: { errors } } = useForm({
     mode: 'onBlur',
     criteriaMode: 'all',
   });
-  const { setLoading, setIsSignedIn, setCurrentUser, flashMessage, setFlashMessage } = useContext(AuthContext);
+  const { setLoading, setIsSignedIn, setCurrentUser } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
     try {
       const res = await Login(data.email, data.password, data.remember_me);
-      if (res?.logged_in === true) {
+      if (res?.status === 201) {
         setIsSignedIn(true);
-        setCurrentUser(res?.user);
-        setFlashMessage({ color: "rgb(48, 200, 214)", message: "ログインしました" });
+        setCurrentUser(res.user);
+        handleFlashMessage("rgb(48, 200, 214)", "ログインしました");
         handleClickLogin();
-      } else if (res?.logged_in === false) {
-        setFlashMessage({ color: "red", message: "メールを確認してアカウントを有効にしてください" });
       } else if (res?.status === 401) {
-        setFlashMessage({ color: "red", message: "正しいメールアドレスまたはパスワードを入力してください" });
+        handleFlashMessage("red", res.message);
       } else {
-        setFlashMessage({ color: "red", message: "ログインに失敗しました" });
+        handleFlashMessage("red", res.message);
       }
     } catch (e) {
-      console.log(e);
-      setFlashMessage({ color: "red", message: e.message });
+      console.error(e);
+      handleFlashMessage("red", e.message);
     }
     setLoading(false);
   };
