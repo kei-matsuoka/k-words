@@ -4,27 +4,27 @@ import { useForm } from "react-hook-form";
 import { Signup } from '../../apis/signup';
 import { ValidationError } from '../parts/ValidationError';
 
-export const SignupForm = ({ handleClickSignup, handleClickLogin }) => {
+export const SignupForm = ({ handleClickSignup, handleClickLogin, handleFlashMessage }) => {
   const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
     mode: 'onBlur',
     criteriaMode: 'all',
   });
-  const { setLoading, flashMessage, setFlashMessage } = useContext(AuthContext);
+  const { setLoading } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
     try {
       const res = await Signup(data.name, data.email, data.password);
-      if (res?.logged_in === "wait") {
+      if (res?.status === 201) {
         handleClickSignup();
-        setFlashMessage({ color: "rgb(48, 200, 214)", message: "確認メールを送信しました" });
-      } else if (res?.logged_in === "email") {
-        setFlashMessage({ color: "red", message: "このメールアドレスは既に使われています" });
+        handleFlashMessage("rgb(48, 200, 214)", res.message);
+      } else if (res.status === 400) {
+        handleFlashMessage("red", res.message);
       } else {
-        setFlashMessage({ color: "red", message: "アカウント作成に失敗しました" });
+        handleFlashMessage("red", res.message);
       }
     } catch (e) {
-      console.log(e);
-      setFlashMessage({ color: "red", message: e.message });
+      console.error(e);
+      handleFlashMessage("red", e.message);
     }
     setLoading(false);
   };

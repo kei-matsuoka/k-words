@@ -3,23 +3,23 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../../AuthProvider';
 import { Logout } from '../../apis/logout';
 
-export const DropDown = ({ handleClickDropDown }) => {
-  const { setLoading, setIsSignedIn, setCurrentUser, flashMessage, setFlashMessage } = useContext(AuthContext);
+export const DropDown = ({ handleClickDropDown, handleFlashMessage }) => {
+  const { setLoading, setIsSignedIn, setCurrentUser, setLogoutMessage } = useContext(AuthContext);
 
   const handleLogout = async () => {
     try {
       const res = await Logout();
-      if (res?.logged_in === false) {
+      if (res?.status === 200) {
         setIsSignedIn(false);
         setCurrentUser(null);
-        setFlashMessage({ color: "rgb(48, 200, 214)", message: "ログアウトしました" });
+        setLogoutMessage({color: "rgb(48, 200, 214)", message: res.message});
         handleClickDropDown();
       } else {
-        setFlashMessage({ color: "red", message: "ログアウトできません。" });
+        handleFlashMessage("red", res.message);
       }
     } catch (e) {
-      console.log(e.message);
-      setFlashMessage({ color: "red", message: e.message });
+      console.error(e.message);
+      handleFlashMessage("red", e.message);
     }
     setLoading(false);
   };

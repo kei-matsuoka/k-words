@@ -1,32 +1,34 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { AuthContext } from '../../AuthProvider';
 import { Header } from "../groups/Header";
 import { JColumnBar } from "../groups/JColumnBar";
 import { Words } from "../groups/Words";
-import { getWords } from '../../apis/words';
 import { escapeStringRegexp } from "../../helper";
 import { reg_list } from "../../constants";
 import { FlashMessage } from "../parts/FlashMessage";
+import { LogoutMessage } from "../parts/LogoutMessage";
+import { getWords } from "../../apis/words";
 
 export const Top = () => {
   const [words, setWords] = useState([]);
   const [filtered, setFiltered] = useState(false);
   const [filteredWords, setFilteredWords] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
-  const { setLoading, setFlashMessage } = useContext(AuthContext);
+  const { setLoading } = useContext(AuthContext);
   const [index, setIndex] = useState(20);
+  const ref = useRef();
 
   const handleGetWords = async () => {
     try {
       const res = await getWords();
       if (res?.status === 200) {
-        setWords(res?.data);
+        setWords(res?.words);
       } else {
-        setFlashMessage({ color: "red", message: "用語がありません" });
+        handleFlashMessage("red", "用語がありません");
       }
     } catch (e) {
-      console.log(e);
-      setFlashMessage({ color: "red", message: e.message });
+      console.error(e);
+      handleFlashMessage("red", e.message);
     }
     setLoading(false);
   };
@@ -71,6 +73,10 @@ export const Top = () => {
     setFiltered(false);
   };
 
+  const handleFlashMessage = (color, message) => {
+    ref.current?.stateChange(color, message)
+  }
+
   useEffect(() => {
     handleGetWords();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -81,6 +87,7 @@ export const Top = () => {
       <Header
         handleGetWords={handleGetWords}
         handleOnInput={handleOnInput}
+        handleFlashMessage={handleFlashMessage}
         searchKeyword={searchKeyword}
         resetWords={resetWords}
       />
@@ -91,7 +98,8 @@ export const Top = () => {
         {filtered && filteredWords && <Words words={filteredWords} />}
         {filtered && !filteredWords && <p className="pl-3.5 pb-3.5">該当する用語がありません。</p>}
       </div>
-      <FlashMessage />
+      <FlashMessage ref={ref} />
+      <LogoutMessage />
     </>
   );
 }

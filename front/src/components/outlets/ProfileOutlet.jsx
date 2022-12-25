@@ -3,9 +3,11 @@ import { AuthContext } from '../../AuthProvider';
 import { useForm } from "react-hook-form";
 import { patchUser } from '../../apis/users';
 import { ValidationError } from '../parts/ValidationError';
+import { useOutletContext } from "react-router-dom";
 
-export const ProfileForm = () => {
-  const { setLoading, setCurrentUser, currentUser, setFlashMessage } = useContext(AuthContext);
+export const ProfileOutlet = () => {
+  const { setLoading, setCurrentUser, currentUser } = useContext(AuthContext);
+  const [handleFlashMessage] = useOutletContext();
   const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
     mode: 'onBlur',
     criteriaMode: 'all',
@@ -19,21 +21,22 @@ export const ProfileForm = () => {
     try {
       const res = await patchUser(currentUser.id, data);
       if (res?.status === 200) {
-        setCurrentUser(res?.user);
-        setFlashMessage({ color: "rgb(48, 200, 214)", message: "プロフィールを修正しました" });
+        // フラッシュメッセージが出た後にページをレンダリングする
+        setTimeout(() => setCurrentUser(res.user), 4000);
+        handleFlashMessage("rgb(48, 200, 214)", res.message);
       } else {
-        setFlashMessage({ color: "red", message: "プロフィールの修正に失敗しました" });
+        handleFlashMessage("red", res.message);
       }
     } catch (e) {
-      console.log(e);
-      setFlashMessage({ color: "red", message: e.message });
+      console.error(e);
+      handleFlashMessage("red", e.message);
     }
     setLoading(false);
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-[480px] sb:w-full px-8 py-10 rounded-sm bg-white">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-[480px] sb:w-full">
         <h2 className='text-lg font-bold mb-8'>プロフィール編集</h2>
         <input
           className="border p-3 text-sm"

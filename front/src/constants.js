@@ -4,10 +4,6 @@ export const REQUEST_STATE = {
   OK: 'OK'
 }
 
-export const HTTP_STATUS_CODE = {
-  NOT_ACCEPTABLE: 406
-}
-
 export const j_column_list = ["あ", "か", "さ", "た", "な", "は", "ま", "や", "ら", "わ"];
 
 export const reg_list = ["^あ|^い|^う|^え|^お|^ぁ|^ぃ|^ぅ|^ぇ|^ぉ",

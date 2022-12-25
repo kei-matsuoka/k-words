@@ -4,26 +4,26 @@ import { useForm } from "react-hook-form";
 import { createWord } from '../../apis/words';
 import { ValidationError } from '../parts/ValidationError';
 
-export const WordForm = ({ handleGetWords, handleClickWord }) => {
+export const WordForm = ({ handleGetWords, handleClickWord, handleFlashMessage }) => {
   const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
     mode: 'onBlur',
     criteriaMode: 'all',
   });
-  const { setLoading, setFlashMessage } = useContext(AuthContext);
+  const { setLoading } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
     try {
       const res = await createWord(data);
-      if (res?.status === 200) {
+      if (res?.status === 201) {
         handleGetWords();
         handleClickWord();
-        setFlashMessage({ color: "rgb(48, 200, 214)", message: "用語を追加しました" });
+        handleFlashMessage("rgb(48, 200, 214)", res.message);
       } else {
-        setFlashMessage({ color: "red", message: "用語の追加に失敗しました" });
+        handleFlashMessage("red", res.message);
       }
     } catch (e) {
-      console.log(e);
-      setFlashMessage({ color: "red", message: e.message });
+      console.error(e);
+      handleFlashMessage("red", e.message);
     }
     setLoading(false);
   };

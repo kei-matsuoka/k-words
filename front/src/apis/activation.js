@@ -7,7 +7,6 @@ export const patchActivation = (id, email) => {
     email: email,
   }, { withCredentials: true }
   ).then(res => {
-    console.log(res.data);
     return res.data
   }).catch(e => {
     throw e;

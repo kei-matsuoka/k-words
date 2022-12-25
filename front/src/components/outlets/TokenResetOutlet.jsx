@@ -1,22 +1,22 @@
 import { useContext } from 'react';
-import { useLocation } from "react-router-dom";
 import { AuthContext } from '../../AuthProvider';
 import { useForm } from "react-hook-form";
+import { useOutletContext } from "react-router-dom";
 import { createResetToken } from '../../apis/resetPassword';
 import { ValidationError } from '../parts/ValidationError';
 
-export const TokenResetForm = ({ handleClickPassword, handleFlashMessage }) => {
+export const TokenResetOutlet= () => {
   const { setLoading } = useContext(AuthContext);
+  const [handleFlashMessage] = useOutletContext();
   const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
     mode: 'onBlur',
     criteriaMode: 'all',
   });
-
+  
   const onSubmit = async (data) => {
     try {
       const res = await createResetToken(data.email);
       if (res?.status === 201) {
-        handleClickPassword();
         handleFlashMessage("rgb(48, 200, 214)", res.message);
       } else {
         handleFlashMessage("red", res.message);
@@ -30,9 +30,8 @@ export const TokenResetForm = ({ handleClickPassword, handleFlashMessage }) => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-[480px] sb:w-full px-8 py-10 rounded-sm bg-white relative">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-[480px] sb:w-full">
         <h2 className='text-lg font-bold mb-8'>パスワード変更</h2>
-        <p className='absolute top-3 right-4 text-sm hover:cursor-pointer' onClick={handleClickPassword}>×</p>
         <input hidden autoComplete='username' />
         <input
           className="border p-3 text-sm"

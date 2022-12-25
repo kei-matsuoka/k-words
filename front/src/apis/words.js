@@ -4,7 +4,7 @@ import { wordsUrl, userWordUrl } from '../urls';
 export const getWords = () => {
   return axios.get(wordsUrl, { withCredentials: true }
   ).then(res => {
-    return res
+    return res.data
   }).catch(e => {
     throw e;
   })

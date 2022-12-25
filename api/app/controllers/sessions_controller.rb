@@ -1,9 +1,9 @@
 class SessionsController < ApplicationController
   def show
     if logged_in?
-      render json: { logged_in: true, user: @current_user }
+      render json: { status: 200, user: @current_user }
     else
-      render json: { status: 401, errors: ['認証に失敗しました。', '正しいメールアドレス・パスワードを入力し直すか、新規登録を行ってください。'] }
+      render json: { status: 401, message: 'ログインしていません' }
     end
   end
 
@@ -13,21 +13,21 @@ class SessionsController < ApplicationController
       if user.activated?
         login(user)
         params[:session][:remember_me] == true ? remember(user) : forget(user)
-        render json: { logged_in: true, user: user }
+        render json: { status:201 , user: user }
       else
-        render json: { logged_in: false, errors: ['アカウントが有効ではありません', 'メールを確認してアカウントを有効にしてください。'] }
+        render json: { status: 401, message: 'メールを確認してアカウントを有効にしてください' }
       end
     else
-      render json: { status: 401, errors: ['認証に失敗しました。', '正しいメールアドレス・パスワードを入力し直すか、新規登録を行ってください。'] }
+      render json: { status: 400, message: '正しいメールアドレスまたはパスワードを入力し直すか、新規登録してください' }
     end
   end
 
   def destroy
     logout if logged_in?
     if !logged_in?
-      render json: { logged_in: false }
+      render json: { status: 200, message: 'ログアウトしました' }
     else
-      render json: { status: 401, errors: '認証に失敗しました。' }
+      render json: { status: 401, message: 'ログインしてください' }
     end
   end
 end
