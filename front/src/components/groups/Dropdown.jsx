@@ -1,10 +1,11 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../AuthProvider';
+import { motion, AnimatePresence } from 'framer-motion'
 import { Logout } from '../../apis/logout';
 
-export const DropDown = ({ handleClickDropDown, handleFlashMessage }) => {
-  const { setLoading, setIsSignedIn, setCurrentUser, setLogoutMessage } = useContext(AuthContext);
+export const DropDown = ({ handleClickDropDown, handleFlashMessage, handleClickLogin, handleClickSignup, isOpen }) => {
+  const { setLoading, isSignedIn, setIsSignedIn, currentUser, setCurrentUser, setLogoutMessage } = useContext(AuthContext);
 
   const handleLogout = async () => {
     try {
@@ -12,7 +13,7 @@ export const DropDown = ({ handleClickDropDown, handleFlashMessage }) => {
       if (res?.status === 200) {
         setIsSignedIn(false);
         setCurrentUser(null);
-        setLogoutMessage({color: "rgb(48, 200, 214)", message: res.message});
+        setLogoutMessage({ color: "rgb(48, 200, 214)", message: res.message });
         handleClickDropDown();
       } else {
         handleFlashMessage("red", res.message);
@@ -25,14 +26,36 @@ export const DropDown = ({ handleClickDropDown, handleFlashMessage }) => {
   };
 
   return (
-    <div className="fixed top-0 z-20 left-0 w-full h-full" onClick={handleClickDropDown}>
-      <div onClick={(e) => e.stopPropagation()}>
-        <div className='text-xs bg-white rounded absolute drop-shadow top-12 right-0 z-20'>
-          <Link to="/mypage" onClick={handleClickDropDown}><div className='p-4 hover:bg-gray-100 z-30'>マイページ</div></Link>
-          <Link to="/settings" onClick={handleClickDropDown}><div className='p-4 hover:bg-gray-100'>アカウント設定</div></Link>
-          <Link to="#" onClick={handleClickDropDown}><div className='p-4 hover:bg-gray-100' onClick={handleLogout}>ログアウト</div></Link>
-        </div>
-      </div>
-    </div>
+    <AnimatePresence>
+      {isOpen &&
+        <motion.div
+          className="fixed top-0 z-20 left-0 w-full h-full"
+          onClick={handleClickDropDown}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.1 }}
+        >
+          <div onClick={(e) => e.stopPropagation()}>
+            <div className='text-xs bg-white rounded absolute drop-shadow top-12 right-0 z-20'>
+              {isSignedIn ?
+                <>
+                  <div className='px-4 py-3 z-30 border-b'>{currentUser.name}</div>
+                  <Link to="/mypage" onClick={handleClickDropDown}><div className='p-4 hover:bg-gray-100 z-30 duration-200'>マイページ</div></Link>
+                  <Link to="/settings" onClick={handleClickDropDown}><div className='p-4 hover:bg-gray-100 duration-200'>アカウント設定</div></Link>
+                  <Link to="#" onClick={handleClickDropDown}><div className='p-4 hover:bg-gray-100 duration-200' onClick={handleLogout}>ログアウト</div></Link>
+                </>
+                :
+                <>
+                  <div className='px-4 py-2.5 z-30 border-b'>ゲスト</div>
+                  <Link to="#" onClick={handleClickLogin}><div className='py-4 pl-4 pr-8 hover:bg-gray-100 duration-200'>ログイン</div></Link>
+                  <Link to="#" onClick={handleClickSignup}><div className='py-4 pl-4 pr-8 hover:bg-gray-100 duration-200'>新規登録</div></Link>
+                </>
+              }
+            </div>
+          </div>
+        </motion.div>
+      }
+    </AnimatePresence>
   );
 }

@@ -6,8 +6,9 @@ module.exports = {
   theme: {
     extend: {},
     screens: {
-      'jb': { 'max': '444px' },
       'sp': { 'max': '520px' },
+      // JColumnBarの長さ
+      'jb': { 'max': '603px' },
       'sb': { 'max': '640px' },
       'tb': { 'max': '960px' },
     },
