@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion'
+
 export const Modal = ({children, onClick, isOpen}) => {
   return (
     <AnimatePresence>

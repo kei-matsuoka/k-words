@@ -7,8 +7,6 @@ import { Modal } from "../modals/Modal";
 import { WordForm } from "../forms/WordForm";
 import { SignupForm } from '../forms/SignupForm';
 import { LoginForm } from '../forms/LoginForm';
-import { SignupButton } from '../buttons/SignupButton';
-import { LoginButton } from '../buttons/LoginButton';
 import { SideBarButton } from '../buttons/SideBarButton';
 import { AddButton } from '../buttons/AddButton';
 import { HeaderLogo } from '../parts/HeaderLogo';
@@ -29,7 +27,7 @@ export const Header = ({ handleGetWords, handleOnInput, handleFlashMessage, sear
     passwordModalIsOpen: false,
     wordModalIsOpen: false,
   };
-  const { isSignedIn, currentUser } = useContext(AuthContext);
+  const { isSignedIn } = useContext(AuthContext);
   const [state, setState] = useState(initialState);
   const location = useLocation();
 
@@ -54,13 +52,17 @@ export const Header = ({ handleGetWords, handleOnInput, handleFlashMessage, sear
   const handleClickWord = () => {
     setState(state.wordModalIsOpen ? { wordModalIsOpen: false } : { wordModalIsOpen: true });
   };
+  const handleLoginWithMessage = () => {
+    handleClickLogin();
+    handleFlashMessage("green", "用語を追加するにはログインが必要です");
+  };
 
   return (
     <>
-      <nav className='flex items-center justify-between fixed top-0 left-0 z-20 px-6 py-2 bg-white w-full border-b'>
+      <nav className='flex items-center justify-between fixed top-0 left-0 z-20 px-6 py-2 bg-white w-full h-[57px] border-b'>
         <div className='flex'>
           <SideBarButton handleClickSideBar={handleClickSideBar} />
-          <div className="ml-6">
+          <div className="ml-6 sp:ml-2">
             <HeaderLogo resetWords={resetWords} />
           </div>
         </div>
@@ -74,23 +76,15 @@ export const Header = ({ handleGetWords, handleOnInput, handleFlashMessage, sear
             </div>
           </>
         }
-        {isSignedIn ?
-          <div className='flex'>
-            {location.pathname === '/' &&
-              <AddButton handleClickWord={handleClickWord} />
-            }
-            <DropDownButton user={currentUser} handleClickDropDown={handleClickDropDown} />
-          </div>
-          :
-          <div className='flex items-center'>
-            <div onClick={handleClickLogin}>
-              <LoginButton text="ログイン" />
-            </div>
-            <div onClick={handleClickSignup} className="ml-2 sb:hidden">
-              <SignupButton text="新規登録" />
-            </div>
-          </div>
-        }
+        <div className='flex'>
+          {location.pathname === '/' &&
+            isSignedIn ?
+            <AddButton handleClick={handleClickWord} />
+            :
+            <AddButton handleClick={handleLoginWithMessage} />
+          }
+          <DropDownButton handleClickDropDown={handleClickDropDown} />
+        </div>
       </nav>
 
       <Modal onClick={handleClickSignup} isOpen={state.signupModalIsOpen}>
@@ -117,14 +111,12 @@ export const Header = ({ handleGetWords, handleOnInput, handleFlashMessage, sear
         />
       </Modal>
 
-      {state.searchInputIsOpen &&
-        <SearchInputModal handleClickSearchInput={handleClickSearchInput}>
-          <SearchInput
-            handleOnInput={handleOnInput}
-            searchKeyword={searchKeyword}
-          />
-        </SearchInputModal>
-      }
+      <SearchInputModal onClick={handleClickSearchInput} isOpen={state.searchInputIsOpen}>
+        <SearchInput
+          handleOnInput={handleOnInput}
+          searchKeyword={searchKeyword}
+        />
+      </SearchInputModal>
 
       <Modal onClick={handleClickWord} isOpen={state.wordModalIsOpen}>
         <WordForm
@@ -134,13 +126,15 @@ export const Header = ({ handleGetWords, handleOnInput, handleFlashMessage, sear
         />
       </Modal>
 
-      {state.sideBarIsOpen &&
-        <SideBarModal handleClickSideBar={handleClickSideBar}>
-          <SideBar handleClickSideBar={handleClickSideBar} />
-        </SideBarModal>
-      }
-      <div className='sp:hidden'><SideBar /></div>
-      {state.dropDownIsOpen && <DropDown handleClickDropDown={handleClickDropDown} handleFlashMessage={handleFlashMessage} />}
+      <SideBarModal onClick={handleClickSideBar} isOpen={state.sideBarIsOpen}>
+        <SideBar handleClickSideBar={handleClickSideBar} handleFlashMessage={handleFlashMessage} handleClickLogin={handleClickLogin} />
+      </SideBarModal>
+
+      <div className='sp:hidden'>
+        <SideBar handleFlashMessage={handleFlashMessage} handleClickLogin={handleClickLogin} />
+      </div>
+
+      <DropDown handleClickDropDown={handleClickDropDown} handleFlashMessage={handleFlashMessage} handleClickLogin={handleClickLogin} handleClickSignup={handleClickSignup} isOpen={state.dropDownIsOpen} />
     </>
   );
 }

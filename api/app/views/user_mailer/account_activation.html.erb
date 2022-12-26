@@ -1,9 +1,22 @@
-<h1>Sample App</h1>
-
-<p>Hi <%= @user.name %>,</p>
+<p><%= @user.name %> 様</p>
 
 <p>
-Welcome to the Sample App! Click on the link below to activate your account:
+お世話になっております。事務次官です。<br>
+この度は霞が関用語辞典にご登録いただき誠にありがとうございます。<br>
+<br>
+下記のリンクにアクセスし、アカウント認証を完了させてください。
 </p>
 
-<%= link_to "Activate", "#{Rails.application.credentials[:url]}/valid/#{@user.activation_token}/#{@user.email}" %>
+<p>
+<%= link_to "アカウントを認証する", "#{Rails.application.credentials[:url]}/valid/#{@user.activation_token}/#{@user.email}" %>
+</p>
+
+<p><br>
+以上、引き続きよろしくお願いいたします。
+</p>
+
+<p><br>
+※本メールは自動的に送信されております。<br>
+※本メールは送信用のため、ご返信いただいても対応できかねます。<br>
+※本メールにお心当たりのない場合は、お手数ですが破棄していただきますようお願いいたします。
+</p>

@@ -1,6 +1,15 @@
-Hi <%= @user.name %>,
+<%= @user.name %> 様
 
-Welcome to the Sample App! Click on the link below to activate your account:
+お世話になっております。事務次官です。
+この度は霞が関用語辞典にご登録いただき誠にありがとうございます。
 
-<%= edit_account_activation_url(@user.activation_token, email: @user.email) %>
+下記のリンクにアクセスし、アカウント認証を完了させてください。
 <%= "#{Rails.application.credentials[:url]}/valid/#{@user.activation_token}/#{@user.email}" %>
+
+
+以上、引き続きよろしくお願いいたします。
+
+
+※本メールは自動的に送信されております。
+※本メールは送信用のため、ご返信いただいても対応できかねます。
+※本メールにお心当たりのない場合は、お手数ですが破棄していただきますようお願いいたします。

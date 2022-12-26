@@ -3,7 +3,7 @@ import { Navigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../../AuthProvider';
 import { patchActivation } from '../../apis/activation';
 
-export const Valid = () => {
+export const Valid = ({handleFlashMessage}) => {
   const { isSignedIn, setIsSignedIn, setCurrentUser, setLogoutMessage } = useContext(AuthContext);
   const { id, email } = useParams();
   const handleSubmit = async () => {
@@ -12,13 +12,13 @@ export const Valid = () => {
       if (res?.status === 200) {
         setIsSignedIn(true);
         setCurrentUser(res?.user);
-        setLogoutMessage({ color: "rgb(48, 200, 214)", message: "アカウントを認証しました" });
+        setLogoutMessage({ color: "rgb(48, 200, 214)", message: res.message });
       } else {
-        setLogoutMessage({ color: "red", message: "アカウントの認証に失敗しました" });
+        handleFlashMessage("red", res.message);
       }
     } catch (e) {
       console.error(e);
-      setLogoutMessage({ color: "red", message: e.message });
+      handleFlashMessage("red", e.message);
     }
   };
 

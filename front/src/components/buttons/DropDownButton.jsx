@@ -1,9 +1,9 @@
-export const DropDownButton = ({user, handleClickDropDown}) => {
+import { FaUserCircle } from 'react-icons/fa';
+
+export const DropDownButton = ({handleClickDropDown}) => {
   return (
-    <button 
-      onClick={handleClickDropDown}
-      className='hover:bg-gray-100 text-gray-800 text-sm px-6 py-2.5'>
-      {user.name}
+    <button onClick={handleClickDropDown}  className="ml-4">
+      <FaUserCircle size="24" className="text-gray-600 hover:text-gray-800 duration-300" />
     </button>
   )
 }

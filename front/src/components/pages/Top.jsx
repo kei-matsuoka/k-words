@@ -92,7 +92,7 @@ export const Top = () => {
         resetWords={resetWords}
       />
       <JColumnBar handleOnClick={handleOnClick} resetWords={resetWords} index={index} />
-      <div className="pt-[109px] ml-[76px] sp:ml-0 jb:pt-[150px] h-full bg-gray-50">
+      <div className="pt-[116px] ml-[76px] sp:ml-0 jb:pt-[166px] h-full bg-gray-50">
         {!filtered && searchWords.length !== 0 && <Words words={searchWords} />}
         {!filtered && searchWords.length === 0 && <p className="pl-3.5 pb-3.5">該当する用語がありません。</p>}
         {filtered && filteredWords && <Words words={filteredWords} />}
