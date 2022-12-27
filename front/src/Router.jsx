@@ -14,6 +14,7 @@ import { DefaultPage } from './components/pages/DefaultPage';
 import { ProfileOutlet } from "./components/outlets/ProfileOutlet";
 import { AccountDestroyOutlet } from './components/outlets/AccountDestroyOutlet';
 import { TokenResetOutlet } from './components/outlets/TokenResetOutlet';
+import { NotFoundPage } from './components/pages/NotFoundPage';
 
 export const Router = () => {
   const { loading, setLoading, isSignedIn, setIsSignedIn, setCurrentUser } = useContext(AuthContext);
@@ -66,6 +67,7 @@ export const Router = () => {
           <Route path='password' element={<TokenResetOutlet />} />
           <Route path='account' element={<AccountDestroyOutlet />} />
         </Route>
+        <Route path="*" element={<DefaultPage><NotFoundPage /></DefaultPage>} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,8 +1,8 @@
-import { Card } from "./Card";
+import { Card } from "../parts/Card";
 
 export const Cards = ({ cards }) => {
   return (
-    <div className="flex flex-col px-4 py-1">
+    <div className="flex flex-col">
       {cards.map((card) => <Card card={card} key={card.id} />)}
     </div>
   );

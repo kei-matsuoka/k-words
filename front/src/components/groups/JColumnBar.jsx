@@ -2,7 +2,7 @@ import { j_column_list } from "../../constants";
 
 export const JColumnBar = ({ resetWords, handleOnClick, index }) => {
   return (
-    <ul className="flex flex-wrap fixed top-[57px] left-[76px] z-10 bg-white shadow-sm sp:left-0 w-full jb:w-auto">
+    <ul className="flex flex-wrap fixed top-[57px] left-[76px] z-10 bg-white shadow-s sp:left-0 w-full jb:w-auto">
       <li>
         <button
           onClick={resetWords}

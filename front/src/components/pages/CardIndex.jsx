@@ -1,42 +1,45 @@
-import { useEffect, useReducer } from 'react';
-import { initialState, wordsActionTypes, wordsReducer } from '../../reducers/words'
+import { useEffect, useState, useContext } from 'react';
+import { AuthContext } from '../../AuthProvider';
 import { Link, useParams } from 'react-router-dom';
 import { getCardWords } from '../../apis/cards';
 import { LearningButton } from '../buttons/LearningButton';
-import { getNewWords } from '../../helper';
 import { Words } from '../groups/Words';
+import { LearningBar } from '../groups/LearningBar';
 
-export const CardIndex = () => {
-  const [state, dispatch] = useReducer(wordsReducer, initialState);
+export const CardIndex = ({handleFlashMessage, setTitle}) => {
+  const [state, setState] = useState({card: {}, words: [], length: 0});
+  const { setLoading } = useContext(AuthContext);
   const { id } = useParams();
 
+  const handleGetCardWords = async () => {
+    try {
+      const res = await getCardWords(id);
+      if (res?.status === 200) {
+        setState({card: res.card, words: res.words, length: res.words.length});
+      } else {
+        console.log(res.message);
+      }
+    } catch (e) {
+      console.error(e);
+      handleFlashMessage("red", e.message);
+    }
+    setLoading(false);
+  };
+
   useEffect(() => {
-    dispatch({ type: wordsActionTypes.FETCHING });
-    getCardWords(id)
-      .then((data) => {
-        const new_words = getNewWords(data.words);
-        dispatch({
-          type: wordsActionTypes.FETCH_SUCCESS,
-          payload: {
-            card: data.card,
-            words: data.words
-          }
-        })
-      })
+    handleGetCardWords();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
-      { state.wordsList[0] &&
+      { state.words &&
       <>
-        <div className='mt-6 text-gray-800'>
-          {state.card.title}
-        </div>
-        <div className='m-6'>
+        <LearningBar url={`/dashboard`} title={state.card.title} />
+        <div className='flex justify-center mb-1'>
           <Link to={`/cards/${id}/learning`}><LearningButton text="暗記する" /></Link>
         </div>
-        <Words words={state.wordsList} />
+        <Words words={state.words} />
       </>
       }
     </>

@@ -11,7 +11,7 @@ export const SideBar = ({ handleClickSideBar, handleFlashMessage, handleClickLog
   };
   return (
     <div className='flex flex-col text-center bg-white w-[76px] h-full fixed top-0 left-0 z-20'>
-      <button onClick={handleClickSideBar} className="pt-3.5 pb-4">
+      <button onClick={handleClickSideBar} className="pt-3.5 pb-4 text-gray-800 hover:text-gray-600 duration-300">
         <MdViewHeadline size={28} className="mx-auto" />
       </button>
       <SideBarLink handleClick={handleClickSideBar} url="/" title="ホーム"><MdHome size={24} /></SideBarLink>

@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { AuthContext } from '../../AuthProvider';
-import { DropDown } from './DropDown';
+import { Dropdown } from './Dropdown';
 import { SideBar } from '../groups/SideBar';
 import { Modal } from "../modals/Modal";
 import { WordForm } from "../forms/WordForm";
@@ -11,7 +11,7 @@ import { SideBarButton } from '../buttons/SideBarButton';
 import { AddButton } from '../buttons/AddButton';
 import { HeaderLogo } from '../parts/HeaderLogo';
 import { SearchInput } from '../parts/SearchInput';
-import { DropDownButton } from '../buttons/DropDownButton';
+import { DropdownButton } from '../buttons/DropdownButton';
 import { SideBarModal } from '../modals/SideBarModal';
 import { SearchButton } from '../buttons/SearchButton';
 import { SearchInputModal } from '../modals/SearchInputModal';
@@ -20,7 +20,7 @@ import { TokenResetForm } from '../forms/TokenResetForm';
 export const Header = ({ handleGetWords, handleOnInput, handleFlashMessage, searchKeyword, resetWords }) => {
   const initialState = {
     sideBarIsOpen: false,
-    dropDownIsOpen: false,
+    dropdownIsOpen: false,
     searchInputIsOpen: false,
     signupModalIsOpen: false,
     loginModalIsOpen: false,
@@ -34,8 +34,8 @@ export const Header = ({ handleGetWords, handleOnInput, handleFlashMessage, sear
   const handleClickSideBar = () => {
     setState(state.sideBarIsOpen ? { sideBarIsOpen: false } : { sideBarIsOpen: true });
   };
-  const handleClickDropDown = () => {
-    setState(state.dropDownIsOpen ? { dropDownIsOpen: false } : { dropDownIsOpen: true });
+  const handleClickDropdown = () => {
+    setState(state.dropdownIsOpen ? { dropdownIsOpen: false } : { dropdownIsOpen: true });
   };
   const handleClickSearchInput = () => {
     setState(state.searchInputIsOpen ? { searchInputIsOpen: false } : { searchInputIsOpen: true });
@@ -50,11 +50,12 @@ export const Header = ({ handleGetWords, handleOnInput, handleFlashMessage, sear
     setState(state.passwordModalIsOpen ? { passwordModalIsOpen: false } : { passwordModalIsOpen: true });
   };
   const handleClickWord = () => {
-    setState(state.wordModalIsOpen ? { wordModalIsOpen: false } : { wordModalIsOpen: true });
-  };
-  const handleLoginWithMessage = () => {
-    handleClickLogin();
-    handleFlashMessage("green", "用語を追加するにはログインが必要です");
+    if (isSignedIn === true) {
+      setState(state.wordModalIsOpen ? { wordModalIsOpen: false } : { wordModalIsOpen: true });
+    } else {
+      setState(state.loginModalIsOpen ? { loginModalIsOpen: false } : { loginModalIsOpen: true });
+      state.loginModalIsOpen === false && handleFlashMessage("green", "用語を追加するにはログインが必要です");
+    }
   };
 
   return (
@@ -78,12 +79,9 @@ export const Header = ({ handleGetWords, handleOnInput, handleFlashMessage, sear
         }
         <div className='flex'>
           {location.pathname === '/' &&
-            isSignedIn ?
-            <AddButton handleClick={handleClickWord} />
-            :
-            <AddButton handleClick={handleLoginWithMessage} />
+            <AddButton handleClickWord={handleClickWord} />
           }
-          <DropDownButton handleClickDropDown={handleClickDropDown} />
+          <DropdownButton handleClickDropdown={handleClickDropdown} />
         </div>
       </nav>
 
@@ -134,7 +132,7 @@ export const Header = ({ handleGetWords, handleOnInput, handleFlashMessage, sear
         <SideBar handleFlashMessage={handleFlashMessage} handleClickLogin={handleClickLogin} />
       </div>
 
-      <DropDown handleClickDropDown={handleClickDropDown} handleFlashMessage={handleFlashMessage} handleClickLogin={handleClickLogin} handleClickSignup={handleClickSignup} isOpen={state.dropDownIsOpen} />
+      <Dropdown handleClickDropdown={handleClickDropdown} handleFlashMessage={handleFlashMessage} handleClickLogin={handleClickLogin} handleClickSignup={handleClickSignup} isOpen={state.dropdownIsOpen} />
     </>
   );
 }

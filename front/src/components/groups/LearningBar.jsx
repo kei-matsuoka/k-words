@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 
-export const LearningBar = ({ id, title, handleOnClick }) => {
+export const LearningBar = ({ url, title, handleOnClick }) => {
   return (
-    <div className="flex justify-between items-center fixed top-[57px] left-[76px] sp:left-0 border-b w-learn sp:w-full h-10 bg-white shadow-sm">
+    <div className="flex justify-between items-center fixed top-[57px] left-[76px] sp:left-0 border-b w-learn sp:w-full h-10 bg-white z-10">
       <div className="ml-4 text-sm">
-        <Link to={`/cards/${id}`}>戻る</Link>
+        <Link to={url}>戻る</Link>
       </div>
       <div>{title}</div>
       <div className="mr-4 text-sm">

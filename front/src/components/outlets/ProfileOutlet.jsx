@@ -86,8 +86,8 @@ export const ProfileOutlet = () => {
           <ValidationError message={errors.email.message} />
         )}
 
-        <input className="button-color
-                        button-color:hover
+        <input className="bg-gray-800
+                        hover:bg-gray-600
                       text-white
                         w-full
                         py-3
