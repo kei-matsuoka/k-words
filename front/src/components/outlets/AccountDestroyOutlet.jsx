@@ -30,12 +30,12 @@ export const AccountDestroyOutlet = () => {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-[480px] sb:w-full">
-        <h2 className='text-lg font-bold mb-8'>アカウント削除</h2>
-        <input className="button-color
-                        button-color:hover
+        <h2 className='text-lg font-bold mb-4'>アカウント削除</h2>
+        <input className="bg-red-600
+                        hover:bg-red-800
                       text-white
                         w-full
-                        py-3
+                        py-2.5
                         mt-6
                         rounded-sm
                         duration-300"

@@ -6,7 +6,7 @@ import { PatchWordForm } from "../forms/PatchWordForm";
 import { Modal } from "../modals/Modal";
 import { Words } from "../groups/Words";
 
-export const MyPage = ({handleFlashMessage}) => {
+export const MyPage = ({ handleFlashMessage, setTitle }) => {
   const [userWords, setUserWords] = useState([]);
   const [patchModalIsOpen, setPatchModalIsOpen] = useState(false);
   const [word, setWord] = useState();
@@ -52,23 +52,48 @@ export const MyPage = ({handleFlashMessage}) => {
     }
   };
 
-  // const handleFlashMessage = (color, message) => {
-  //   ref.current?.stateChange(color, message)
-  // }
-
   useEffect(() => {
     handleGetUserWords();
+    setTitle("マイページ");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setUserWords]);
 
   return (
     <>
-      <h1 className="p-6">マイ用語</h1>
-      {userWords ? <Words words={userWords}
-        handleClickPatch={handleClickPatch}
-        handleClickDestroy={handleClickDestroy} />
-        : <p>マイ用語がありません。</p>}
-      {patchModalIsOpen && <Modal onClick={handleClickPatch} isOpen={patchModalIsOpen}><PatchWordForm handleGetUserWords={handleGetUserWords} handleClickPatch={handleClickPatch} handleFlashMessage={handleFlashMessage} word={word} /></Modal>}
+      {patchModalIsOpen &&
+        <Modal
+          onClick={handleClickPatch}
+          isOpen={patchModalIsOpen}>
+          <PatchWordForm
+            handleGetUserWords={handleGetUserWords}
+            handleClickPatch={handleClickPatch}
+            handleFlashMessage={handleFlashMessage}
+            word={word}
+          />
+        </Modal>
+      }
+      <div className='flex w-full h-12 rounded-t bg-gray-50'>
+        <button className='flex justify-center items-center w-1/3 h-12 bg-gray-800 text-white rounded-t'>
+          マイ単語
+        </button>
+        <button className='flex justify-center items-center w-1/3 h-12 bg-white border-t border-r rounded-t'>
+          お気に入り
+        </button>
+        <button className='flex justify-center items-center w-1/3 h-12 bg-white border-t border-r rounded-t'>
+          コメント
+        </button>
+      </div>
+      <div className="w-full bg-gray-800 rounded-b shadow-sm px-4 pb-4 pt-1">
+        {userWords ?
+          <Words
+            words={userWords}
+            handleClickPatch={handleClickPatch}
+            handleClickDestroy={handleClickDestroy}
+          />
+          :
+          <p>マイ用語がありません</p>
+        }
+      </div>
     </>
   );
 }

@@ -1,8 +1,8 @@
-import { Word } from "./Word";
+import { Word } from "../parts/Word";
 
 export const Words = ({ words, handleClickPatch, handleClickDestroy }) => {
   return (
-    <div className="flex flex-col px-4 py-1 w-full">
+    <div className="flex flex-col">
       {words.map((word) => <Word
         word={word}
         key={word.id}

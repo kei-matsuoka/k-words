@@ -8,6 +8,7 @@ import { reg_list } from "../../constants";
 import { FlashMessage } from "../parts/FlashMessage";
 import { LogoutMessage } from "../parts/LogoutMessage";
 import { getWords } from "../../apis/words";
+import { Footer } from "../groups/Footer";
 
 export const Top = () => {
   const [words, setWords] = useState([]);
@@ -92,12 +93,13 @@ export const Top = () => {
         resetWords={resetWords}
       />
       <JColumnBar handleOnClick={handleOnClick} resetWords={resetWords} index={index} />
-      <div className="pt-[116px] ml-[76px] sp:ml-0 jb:pt-[166px] h-full bg-gray-50">
+      <div className="mt-[94px] ml-[76px] p-4 sp:ml-0 jb:mt-[142px] h-full bg-gray-50">
         {!filtered && searchWords.length !== 0 && <Words words={searchWords} />}
-        {!filtered && searchWords.length === 0 && <p className="pl-3.5 pb-3.5">該当する用語がありません。</p>}
+        {!filtered && searchWords.length === 0 && <p className="pt-2">該当する用語がありません</p>}
         {filtered && filteredWords && <Words words={filteredWords} />}
-        {filtered && !filteredWords && <p className="pl-3.5 pb-3.5">該当する用語がありません。</p>}
+        {filtered && !filteredWords && <p className="pt-2">該当する用語がありません</p>}
       </div>
+      <Footer />
       <FlashMessage ref={ref} />
       <LogoutMessage />
     </>

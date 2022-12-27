@@ -1,22 +1,39 @@
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import { AuthContext } from '../../AuthProvider';
 import { useParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion'
-import { initialState, wordsActionTypes, wordsReducer } from '../../reducers/words'
 import { getCardWords } from '../../apis/cards';
 import { getNewWords } from '../../helper';
 import { LearningWord } from '../groups/LeaningWord';
 import { LearningBar } from '../groups/LearningBar';
 
-export const Learning = () => {
-  const [state, dispatch] = useReducer(wordsReducer, initialState)
+export const Learning = ({ handleFlashMessage, setTitle }) => {
+  const [state, setState] = useState({ card: {}, words: [], length: 0 });
   const [[word_id, direction], setWordId] = useState([0, 1]);
+  const { setLoading } = useContext(AuthContext);
   const { id } = useParams();
   const variants = {
     enter: (direction) => { return { x: direction > 0 ? 0 : -2000 } },
     center: { x: 0 },
     exit: (direction) => { return { x: direction > 0 ? -2000 : 0 } }
   };
-  
+
+  const handleGetCardWords = async () => {
+    try {
+      const res = await getCardWords(id);
+      if (res?.status === 200) {
+        const new_words = getNewWords(res.words);
+        setState({ card: res.card, words: new_words, length: new_words.length });
+      } else {
+        console.log(res.message);
+      }
+    } catch (e) {
+      console.error(e);
+      handleFlashMessage("red", e.message);
+    }
+    setLoading(false);
+  };
+
   const handleOnClick = (newDirection) => {
     if (newDirection > 0) {
       if (state.length - 1 > word_id) {
@@ -34,43 +51,36 @@ export const Learning = () => {
   };
 
   useEffect(() => {
-    dispatch({ type: wordsActionTypes.FETCHING });
-    getCardWords(id)
-      .then((data) => {
-        const new_words = getNewWords(data.words);
-        dispatch({
-          type: wordsActionTypes.FETCH_SUCCESS,
-          payload: {
-            card: data.card,
-            words: new_words,
-            length: new_words.length
-          }
-        })
-      })
+    handleGetCardWords();
+    setTitle("")
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
-      {state.wordsList[0] ?
-      <div className='h-full w-full'>
-        <LearningBar id={id} title={state.card.title}/>
-        <AnimatePresence initial={false} custom={direction}>
-          <motion.div
-            key={state.wordsList[word_id].id}
-            variants={variants}
-            initial="enter"
-            custom={direction}
-            animate="center"
-            exit="exit"
-            transition={{ type: "tween", duration: 0.4 }}
-            className='top-[40px] sp:left-0 relative'>
-            <LearningWord
-              title={state.wordsList[word_id].title}
-              handleOnClick={handleOnClick} />
-          </motion.div>
-        </AnimatePresence>
-        </div>
+      {state.words[0] ?
+        <>
+          <LearningBar url={`/cards/${id}`} title={state.card.title} />
+          <div className='fixed w-full h-[450px] bg-gray-50 -z-20 -m-4 border-b'></div>
+          <AnimatePresence initial={false} custom={direction}>
+            <motion.div
+              key={state.words[word_id].id}
+              variants={variants}
+              initial="enter"
+              custom={direction}
+              animate="center"
+              exit="exit"
+              transition={{ type: "tween", duration: 0.4 }}
+              className='relative top-4'
+            >
+              <LearningWord
+                word_id={word_id}
+                state={state}
+                handleOnClick={handleOnClick}
+              />
+            </motion.div>
+          </AnimatePresence>
+        </>
         : null}
     </>
   );
