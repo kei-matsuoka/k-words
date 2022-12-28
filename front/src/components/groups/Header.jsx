@@ -50,8 +50,8 @@ export const Header = ({ handleGetWords,
     if (isSignedIn === true) {
       setState(state.wordModalIsOpen ? { wordModalIsOpen: false } : { wordModalIsOpen: true });
     } else {
-      setState(state.loginModalIsOpen ? { loginModalIsOpen: false } : { loginModalIsOpen: true });
-      state.loginModalIsOpen === false && handleFlashMessage("green", "用語を追加するにはログインが必要です");
+      handleClickLogin();
+      handleFlashMessage("green", "用語を追加するにはログインが必要です");
     }
   };
 
