@@ -9,15 +9,36 @@ import { FlashMessage } from "../parts/FlashMessage";
 import { LogoutMessage } from "../parts/LogoutMessage";
 import { getWords } from "../../apis/words";
 import { Footer } from "../groups/Footer";
+import { Modal } from "../modals/Modal";
+import { SignupForm } from "../forms/SignupForm";
+import { LoginForm } from "../forms/LoginForm";
+import { TokenResetForm } from "../forms/TokenResetForm";
 
 export const Top = () => {
+  const initialState = {
+    signupModalIsOpen: false,
+    loginModalIsOpen: false,
+    passwordModalIsOpen: false,
+  };
+
+  const { setLoading } = useContext(AuthContext);
+  const [state, setState] = useState(initialState);
   const [words, setWords] = useState([]);
+  const [index, setIndex] = useState(20);
   const [filtered, setFiltered] = useState(false);
   const [filteredWords, setFilteredWords] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
-  const { setLoading } = useContext(AuthContext);
-  const [index, setIndex] = useState(20);
   const ref = useRef();
+
+  const handleClickSignup = () => {
+    setState(state.signupModalIsOpen ? { signupModalIsOpen: false } : { signupModalIsOpen: true });
+  };
+  const handleClickLogin = () => {
+    setState(state.loginModalIsOpen ? { loginModalIsOpen: false } : { loginModalIsOpen: true });
+  };
+  const handleClickPassword = () => {
+    setState(state.passwordModalIsOpen ? { passwordModalIsOpen: false } : { passwordModalIsOpen: true });
+  };
 
   const handleGetWords = async () => {
     try {
@@ -88,20 +109,61 @@ export const Top = () => {
       <Header
         handleGetWords={handleGetWords}
         handleOnInput={handleOnInput}
+        handleClickSignup={handleClickSignup}
+        handleClickLogin={handleClickLogin}
+        handleClickPassword={handleClickPassword}
         handleFlashMessage={handleFlashMessage}
         searchKeyword={searchKeyword}
         resetWords={resetWords}
       />
       <JColumnBar handleOnClick={handleOnClick} resetWords={resetWords} index={index} />
       <div className="mt-[94px] ml-[76px] p-4 sp:ml-0 jb:mt-[142px] h-full bg-gray-50">
-        {!filtered && searchWords.length !== 0 && <Words words={searchWords} />}
-        {!filtered && searchWords.length === 0 && <p className="pt-2">該当する用語がありません</p>}
-        {filtered && filteredWords && <Words words={filteredWords} />}
-        {filtered && !filteredWords && <p className="pt-2">該当する用語がありません</p>}
+        {!filtered && searchWords.length !== 0 &&
+          <Words 
+            words={searchWords}
+            handleClickLogin={handleClickLogin}
+            handleFlashMessage={handleFlashMessage}
+            handleWords={handleGetWords}
+          />
+        }
+        {filtered && filteredWords &&
+          <Words 
+            words={filteredWords}
+            handleClickLogin={handleClickLogin}
+            handleFlashMessage={handleFlashMessage}
+            handleWords={handleGetWords}
+          />
+        }
+        {!filtered && searchWords.length === 0 && <p className="pt-2">該当する用語がありません。</p>}
+        {filtered && !filteredWords && <p className="pt-2">該当する用語がありません。</p>}
       </div>
       <Footer />
       <FlashMessage ref={ref} />
       <LogoutMessage />
+
+      <Modal onClick={handleClickSignup} isOpen={state.signupModalIsOpen}>
+        <SignupForm
+          handleClickSignup={handleClickSignup}
+          handleClickLogin={handleClickLogin}
+          handleFlashMessage={handleFlashMessage}
+        />
+      </Modal>
+
+      <Modal onClick={handleClickLogin} isOpen={state.loginModalIsOpen}>
+        <LoginForm
+          handleClickLogin={handleClickLogin}
+          handleClickSignup={handleClickSignup}
+          handleClickPassword={handleClickPassword}
+          handleFlashMessage={handleFlashMessage}
+        />
+      </Modal>
+
+      <Modal onClick={handleClickPassword} isOpen={state.passwordModalIsOpen}>
+        <TokenResetForm
+          handleClickPassword={handleClickPassword}
+          handleFlashMessage={handleFlashMessage}
+        />
+      </Modal>
     </>
   );
 }

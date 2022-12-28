@@ -1,16 +1,10 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:show, :update, :destroy]
-
-  def show
-    @user = User.find(params[:id])
-    @words = @user.words
-    render json: { status: 200, words: @words }
-  end
+  before_action :logged_in_user, only: [:update, :destroy]
 
   def create
     user = User.find_by(email: user_params[:email].downcase)
     if user
-      render json: { status: 400, message: 'このメールアドレスは既に使われています' } if user
+      render json: { status: 400, message: 'このメールアドレスは既に使われています' }
     else
       user = User.new(user_params)
       if user.save!
@@ -23,8 +17,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    user = User.find(params[:id])
-    if user.update!(user_params)
+    if @current_user.update!(user_params)
       render json: { status: 200, user: user, message:'プロフィールを修正しました' }
     else 
       render json: { status: 500, message: 'プロフィールを修正できません'  }
@@ -32,8 +25,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    user = User.find(params[:id])
-    if user.destroy
+    if @current_user.destroy
       render json: { status: 200, message: 'アカウントを削除しました' } 
     else 
       render json: { status: 500, message: 'アカウントを削除できません'  }

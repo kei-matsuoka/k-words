@@ -4,7 +4,7 @@ import { AuthContext } from '../../AuthProvider';
 import { Login } from '../../apis/login';
 import { ValidationError } from '../parts/ValidationError';
 
-export const LoginForm = ({ handleClickLogin, handleClickSignup, handleClickPassword, handleFlashMessage }) => {
+export const LoginForm = ({ handleClickLogin, handleClickSignup, handleClickPassword, handleFlashMessage　}) => {
   const { register, handleSubmit, formState: { errors } } = useForm({
     mode: 'onBlur',
     criteriaMode: 'all',
@@ -15,10 +15,10 @@ export const LoginForm = ({ handleClickLogin, handleClickSignup, handleClickPass
     try {
       const res = await Login(data.email, data.password, data.remember_me);
       if (res?.status === 201) {
+        handleClickLogin();
         setIsSignedIn(true);
         setCurrentUser(res.user);
         handleFlashMessage("rgb(48, 200, 214)", "ログインしました");
-        handleClickLogin();
       } else if (res?.status === 401) {
         handleFlashMessage("red", res.message);
       } else {

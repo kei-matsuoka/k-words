@@ -10,8 +10,17 @@ export const getWords = () => {
   })
 };
 
-export const createWord = (data) => {
-  return axios.post(wordsUrl, {
+export const getUserWords = (user_id) => {
+  return axios.get(userWordUrl(user_id), { withCredentials: true }
+  ).then(res => {
+    return res.data
+  }).catch(e => {
+    throw e;
+  });
+};
+
+export const createWord = (data, user_id) => {
+  return axios.post(userWordUrl(user_id), {
     title: data.title,
     kana: data.kana,
     meaning: data.meaning,

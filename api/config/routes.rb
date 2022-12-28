@@ -3,24 +3,29 @@ Rails.application.routes.draw do
   post '/signup', to: 'users#create'
   
   # ユーザー
-  get 'users/:id', to: 'users#show'
+  get '/users/:id', to: 'users#show'
   patch '/users/:id', to: 'users#update'
   delete '/users/:id', to: 'users#destroy'
 
   # ログイン
-  post '/login', to: 'sessions#create'
   get '/login', to: 'sessions#show'
+  post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
   # ワード
   get '/words', to: 'words#index'
-  post '/words', to: 'words#create'
-  patch '/words/:id', to: 'words#update'
-  delete '/words/:id', to: 'words#destroy'
+  get '/users/:id/words', to: 'words#show'
+  get '/cards/:id/words', to: 'words#show_card_words'
+  post '/users/:id/words', to: 'words#create'
+  patch '/users/:id/words/', to: 'words#update'
+  delete '/users/:id/words/', to: 'words#destroy'
 
   # カード
   get '/cards', to: 'cards#index'
-  get '/cards/:id', to: 'cards#show'
+
+  # お気に入り
+  get '/users/:id/favorites', to: 'favorites#show'
+  post '/users/:id/favorites', to: 'favorites#favorite'
 
   # アカウントの有効化
   resources :account_activations, only: [:edit]

@@ -3,9 +3,10 @@ import { AuthContext } from '../../AuthProvider';
 import { MdHome, MdPerson, MdArticle, MdSettings, MdViewHeadline } from 'react-icons/md';
 import { SideBarLink } from '../parts/SideBarLink';
 
-export const SideBar = ({ handleClickSideBar, handleFlashMessage, handleClickLogin }) => {
+export const SideBar = ({ handleFlashMessage, handleClickLogin, handleClickSideBar }) => {
   const { isSignedIn } = useContext(AuthContext);
   const handleLoginWithMessage = () => {
+    handleClickSideBar && handleClickSideBar();
     handleClickLogin();
     handleFlashMessage("green", "ログインしてください");
   };
@@ -14,18 +15,18 @@ export const SideBar = ({ handleClickSideBar, handleFlashMessage, handleClickLog
       <button onClick={handleClickSideBar} className="pt-3.5 pb-4 text-gray-800 hover:text-gray-600 duration-300">
         <MdViewHeadline size={28} className="mx-auto" />
       </button>
-      <SideBarLink handleClick={handleClickSideBar} url="/" title="ホーム"><MdHome size={24} /></SideBarLink>
+      <SideBarLink handleOnClick={handleClickSideBar} url="/" title="ホーム"><MdHome size={24} /></SideBarLink>
       { isSignedIn ?
       <>
-        <SideBarLink handleClick={handleClickSideBar} url="/dashboard" title="単語カード"><MdArticle size={24} /></SideBarLink>
-        <SideBarLink handleClick={handleClickSideBar} url="/mypage" title="マイページ"><MdPerson size={24} /></SideBarLink>
-        <SideBarLink handleClick={handleClickSideBar} url="/settings" title="設定"><MdSettings size={24} /></SideBarLink>
+        <SideBarLink handleOnClick={handleClickSideBar} url="/dashboard" title="単語カード"><MdArticle size={24} /></SideBarLink>
+        <SideBarLink handleOnClick={handleClickSideBar} url="/mypage" title="マイページ"><MdPerson size={24} /></SideBarLink>
+        <SideBarLink handleOnClick={handleClickSideBar} url="/settings" title="設定"><MdSettings size={24} /></SideBarLink>
       </>
       :
       <>
-        <SideBarLink handleClick={handleLoginWithMessage} url="#" title="単語カード"><MdArticle size={24} /></SideBarLink>
-        <SideBarLink handleClick={handleLoginWithMessage} url="#" title="マイページ"><MdPerson size={24} /></SideBarLink>
-        <SideBarLink handleClick={handleLoginWithMessage} url="#" title="設定"><MdSettings size={24} /></SideBarLink>
+        <SideBarLink handleOnClick={handleLoginWithMessage} url="#" title="単語カード"><MdArticle size={24} /></SideBarLink>
+        <SideBarLink handleOnClick={handleLoginWithMessage} url="#" title="マイページ"><MdPerson size={24} /></SideBarLink>
+        <SideBarLink handleOnClick={handleLoginWithMessage} url="#" title="設定"><MdSettings size={24} /></SideBarLink>
       </>
       }
     </div>

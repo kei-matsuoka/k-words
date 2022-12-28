@@ -1,98 +1,48 @@
-import { useState, useEffect, useContext } from "react";
-import { AuthContext } from '../../AuthProvider';
-import { getUserWords } from '../../apis/users';
-import { destroyWord } from '../../apis/words';
-import { PatchWordForm } from "../forms/PatchWordForm";
-import { Modal } from "../modals/Modal";
-import { Words } from "../groups/Words";
+import { useState, useEffect } from "react";
+import { Link, Outlet, useLocation } from "react-router-dom";
 
 export const MyPage = ({ handleFlashMessage, setTitle }) => {
-  const [userWords, setUserWords] = useState([]);
-  const [patchModalIsOpen, setPatchModalIsOpen] = useState(false);
-  const [word, setWord] = useState();
-  const { setLoading, currentUser } = useContext(AuthContext);
+  const [index, setIndex] = useState(0);
+  const location = useLocation();
+  const tab_list = [
+    { url: '/mypage/words', title: "マイ用語" },
+    { url: '/mypage/favorites', title: "お気に入り" },
+    { url: '/mypage/comments', title: "コメント" }
+  ];
 
-  const handleGetUserWords = async () => {
-    try {
-      const res = await getUserWords(currentUser.id);
-      if (res?.status === 200) {
-        setUserWords(res.words);
-      } else {
-        console.log(res.message);
-      }
-    } catch (e) {
-      console.error(e);
-      handleFlashMessage("red", e.message);
-    }
-    setLoading(false);
-  };
-
-  const handleClickDestroy = async (id) => {
-    try {
-      const res = await destroyWord(id);
-      if (res?.status === 200) {
-        handleGetUserWords();
-        handleFlashMessage("rgb(48, 200, 214)", res.message);
-      } else {
-        handleFlashMessage("red", res.message);
-      }
-    } catch (e) {
-      console.error(e);
-      handleFlashMessage("red", e.message);
-    }
-    setLoading(false);
-  };
-
-  const handleClickPatch = (word) => {
-    if (!patchModalIsOpen) {
-      setPatchModalIsOpen(true);
-      setWord(word);
+  const handleLocation = () => {
+    if (location.pathname === '/mypage') {
+      setIndex(0);
     } else {
-      setPatchModalIsOpen(false);
+      const tab_index = tab_list.findIndex((tab) => { return tab.url === location.pathname });
+      setIndex(tab_index);
     }
+  };
+
+  const handleOnClick = (i) => {
+    setIndex(i);
   };
 
   useEffect(() => {
-    handleGetUserWords();
     setTitle("マイページ");
+    handleLocation();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setUserWords]);
+  }, [setTitle]);
 
   return (
     <>
-      {patchModalIsOpen &&
-        <Modal
-          onClick={handleClickPatch}
-          isOpen={patchModalIsOpen}>
-          <PatchWordForm
-            handleGetUserWords={handleGetUserWords}
-            handleClickPatch={handleClickPatch}
-            handleFlashMessage={handleFlashMessage}
-            word={word}
-          />
-        </Modal>
-      }
-      <div className='flex w-full h-12 rounded-t bg-gray-50'>
-        <button className='flex justify-center items-center w-1/3 h-12 bg-gray-800 text-white rounded-t'>
-          マイ単語
-        </button>
-        <button className='flex justify-center items-center w-1/3 h-12 bg-white border-t border-r rounded-t'>
-          お気に入り
-        </button>
-        <button className='flex justify-center items-center w-1/3 h-12 bg-white border-t border-r rounded-t'>
-          コメント
-        </button>
+      <div className='flex w-full h-12 rounded-t bg-gray-50 text-sm'>
+        {tab_list.map((tab) =>
+          <Link
+            to={tab.url}
+            key={tab_list.indexOf(tab)}
+            onClick={() => handleOnClick(tab_list.indexOf(tab))}
+            className={`flex justify-center items-center w-1/3 h-12 rounded-t border-t border-r duration-200 hover:bg-gray-100 ${tab_list.indexOf(tab) === 0 && "border-l"} ${tab_list.indexOf(tab) === index && "bg-gray-800 text-white border-none hover:bg-gray-800 "}`}
+          >{tab.title}</Link>
+        )}
       </div>
       <div className="w-full bg-gray-800 rounded-b shadow-sm px-4 pb-4 pt-1">
-        {userWords ?
-          <Words
-            words={userWords}
-            handleClickPatch={handleClickPatch}
-            handleClickDestroy={handleClickDestroy}
-          />
-          :
-          <p>マイ用語がありません</p>
-        }
+        <Outlet context={[handleFlashMessage]} />
       </div>
     </>
   );

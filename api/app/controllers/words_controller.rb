@@ -1,21 +1,34 @@
 class WordsController < ApplicationController
-  before_action :logged_in_user, only: [:create, :update, :destroy]
+  before_action :logged_in_user, only: [:show, :create, :update, :destroy]
   before_action :correct_user, only: [:update, :destroy]
 
   def index
-    @words = Word.all
-    if @words
+    words = Word.all
+    if words
       render json: { status: 200,
-                     words: @words.as_json(:include => { :user => { :only => :name } })
+                     words: words.as_json(:include => [ :user => { :only => :name }, :users => { :only => :id} ])
                    }
     else
       render json: { status: 401, message: '用語がありません' }
     end
   end
 
+  def show
+    words = @current_user.words
+    render json: { status: 200,
+                   words: words.as_json(:include => [ :user => { :only => :name }, :users => { :only => :id} ])
+                 }
+  end
+
+  def show_card_words
+    card = Card.find(params[:id])
+    words = card.words
+    render json: { status: 200, card: card, words: words }
+  end
+
   def create
-    @word = current_user.words.build(word_params)
-    if @word.save!
+    word = @current_user.words.build(word_params)
+    if word.save!
       render json: { status: 201, message: '用語を追加しました' }
     else
       render json: { status: 500, message: '用語を追加できません' }
@@ -23,7 +36,6 @@ class WordsController < ApplicationController
   end
 
   def update
-    @word = Word.find(params[:id])
     if @word.update!(word_params)
       render json: { status: 200, message: '用語を修正しました' }
     else

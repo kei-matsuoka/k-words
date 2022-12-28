@@ -25,6 +25,16 @@ export const Dropdown = ({ handleClickDropdown, handleFlashMessage, handleClickL
     setLoading(false);
   };
 
+  const handleLoginWithDrodown = () => {
+    handleClickDropdown();
+    handleClickLogin();
+  };
+
+  const handleSignupWithDrodown = () => {
+    handleClickDropdown();
+    handleClickSignup();
+  };
+
   return (
     <AnimatePresence>
       {isOpen &&
@@ -48,8 +58,8 @@ export const Dropdown = ({ handleClickDropdown, handleFlashMessage, handleClickL
                 :
                 <>
                   <div className='px-4 py-2.5 z-30 border-b'>ゲスト</div>
-                  <Link to="#" onClick={handleClickLogin}><div className='py-4 pl-4 pr-8 hover:bg-gray-100 duration-200'>ログイン</div></Link>
-                  <Link to="#" onClick={handleClickSignup}><div className='py-4 pl-4 pr-8 hover:bg-gray-100 duration-200 rounded-b'>新規登録</div></Link>
+                  <Link to="#" onClick={handleLoginWithDrodown}><div className='py-4 pl-4 pr-8 hover:bg-gray-100 duration-200'>ログイン</div></Link>
+                  <Link to="#" onClick={handleSignupWithDrodown}><div className='py-4 pl-4 pr-8 hover:bg-gray-100 duration-200 rounded-b'>新規登録</div></Link>
                 </>
               }
             </div>

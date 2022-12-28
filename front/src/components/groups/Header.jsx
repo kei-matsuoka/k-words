@@ -1,23 +1,28 @@
 import { useState, useContext } from 'react';
-import { useLocation } from 'react-router-dom';
 import { AuthContext } from '../../AuthProvider';
+import { useLocation } from 'react-router-dom';
 import { Dropdown } from './Dropdown';
 import { SideBar } from '../groups/SideBar';
 import { Modal } from "../modals/Modal";
+import { SideBarModal } from '../modals/SideBarModal';
+import { SearchInputModal } from '../modals/SearchInputModal';
 import { WordForm } from "../forms/WordForm";
-import { SignupForm } from '../forms/SignupForm';
-import { LoginForm } from '../forms/LoginForm';
 import { SideBarButton } from '../buttons/SideBarButton';
+import { SearchButton } from '../buttons/SearchButton';
 import { AddButton } from '../buttons/AddButton';
+import { DropdownButton } from '../buttons/DropdownButton';
 import { HeaderLogo } from '../parts/HeaderLogo';
 import { SearchInput } from '../parts/SearchInput';
-import { DropdownButton } from '../buttons/DropdownButton';
-import { SideBarModal } from '../modals/SideBarModal';
-import { SearchButton } from '../buttons/SearchButton';
-import { SearchInputModal } from '../modals/SearchInputModal';
-import { TokenResetForm } from '../forms/TokenResetForm';
 
-export const Header = ({ handleGetWords, handleOnInput, handleFlashMessage, searchKeyword, resetWords }) => {
+export const Header = ({ handleGetWords,
+                         handleOnInput,
+                         handleClickSignup,
+                         handleClickLogin,
+                         handleFlashMessage,
+                         searchKeyword,
+                         resetWords 
+                        }) => {
+
   const initialState = {
     sideBarIsOpen: false,
     dropdownIsOpen: false,
@@ -27,6 +32,7 @@ export const Header = ({ handleGetWords, handleOnInput, handleFlashMessage, sear
     passwordModalIsOpen: false,
     wordModalIsOpen: false,
   };
+
   const { isSignedIn } = useContext(AuthContext);
   const [state, setState] = useState(initialState);
   const location = useLocation();
@@ -34,20 +40,11 @@ export const Header = ({ handleGetWords, handleOnInput, handleFlashMessage, sear
   const handleClickSideBar = () => {
     setState(state.sideBarIsOpen ? { sideBarIsOpen: false } : { sideBarIsOpen: true });
   };
-  const handleClickDropdown = () => {
-    setState(state.dropdownIsOpen ? { dropdownIsOpen: false } : { dropdownIsOpen: true });
-  };
   const handleClickSearchInput = () => {
     setState(state.searchInputIsOpen ? { searchInputIsOpen: false } : { searchInputIsOpen: true });
   };
-  const handleClickSignup = () => {
-    setState(state.signupModalIsOpen ? { signupModalIsOpen: false } : { signupModalIsOpen: true });
-  };
-  const handleClickLogin = () => {
-    setState(state.loginModalIsOpen ? { loginModalIsOpen: false } : { loginModalIsOpen: true });
-  };
-  const handleClickPassword = () => {
-    setState(state.passwordModalIsOpen ? { passwordModalIsOpen: false } : { passwordModalIsOpen: true });
+  const handleClickDropdown = () => {
+    setState(state.dropdownIsOpen ? { dropdownIsOpen: false } : { dropdownIsOpen: true });
   };
   const handleClickWord = () => {
     if (isSignedIn === true) {
@@ -85,30 +82,6 @@ export const Header = ({ handleGetWords, handleOnInput, handleFlashMessage, sear
         </div>
       </nav>
 
-      <Modal onClick={handleClickSignup} isOpen={state.signupModalIsOpen}>
-        <SignupForm
-          handleClickSignup={handleClickSignup}
-          handleClickLogin={handleClickLogin}
-          handleFlashMessage={handleFlashMessage}
-        />
-      </Modal>
-
-      <Modal onClick={handleClickLogin} isOpen={state.loginModalIsOpen}>
-        <LoginForm
-          handleClickLogin={handleClickLogin}
-          handleClickSignup={handleClickSignup}
-          handleClickPassword={handleClickPassword}
-          handleFlashMessage={handleFlashMessage}
-        />
-      </Modal>
-
-      <Modal onClick={handleClickPassword} isOpen={state.passwordModalIsOpen}>
-        <TokenResetForm
-          handleClickPassword={handleClickPassword}
-          handleFlashMessage={handleFlashMessage}
-        />
-      </Modal>
-
       <SearchInputModal onClick={handleClickSearchInput} isOpen={state.searchInputIsOpen}>
         <SearchInput
           handleOnInput={handleOnInput}
@@ -125,7 +98,7 @@ export const Header = ({ handleGetWords, handleOnInput, handleFlashMessage, sear
       </Modal>
 
       <SideBarModal onClick={handleClickSideBar} isOpen={state.sideBarIsOpen}>
-        <SideBar handleClickSideBar={handleClickSideBar} handleFlashMessage={handleFlashMessage} handleClickLogin={handleClickLogin} />
+        <SideBar handleFlashMessage={handleFlashMessage} handleClickLogin={handleClickLogin} handleClickSideBar={handleClickSideBar} />
       </SideBarModal>
 
       <div className='sp:hidden'>

@@ -15,7 +15,8 @@ export const JColumnBar = ({ resetWords, handleOnClick, index }) => {
             onClick={() => handleOnClick(j_column_list.indexOf(column))}
             className={`w-12 h-12 hover:bg-gray-100 duration-100 border-r border-b ${j_column_list.indexOf(column) === index ? "bg-gray-100" : "bg-white"}`}
           >{column}</button>
-        </li>)}
+        </li>
+      )}
     </ul>
   );
 }
