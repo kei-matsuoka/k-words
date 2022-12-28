@@ -9,14 +9,14 @@ export const WordForm = ({ handleGetWords, handleClickWord, handleFlashMessage }
     mode: 'onBlur',
     criteriaMode: 'all',
   });
-  const { setLoading } = useContext(AuthContext);
+  const { setLoading, currentUser } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
     try {
-      const res = await createWord(data);
+      const res = await createWord(data, currentUser.id);
       if (res?.status === 201) {
-        handleGetWords();
         handleClickWord();
+        handleGetWords();
         handleFlashMessage("rgb(48, 200, 214)", res.message);
       } else {
         handleFlashMessage("red", res.message);

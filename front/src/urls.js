@@ -1,15 +1,28 @@
 const HOST = process.env.REACT_APP_URL
 
+// 新規登録
 export const signupUrl = `${HOST}/signup`
-export const userUrl = (id) => `${HOST}/users/${id}`
-export const passwordUrl = `${HOST}/password_resets`
-export const activationUrl = `${HOST}/account_activations`
 
+// ユーザー
+export const userUrl = (id) => `${HOST}/users/${id}`
+
+// ログイン
 export const loginUrl = `${HOST}/login`
 export const logoutUrl = `${HOST}/logout`
 
+// ワード
 export const wordsUrl = `${HOST}/words`
-export const userWordUrl = (id) => `${HOST}/words/${id}`
+export const userWordUrl = (id) => `${HOST}/users/${id}/words`
+export const cardWordUrl = (id) => `${HOST}/cards/${id}/words`
 
+// カード
 export const cardsUrl = `${HOST}/cards`
-export const cardUrl = (id) => `${HOST}/cards/${id}`
+
+// お気に入り
+export const userFavoriteUrl = (id) => `${HOST}/users/${id}/favorites`
+
+// アカウントの有効化
+export const activationUrl = `${HOST}/account_activations`
+
+// パスワードの再設定
+export const passwordUrl = `${HOST}/password_resets`

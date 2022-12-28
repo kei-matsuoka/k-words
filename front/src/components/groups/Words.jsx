@@ -1,14 +1,17 @@
 import { Word } from "../parts/Word";
 
-export const Words = ({ words, handleClickPatch, handleClickDestroy }) => {
+export const Words = ({ words, handleClickPatch, handleClickDestroy, handleClickLogin, handleFlashMessage, handleWords }) => {
   return (
     <div className="flex flex-col">
       {words.map((word) => <Word
-        word={word}
         key={word.id}
+        word={word}
         handleClickDestroy={handleClickDestroy}
-        handleClickPatch={handleClickPatch} />)
-      }
+        handleClickPatch={handleClickPatch}
+        handleClickLogin={handleClickLogin}
+        handleFlashMessage={handleFlashMessage}
+        handleWords={handleWords}
+      />)}
     </div>
   );
 }

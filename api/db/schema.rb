@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_13_132544) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_27_104559) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "cards", force: :cascade do |t|
-    t.string "title"
+    t.string "title", null: false
     t.text "text"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
@@ -24,8 +24,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_13_132544) do
   end
 
   create_table "connections", force: :cascade do |t|
-    t.bigint "card_id"
-    t.bigint "word_id"
+    t.bigint "card_id", null: false
+    t.bigint "word_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["card_id", "word_id"], name: "index_connections_on_card_id_and_word_id", unique: true
@@ -33,10 +33,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_13_132544) do
     t.index ["word_id"], name: "index_connections_on_word_id"
   end
 
+  create_table "favorites", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "word_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "word_id"], name: "index_favorites_on_user_id_and_word_id", unique: true
+    t.index ["user_id"], name: "index_favorites_on_user_id"
+    t.index ["word_id"], name: "index_favorites_on_word_id"
+  end
+
   create_table "users", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.string "password_digest"
+    t.string "name", null: false
+    t.string "email", null: false
+    t.string "password_digest", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "remember_digest"
@@ -49,9 +59,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_13_132544) do
   end
 
   create_table "words", force: :cascade do |t|
-    t.string "title"
-    t.string "kana"
-    t.text "meaning"
+    t.string "title", null: false
+    t.string "kana", null: false
+    t.text "meaning", null: false
     t.text "text"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
@@ -62,5 +72,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_13_132544) do
   add_foreign_key "cards", "users"
   add_foreign_key "connections", "cards"
   add_foreign_key "connections", "words"
+  add_foreign_key "favorites", "users"
+  add_foreign_key "favorites", "words"
   add_foreign_key "words", "users"
 end

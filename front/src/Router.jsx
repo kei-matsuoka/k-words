@@ -15,9 +15,11 @@ import { ProfileOutlet } from "./components/outlets/ProfileOutlet";
 import { AccountDestroyOutlet } from './components/outlets/AccountDestroyOutlet';
 import { TokenResetOutlet } from './components/outlets/TokenResetOutlet';
 import { NotFoundPage } from './components/pages/NotFoundPage';
+import { WordsOutlet } from './components/outlets/WordsOutlet';
+import { FavoritesOutlet } from './components/outlets/FavoritesOutlet';
 
 export const Router = () => {
-  const { loading, setLoading, isSignedIn, setIsSignedIn, setCurrentUser } = useContext(AuthContext);
+  const { loading, setLoading, isSignedIn, setIsSignedIn, setCurrentUser, logoutMessage, setLogoutMessage } = useContext(AuthContext);
 
   const handleGetCurrentUser = async () => {
     try {
@@ -44,6 +46,7 @@ export const Router = () => {
       if (isSignedIn) {
         return <DefaultPage>{children}</DefaultPage>;
       } else {
+        !logoutMessage.message && setTimeout(() => setLogoutMessage({ color: "red", message: "ログインしてください" }), 500) 
         return <Navigate to='/' />;
       }
     } else {
@@ -58,7 +61,11 @@ export const Router = () => {
         <Route path='/dashboard' element={<PrivateRoute><Dashboard /></PrivateRoute>} />
         <Route path='/cards/:id' element={<PrivateRoute><CardIndex /></PrivateRoute>} />
         <Route path='/cards/:id/learning' element={<PrivateRoute><Learning /></PrivateRoute>} />
-        <Route path='/mypage' element={<PrivateRoute><MyPage /></PrivateRoute>} />
+        <Route path='/mypage' element={<PrivateRoute><MyPage /></PrivateRoute>} >
+        <Route path='' element={<WordsOutlet />} />
+          <Route path='words' element={<WordsOutlet />} />
+          <Route path='favorites' element={<FavoritesOutlet />} />
+        </Route>
         <Route path='/valid/:id/:email' element={<DefaultPage><Valid /></DefaultPage>} />
         <Route path='/password/:id/:email' element={<DefaultPage><Password /></DefaultPage>} />
         <Route path='/settings' element={<PrivateRoute><Settings /></PrivateRoute>} >

@@ -21,12 +21,3 @@ export const destroyUser = (id) => {
     throw e;
   });
 };
-
-export const getUserWords = (id) => {
-  return axios.get(userUrl(id), { withCredentials: true }
-  ).then(res => {
-    return res.data
-  }).catch(e => {
-    throw e;
-  });
-};
