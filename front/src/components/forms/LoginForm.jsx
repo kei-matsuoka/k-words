@@ -5,7 +5,7 @@ import { Login } from '../../apis/login';
 import { ValidationError } from '../parts/ValidationError';
 
 export const LoginForm = ({ handleClickLogin, handleClickSignup, handleClickPassword, handleFlashMessage　}) => {
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
     mode: 'onBlur',
     criteriaMode: 'all',
   });
@@ -101,8 +101,9 @@ export const LoginForm = ({ handleClickLogin, handleClickSignup, handleClickPass
                         py-3
                         mt-6
                         rounded-sm
-                        duration-300"
-        type="submit" value="ログイン" />
+                        duration-300
+                        disabled:bg-gray-200"
+        type="submit" value="ログイン" disabled={!isDirty || !isValid}/>
       <div className='flex flex-col items-center justify-center text-sm mt-6'>
         <p>
           <span>パスワードを忘れた場合 </span>

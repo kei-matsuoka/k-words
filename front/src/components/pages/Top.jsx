@@ -45,6 +45,7 @@ export const Top = () => {
       const res = await getWords();
       if (res?.status === 200) {
         setWords(res?.words);
+        console.log(res.words)
       } else {
         handleFlashMessage("red", "用語がありません");
       }

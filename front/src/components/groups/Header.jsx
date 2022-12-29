@@ -15,13 +15,13 @@ import { HeaderLogo } from '../parts/HeaderLogo';
 import { SearchInput } from '../parts/SearchInput';
 
 export const Header = ({ handleGetWords,
-                         handleOnInput,
-                         handleClickSignup,
-                         handleClickLogin,
-                         handleFlashMessage,
-                         searchKeyword,
-                         resetWords 
-                        }) => {
+  handleOnInput,
+  handleClickSignup,
+  handleClickLogin,
+  handleFlashMessage,
+  searchKeyword,
+  resetWords
+}) => {
 
   const initialState = {
     sideBarIsOpen: false,
@@ -36,6 +36,7 @@ export const Header = ({ handleGetWords,
   const { isSignedIn } = useContext(AuthContext);
   const [state, setState] = useState(initialState);
   const location = useLocation();
+  const path = location.pathname
 
   const handleClickSideBar = () => {
     setState(state.sideBarIsOpen ? { sideBarIsOpen: false } : { sideBarIsOpen: true });
@@ -64,7 +65,7 @@ export const Header = ({ handleGetWords,
             <HeaderLogo resetWords={resetWords} />
           </div>
         </div>
-        {location.pathname === '/' &&
+        {path === '/' &&
           <>
             <div className='sp:hidden ml-10 mr-4 w-full'>
               <SearchInput handleOnInput={handleOnInput} searchKeyword={searchKeyword} />
@@ -75,7 +76,7 @@ export const Header = ({ handleGetWords,
           </>
         }
         <div className='flex'>
-          {location.pathname === '/' &&
+          {path === '/' &&
             <AddButton handleClickWord={handleClickWord} />
           }
           <DropdownButton handleClickDropdown={handleClickDropdown} />

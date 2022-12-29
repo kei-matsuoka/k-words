@@ -47,8 +47,8 @@ export const patchWord = (data, word_id) => {
   })
 };
 
-export const destroyWord = (id) => {
-  return axios.delete(userWordUrl(id), { withCredentials: true }
+export const destroyWord = (word_id) => {
+  return axios.delete(userWordUrl(word_id), { withCredentials: true }
   ).then(res => {
     return res.data
   }).catch(e => {

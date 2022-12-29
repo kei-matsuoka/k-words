@@ -1,9 +1,12 @@
 class User < ApplicationRecord
   attr_accessor :remember_token, :activation_token, :reset_token
-  has_many :cards, dependent: :destroy
   has_many :words, dependent: :destroy
+  has_many :cards, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  has_many :comments, dependent: :destroy
   has_many :favorite_words, through: :favorites, source: :word
+  has_many :commented_words, through: :comments, source: :word
+
   #emailをチェックするための正規表現
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
 

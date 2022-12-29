@@ -27,6 +27,11 @@ Rails.application.routes.draw do
   get '/users/:id/favorites', to: 'favorites#show'
   post '/users/:id/favorites', to: 'favorites#favorite'
 
+  # コメント
+  get '/users/:id/comments', to: 'comments#show'
+  post '/users/:id/comments', to: 'comments#create'
+  delete '/users/:id/comments/', to: 'comments#destroy'
+
   # アカウントの有効化
   resources :account_activations, only: [:edit]
   patch '/account_activations', to: 'account_activations#update'

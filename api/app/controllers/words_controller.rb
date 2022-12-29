@@ -6,7 +6,14 @@ class WordsController < ApplicationController
     words = Word.all
     if words
       render json: { status: 200,
-                     words: words.as_json(:include => [ :user => { :only => :name }, :users => { :only => :id} ])
+                     words: words.as_json(:include => [ 
+                      :user => { :only => :name },
+                      :favorite_users => { :only => :id },
+                      :commenters => { :only => :id },
+                      :comments => { :include => [
+                        :user => { :only => [:id, :name] }
+                      ] }
+                     ])
                    }
     else
       render json: { status: 401, message: '用語がありません' }
@@ -16,8 +23,15 @@ class WordsController < ApplicationController
   def show
     words = @current_user.words
     render json: { status: 200,
-                   words: words.as_json(:include => [ :user => { :only => :name }, :users => { :only => :id} ])
-                 }
+                   words: words.as_json(:include => [ 
+                    :user => { :only => :name },
+                    :favorite_users => { :only => :id },
+                    :commenters => { :only => :id },
+                    :comments => { :include => [
+                      :user => { :only => [:id, :name] }
+                    ] }
+                   ])
+                  }
   end
 
   def show_card_words

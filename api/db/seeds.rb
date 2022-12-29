@@ -33,4 +33,3 @@ Connection.create!(card_id: 2, word_id: 3)
 Connection.create!(card_id: 2, word_id: 2)
 Connection.create!(card_id: 3, word_id: 2)
 Connection.create!(card_id: 3, word_id: 4)
-

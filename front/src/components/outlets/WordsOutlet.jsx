@@ -29,9 +29,9 @@ export const WordsOutlet = () => {
     setLoading(false);
   };
 
-  const handleClickDestroy = async (id) => {
+  const handleClickDestroy = async (word_id) => {
     try {
-      const res = await destroyWord(id);
+      const res = await destroyWord(word_id);
       if (res?.status === 200) {
         handleGetUserWords();
         handleFlashMessage("rgb(48, 200, 214)", res.message);
@@ -64,9 +64,10 @@ export const WordsOutlet = () => {
       {userWords ?
         <Words
           words={userWords}
+          handleWords={handleGetUserWords}
           handleClickPatch={handleClickPatch}
           handleClickDestroy={handleClickDestroy}
-          handleWords={handleGetUserWords}
+          handleFlashMessage={handleFlashMessage}
         />
         :
         <p className="text-white text-sm mt-3">マイ用語がありません。</p>

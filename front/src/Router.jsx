@@ -17,6 +17,7 @@ import { TokenResetOutlet } from './components/outlets/TokenResetOutlet';
 import { NotFoundPage } from './components/pages/NotFoundPage';
 import { WordsOutlet } from './components/outlets/WordsOutlet';
 import { FavoritesOutlet } from './components/outlets/FavoritesOutlet';
+import { CommentsOutlet } from './components/outlets/CommentsOutlet';
 
 export const Router = () => {
   const { loading, setLoading, isSignedIn, setIsSignedIn, setCurrentUser, logoutMessage, setLogoutMessage } = useContext(AuthContext);
@@ -65,6 +66,7 @@ export const Router = () => {
         <Route path='' element={<WordsOutlet />} />
           <Route path='words' element={<WordsOutlet />} />
           <Route path='favorites' element={<FavoritesOutlet />} />
+          <Route path='comments' element={<CommentsOutlet />} />
         </Route>
         <Route path='/valid/:id/:email' element={<DefaultPage><Valid /></DefaultPage>} />
         <Route path='/password/:id/:email' element={<DefaultPage><Password /></DefaultPage>} />
