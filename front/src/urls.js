@@ -21,6 +21,9 @@ export const cardsUrl = `${HOST}/cards`
 // お気に入り
 export const userFavoriteUrl = (id) => `${HOST}/users/${id}/favorites`
 
+// コメント
+export const userCommentUrl = (id) => `${HOST}/users/${id}/comments`
+
 // アカウントの有効化
 export const activationUrl = `${HOST}/account_activations`
 

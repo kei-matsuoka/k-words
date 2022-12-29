@@ -1,17 +1,24 @@
 class FavoritesController < ApplicationController
   before_action :logged_in_user, only: [:show, :create, :destroy]
-  before_action :correct_user, only: [:destroy]
 
   def show
-    favorites = current_user.favorite_words
+    favorite_words = current_user.favorite_words
     render json: { status: 200,
-                   words: favorites.as_json(:include => [ :user => { :only => :name }, :users => { :only => :id} ])
+                   words: favorite_words.as_json(:include => [
+                    :user => { :only => :name },
+                    :favorite_users => { :only => :id },
+                    :commenters => { :only => :id },
+                    :comments => { :include => [
+                      :user => { :only => [:id, :name] }
+                    ] }
+                   ])
                  }
   end
 
   def favorite
     @favorite = Favorite.find_by(favorite_params)
     if @favorite
+      correct_user
       destroy()
     else
       create()
@@ -43,7 +50,7 @@ class FavoritesController < ApplicationController
 
     # 正しいユーザーかどうかを確認
     def correct_user
-      @favorite = current_user.favorites.find_by(word_id: params[:word_id])
-      render json: { status: 401, message: '正しいアカウントでログインしてください' } if @favorite.nil?
+      favorite = current_user.favorites.find_by(id: @favorite.id)
+      render json: { status: 401, message: '正しいアカウントでログインしてください' } if favorite.nil?
     end
 end

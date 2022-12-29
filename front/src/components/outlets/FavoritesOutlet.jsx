@@ -32,7 +32,7 @@ export const FavoritesOutlet = () => {
   return (
     <>
       {userFavorites[0] ?
-        <Words words={userFavorites} />
+        <Words words={userFavorites} handleWords={handleGetUserFavorites} handleFlashMessage={handleFlashMessage} />
         :
         <p className="text-white text-sm mt-3">お気に入りの用語がありません。</p>
       }

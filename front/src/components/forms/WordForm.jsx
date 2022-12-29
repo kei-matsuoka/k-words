@@ -6,7 +6,7 @@ import { ValidationError } from '../parts/ValidationError';
 
 export const WordForm = ({ handleGetWords, handleClickWord, handleFlashMessage }) => {
   const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
-    mode: 'onBlur',
+    mode: 'onChange',
     criteriaMode: 'all',
   });
   const { setLoading, currentUser } = useContext(AuthContext);
@@ -135,7 +135,8 @@ export const WordForm = ({ handleGetWords, handleClickWord, handleFlashMessage }
                           py-3
                           mt-6
                           rounded-sm
-                          duration-300"
+                          duration-300
+                          disabled:bg-gray-200"
           type="submit" value="新規作成" disabled={!isDirty || !isValid} />
       </div>
     </form>

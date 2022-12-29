@@ -1,16 +1,22 @@
 import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../../AuthProvider';
 import { useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion'
 import { CommentButton } from '../buttons/CommentButton';
+import { CommentedButton } from '../buttons/CommentedButton';
 import { DestroyButton } from '../buttons/DestroyButton';
 import { FavoriteButton } from '../buttons/FavoriteButton';
 import { PatchButton } from '../buttons/PatchButton';
 import { UnFavoriteButton } from '../buttons/UnFavoriteButton';
 import { handleFavorite } from '../../apis/favorites';
+import { Comment } from './Comment';
+import { CommentForm } from '../forms/CommentForm';
 
 export const Word = ({ word, handleClickPatch, handleClickDestroy, handleClickLogin, handleFlashMessage, handleWords }) => {
   const { isSignedIn, currentUser, setLoading } = useContext(AuthContext);
   const [favorite, setFavorite] = useState(false);
+  const [commented, setCommented] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const path = location.pathname
 
@@ -20,16 +26,36 @@ export const Word = ({ word, handleClickPatch, handleClickDestroy, handleClickLo
   const handleOnClickPatch = () => {
     handleClickPatch(word);
   };
+  const handleClickComment = () => {
+    if (isSignedIn) {
+      setIsOpen(isOpen ? false : true);
+    } else {
+      handleFlashMessage("red", "この機能を使用するにはログインが必要です");
+      handleClickLogin();
+    }
+  };
 
   const isFavorite = () => {
     if (isSignedIn && (path === '/' || path.indexOf("mypage") !== -1)) {
-      if (word.users.findIndex(({ id }) => id === currentUser.id) !== -1) {
+      if (word.favorite_users.findIndex(({ id }) => id === currentUser.id) !== -1) {
         setFavorite(true);
       } else {
         setFavorite(false);
       }
     } else {
       setFavorite(false);
+    }
+  };
+
+  const isCommented = () => {
+    if (isSignedIn && (path === '/' || path.indexOf("mypage") !== -1)) {
+      if (word.commenters.findIndex(({ id }) => id === currentUser.id) !== -1) {
+        setCommented(true);
+      } else {
+        setCommented(false);
+      }
+    } else {
+      setCommented(false);
     }
   };
 
@@ -57,39 +83,78 @@ export const Word = ({ word, handleClickPatch, handleClickDestroy, handleClickLo
 
   useEffect(() => {
     isFavorite();
+    isCommented();
   }, [setFavorite, isSignedIn]);
 
   return (
     <article className='flex flex-col w-full px-8 pt-6 pb-5 mt-3 bg-white relative shadow rounded-sm'>
       {(path === '/mypage' || path === '/mypage/words') &&
         <div className='flex absolute top-4 right-6'>
-          <div className='mr-1'><PatchButton handleOnClickPatch={handleOnClickPatch} /></div>
-          <div><DestroyButton handleOnClickDestroy={handleOnClickDestroy} /></div>
+          <div className='mr-1'>
+            <PatchButton handleOnClickPatch={handleOnClickPatch} />
+          </div>
+          <div>
+            <DestroyButton handleOnClickDestroy={handleOnClickDestroy} />
+          </div>
         </div>
       }
+
       <h1 className="mb-1">{word.title}</h1>
       <div className="text-sm">
         <p>{word.meaning}</p>
         <p>{word.text}</p>
       </div>
+
       {(path === '/' || path.indexOf("mypage") !== -1) &&
-        <div className='flex justify-between mt-3 text-xs'>
-          <div className='flex items-center text-gray-500'>
-            <div className='flex items-center mr-4'>
-              {favorite ?
-                <UnFavoriteButton handleOnFavorite={handleOnFavorite} />
-                :
-                <FavoriteButton handleOnFavorite={handleOnFavorite} />
-              }
-              <p className='ml-1'>{word.users.length}</p>
-            </div>
-            <div className='flex items-center'>
-              <CommentButton />
-              <p className='ml-1'>{"0"}</p>
+        <>
+          <div className='flex justify-between mt-3 text-xs'>
+            <p className=''>by {word.user.name}</p>
+            <div className='flex items-center text-gray-500'>
+              <div className='flex items-center mr-4'>
+                {commented ?
+                  <CommentedButton handleClickComment={handleClickComment} />
+                  :
+                  <CommentButton handleClickComment={handleClickComment} />
+                }
+                <p className='ml-1'>{word.comments.length}</p>
+              </div>
+              <div className='flex items-center'>
+                {favorite ?
+                  <UnFavoriteButton handleOnFavorite={handleOnFavorite} />
+                  :
+                  <FavoriteButton handleOnFavorite={handleOnFavorite} />
+                }
+                <p className='ml-1'>{word.favorite_users.length}</p>
+              </div>
             </div>
           </div>
-          <p className=''>@{word.user.name}</p>
-        </div>
+          <AnimatePresence>
+            {isOpen &&
+              <motion.div
+                className='flex flex-col'
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ type: "tween", duration: 0.4 }}
+              >
+                <div className='mt-5 pt-3 border-t'>
+                  <CommentForm word={word} handleWords={handleWords} handleFlashMessage={handleFlashMessage} handleClickLogin={handleClickLogin} />
+                </div>
+                <div className='flex flex-col pb-1 ml-2'>
+                  {word.comments.map((comment) =>
+                    <Comment
+                      key={comment.id}
+                      comment={comment}
+                      handleFlashMessage={handleFlashMessage}
+                      handleWords={handleWords}
+                      handleClickLogin={handleClickLogin}
+                    />
+                  )}
+                </div>
+              </motion.div>
+            }
+          </AnimatePresence>
+        </>
       }
     </article>
   );

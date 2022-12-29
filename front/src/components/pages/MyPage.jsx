@@ -31,13 +31,13 @@ export const MyPage = ({ handleFlashMessage, setTitle }) => {
 
   return (
     <>
-      <div className='flex w-full h-12 rounded-t bg-gray-50 text-sm'>
+      <div className='flex w-full h-11 rounded-t bg-gray-50 text-sm'>
         {tab_list.map((tab) =>
           <Link
             to={tab.url}
             key={tab_list.indexOf(tab)}
             onClick={() => handleOnClick(tab_list.indexOf(tab))}
-            className={`flex justify-center items-center w-1/3 h-12 rounded-t border-t border-r duration-200 hover:bg-gray-100 ${tab_list.indexOf(tab) === 0 && "border-l"} ${tab_list.indexOf(tab) === index && "bg-gray-800 text-white border-none hover:bg-gray-800 "}`}
+            className={`flex justify-center items-center w-1/3 h-11 rounded-t border-t border-r duration-200 hover:bg-gray-100 ${tab_list.indexOf(tab) === 0 && "border-l"} ${tab_list.indexOf(tab) === index && "bg-gray-800 text-white border-none hover:bg-gray-800 "}`}
           >{tab.title}</Link>
         )}
       </div>
