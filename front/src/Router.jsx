@@ -18,6 +18,10 @@ import { NotFoundPage } from './components/pages/NotFoundPage';
 import { WordsOutlet } from './components/outlets/WordsOutlet';
 import { FavoritesOutlet } from './components/outlets/FavoritesOutlet';
 import { CommentsOutlet } from './components/outlets/CommentsOutlet';
+import { Policy } from './components/pages/Policy';
+import { Privacy } from './components/pages/Privacy';
+import { About } from './components/pages/About';
+import { Contact } from './components/pages/Contact';
 
 export const Router = () => {
   const { loading, setLoading, isSignedIn, setIsSignedIn, setCurrentUser, logoutMessage, setLogoutMessage } = useContext(AuthContext);
@@ -47,7 +51,7 @@ export const Router = () => {
       if (isSignedIn) {
         return <DefaultPage>{children}</DefaultPage>;
       } else {
-        !logoutMessage.message && setTimeout(() => setLogoutMessage({ color: "red", message: "ログインしてください" }), 500) 
+        !logoutMessage.message && setTimeout(() => setLogoutMessage({ color: "red", message: "ログインしてください" }), 500)
         return <Navigate to='/' />;
       }
     } else {
@@ -63,7 +67,7 @@ export const Router = () => {
         <Route path='/cards/:id' element={<PrivateRoute><CardIndex /></PrivateRoute>} />
         <Route path='/cards/:id/learning' element={<PrivateRoute><Learning /></PrivateRoute>} />
         <Route path='/mypage' element={<PrivateRoute><MyPage /></PrivateRoute>} >
-        <Route path='' element={<WordsOutlet />} />
+          <Route path='' element={<WordsOutlet />} />
           <Route path='words' element={<WordsOutlet />} />
           <Route path='favorites' element={<FavoritesOutlet />} />
           <Route path='comments' element={<CommentsOutlet />} />
@@ -76,6 +80,10 @@ export const Router = () => {
           <Route path='password' element={<TokenResetOutlet />} />
           <Route path='account' element={<AccountDestroyOutlet />} />
         </Route>
+        <Route path='/policy' element={<DefaultPage><Policy /></DefaultPage>} />
+        <Route path='/privacy' element={<DefaultPage><Privacy /></DefaultPage>} />
+        <Route path='/contact' element={<DefaultPage><Contact /></DefaultPage>} />
+        <Route path='/about' element={<DefaultPage><About /></DefaultPage>} />
         <Route path="*" element={<DefaultPage><NotFoundPage /></DefaultPage>} />
       </Routes>
     </BrowserRouter>

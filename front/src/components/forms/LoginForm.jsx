@@ -3,10 +3,11 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from '../../AuthProvider';
 import { Login } from '../../apis/login';
 import { ValidationError } from '../parts/ValidationError';
+import { MdClear } from 'react-icons/md';
 
-export const LoginForm = ({ handleClickLogin, handleClickSignup, handleClickPassword, handleFlashMessage　}) => {
+export const LoginForm = ({ handleClickLogin, handleClickSignup, handleClickPassword, handleFlashMessage }) => {
   const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
-    mode: 'onBlur',
+    mode: 'onChange',
     criteriaMode: 'all',
   });
   const { setLoading, setIsSignedIn, setCurrentUser } = useContext(AuthContext);
@@ -32,11 +33,9 @@ export const LoginForm = ({ handleClickLogin, handleClickSignup, handleClickPass
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col w-[480px] sp:w-full px-8 py-10 rounded-sm bg-white relative">
+    <form onSubmit={handleSubmit(onSubmit)} className="form relative">
       <h2 className='text-lg font-bold mb-8'>ログイン</h2>
-      <p className='absolute top-3 right-4 text-sm hover:cursor-pointer' onClick={handleClickLogin}>×</p>
+      <MdClear className='absolute top-4 right-4 button-gray-500' onClick={handleClickLogin} />
       <input
         className="border p-3 text-sm"
         type="email"
@@ -94,16 +93,7 @@ export const LoginForm = ({ handleClickLogin, handleClickSignup, handleClickPass
         />
         <p className='text-sm'>次回から自動でログインする</p>
       </div>
-      <input className="button-color
-                        hover:button-color
-                      text-white
-                        w-full
-                        py-3
-                        mt-6
-                        rounded-sm
-                        duration-300
-                        disabled:bg-gray-200"
-        type="submit" value="ログイン" disabled={!isDirty || !isValid}/>
+      <input className="button-form" value="ログイン" type="submit" disabled={!isDirty || !isValid} />
       <div className='flex flex-col items-center justify-center text-sm mt-6'>
         <p>
           <span>パスワードを忘れた場合 </span>

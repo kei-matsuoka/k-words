@@ -56,16 +56,9 @@ export const CommentForm = ({ word, handleWords, handleFlashMessage, handleClick
           })}
         />
 
-        <button className="bg-gray-800
-                          hover:bg-gray-600
-                        text-white
-                          rounded-sm
-                          duration-300
-                          disabled:bg-gray-200
-                          px-3
-                          ml-1"
-          type="submit" disabled={!isDirty || !isValid}
-        ><MdSend /></button>
+        <button className="button-comment-form" type="submit" disabled={!isDirty || !isValid}>
+          <MdSend />
+        </button>
       </div>
 
       <div className='text-xs'>

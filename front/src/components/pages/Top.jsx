@@ -13,6 +13,7 @@ import { Modal } from "../modals/Modal";
 import { SignupForm } from "../forms/SignupForm";
 import { LoginForm } from "../forms/LoginForm";
 import { TokenResetForm } from "../forms/TokenResetForm";
+import { Skeltons } from "../groups/Skeltons";
 
 export const Top = () => {
   const initialState = {
@@ -21,7 +22,7 @@ export const Top = () => {
     passwordModalIsOpen: false,
   };
 
-  const { setLoading } = useContext(AuthContext);
+  const { loading, setLoading } = useContext(AuthContext);
   const [state, setState] = useState(initialState);
   const [words, setWords] = useState([]);
   const [index, setIndex] = useState(20);
@@ -39,9 +40,13 @@ export const Top = () => {
   const handleClickPassword = () => {
     setState(state.passwordModalIsOpen ? { passwordModalIsOpen: false } : { passwordModalIsOpen: true });
   };
+  const handleFlashMessage = (color, message) => {
+    ref.current?.stateChange(color, message)
+  };
 
   const handleGetWords = async () => {
     try {
+      setLoading(true);
       const res = await getWords();
       if (res?.status === 200) {
         setWords(res?.words);
@@ -96,10 +101,6 @@ export const Top = () => {
     setFiltered(false);
   };
 
-  const handleFlashMessage = (color, message) => {
-    ref.current?.stateChange(color, message)
-  }
-
   useEffect(() => {
     handleGetWords();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -119,24 +120,28 @@ export const Top = () => {
       />
       <JColumnBar handleOnClick={handleOnClick} resetWords={resetWords} index={index} />
       <div className="mt-[94px] ml-[76px] p-4 sp:ml-0 jb:mt-[142px] h-full bg-gray-50">
-        {!filtered && searchWords.length !== 0 &&
-          <Words 
-            words={searchWords}
-            handleClickLogin={handleClickLogin}
-            handleFlashMessage={handleFlashMessage}
-            handleWords={handleGetWords}
-          />
+        {loading ? <Skeltons /> :
+          <>
+            {!filtered && (searchWords.length !== 0) &&
+              <Words
+                words={searchWords}
+                handleClickLogin={handleClickLogin}
+                handleFlashMessage={handleFlashMessage}
+                handleWords={handleGetWords}
+              />
+            }
+            {filtered && filteredWords &&
+              <Words
+                words={filteredWords}
+                handleClickLogin={handleClickLogin}
+                handleFlashMessage={handleFlashMessage}
+                handleWords={handleGetWords}
+              />
+            }
+            {!filtered && searchWords.length === 0 && <p className="pt-2">該当する用語がありません。</p>}
+            {filtered && !filteredWords && <p className="pt-2">該当する用語がありません。</p>}
+          </>
         }
-        {filtered && filteredWords &&
-          <Words 
-            words={filteredWords}
-            handleClickLogin={handleClickLogin}
-            handleFlashMessage={handleFlashMessage}
-            handleWords={handleGetWords}
-          />
-        }
-        {!filtered && searchWords.length === 0 && <p className="pt-2">該当する用語がありません。</p>}
-        {filtered && !filteredWords && <p className="pt-2">該当する用語がありません。</p>}
       </div>
       <Footer />
       <FlashMessage ref={ref} />

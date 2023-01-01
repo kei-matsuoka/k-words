@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { AuthContext } from '../../AuthProvider';
-import { DestroyButton } from '../buttons/DestroyButton';
 import { destroyComment } from '../../apis/comments';
+import { IoTrashSharp } from 'react-icons/io5';
 
 export const Comment = ({ comment, handleFlashMessage, handleWords, handleClickLogin }) => {
   const { setLoading, isSignedIn, currentUser } = useContext(AuthContext);
@@ -38,9 +38,7 @@ export const Comment = ({ comment, handleFlashMessage, handleWords, handleClickL
         </div>
       </div>
       {comment.user.id === currentUser.id &&
-        <div className=''>
-          <DestroyButton handleOnClickDestroy={handleCommentDestroy} />
-        </div>
+        <IoTrashSharp className='button-gray-500' onClick={handleCommentDestroy} />
       }
     </div>
   );

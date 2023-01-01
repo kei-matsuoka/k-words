@@ -6,9 +6,9 @@ export const LearningBar = ({ url, title, handleOnClick }) => {
       <div className="ml-4 text-sm">
         <Link to={url}>戻る</Link>
       </div>
-      <div>{title}</div>
+      <div className="mb-0.5">{title}</div>
       <div className="mr-4 text-sm">
-        <button>設定</button>
+        <div>　　</div>
       </div>
     </div>
   );

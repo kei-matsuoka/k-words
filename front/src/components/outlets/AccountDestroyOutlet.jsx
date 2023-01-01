@@ -6,7 +6,7 @@ import { destroyUser } from '../../apis/users';
 export const AccountDestroyOutlet = () => {
   const { setLoading, setCurrentUser, currentUser, setIsSignedIn, setLogoutMessage } = useContext(AuthContext);
   const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
-    mode: 'onBlur',
+    mode: 'onChange',
     criteriaMode: 'all',
   });
 

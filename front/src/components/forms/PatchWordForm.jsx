@@ -2,10 +2,11 @@ import { useContext } from 'react';
 import { AuthContext } from '../../AuthProvider';
 import { useForm } from "react-hook-form";
 import { patchWord } from '../../apis/words';
+import { MdClear } from 'react-icons/md';
 
 export const PatchWordForm = ({ handleGetUserWords, handleClickPatch, handleFlashMessage, word }) => {
   const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
-    mode: 'onBlur',
+    mode: 'onChange',
     criteriaMode: 'all',
     defaultValues: {
       title: word.title,
@@ -33,10 +34,9 @@ export const PatchWordForm = ({ handleGetUserWords, handleClickPatch, handleFlas
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col w-[480px] sp:w-full px-8 py-10 rounded-sm bg-white">
+    <form onSubmit={handleSubmit(onSubmit)} className="form relative">
       <h2 className='text-lg font-bold mb-8'>用語を編集する</h2>
+      <MdClear className='absolute top-4 right-4 button-gray-500' onClick={handleClickPatch} />
       <input
         className="border p-3 text-sm"
         type="text"
@@ -122,16 +122,7 @@ export const PatchWordForm = ({ handleGetUserWords, handleClickPatch, handleFlas
         <div className='text-red-500'>{errors.text.message}</div>
       )}
 
-      <input className="button-color
-                        button-color:hover
-                      text-white
-                        w-full
-                        py-3
-                        mt-6
-                        rounded-sm
-                        duration-300
-                      disabled:bg-gray-200"
-        type="submit" value="修正" disabled={!isDirty || !isValid} />
+      <input className="button-form" type="submit" value="修正" disabled={!isDirty || !isValid} />
     </form>
   );
 }

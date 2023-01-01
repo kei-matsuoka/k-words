@@ -6,16 +6,19 @@ import { destroyWord } from '../../apis/words';
 import { PatchWordForm } from "../forms/PatchWordForm";
 import { Modal } from "../modals/Modal";
 import { Words } from "../groups/Words";
+import { Skeltons } from "../groups/Skeltons";
 
 export const WordsOutlet = () => {
   const [userWords, setUserWords] = useState([]);
   const [patchModalIsOpen, setPatchModalIsOpen] = useState(false);
   const [patchWord, setPatchWord] = useState();
-  const { setLoading, currentUser } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
+  const { currentUser } = useContext(AuthContext);
   const [handleFlashMessage] = useOutletContext();
 
   const handleGetUserWords = async () => {
     try {
+      setLoading(true)
       const res = await getUserWords(currentUser.id);
       if (res?.status === 200) {
         setUserWords(res.words);
@@ -31,6 +34,7 @@ export const WordsOutlet = () => {
 
   const handleClickDestroy = async (word_id) => {
     try {
+      setLoading(true);
       const res = await destroyWord(word_id);
       if (res?.status === 200) {
         handleGetUserWords();
@@ -59,18 +63,21 @@ export const WordsOutlet = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setUserWords]);
 
+  console.log(userWords)
+
   return (
     <>
-      {userWords ?
-        <Words
-          words={userWords}
-          handleWords={handleGetUserWords}
-          handleClickPatch={handleClickPatch}
-          handleClickDestroy={handleClickDestroy}
-          handleFlashMessage={handleFlashMessage}
-        />
-        :
-        <p className="text-white text-sm mt-3">マイ用語がありません。</p>
+      {loading ? <Skeltons /> :
+        userWords[0] ?
+          <Words
+            words={userWords}
+            handleWords={handleGetUserWords}
+            handleClickPatch={handleClickPatch}
+            handleClickDestroy={handleClickDestroy}
+            handleFlashMessage={handleFlashMessage}
+          />
+          :
+          <p className="text-sm mt-3 p-4 bg-white rounded-sm">マイ用語がありません。</p>
       }
       <Modal
         onClick={handleClickPatch}

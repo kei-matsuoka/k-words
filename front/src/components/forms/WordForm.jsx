@@ -3,6 +3,7 @@ import { AuthContext } from '../../AuthProvider';
 import { useForm } from "react-hook-form";
 import { createWord } from '../../apis/words';
 import { ValidationError } from '../parts/ValidationError';
+import { MdClear } from 'react-icons/md';
 
 export const WordForm = ({ handleGetWords, handleClickWord, handleFlashMessage }) => {
   const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
@@ -29,11 +30,9 @@ export const WordForm = ({ handleGetWords, handleClickWord, handleFlashMessage }
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col w-[480px] sp:w-full px-8 py-10 rounded-sm bg-white relative">
+    <form onSubmit={handleSubmit(onSubmit)} className="form relative">
       <h2 className='text-lg font-bold mb-8'>用語を作成する</h2>
-      <p className='absolute top-3 right-4 text-sm hover:cursor-pointer' onClick={handleClickWord}>×</p>
+      <MdClear className='absolute top-4 right-4 button-gray-500' onClick={handleClickWord} />
       <input
         className="border p-3 text-sm"
         type="text"
@@ -126,19 +125,7 @@ export const WordForm = ({ handleGetWords, handleClickWord, handleFlashMessage }
           <ValidationError message={errors.text.message} />
         )}
       </div>
-
-      <div>
-        <input className="button-color
-                          hover:button-color
-                        text-white
-                          w-full
-                          py-3
-                          mt-6
-                          rounded-sm
-                          duration-300
-                          disabled:bg-gray-200"
-          type="submit" value="新規作成" disabled={!isDirty || !isValid} />
-      </div>
+      <input className="button-form" type="submit" value="新規作成" disabled={!isDirty || !isValid} />
     </form>
   );
 }

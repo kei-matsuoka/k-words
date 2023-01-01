@@ -1,11 +1,25 @@
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
 import { AuthContext } from '../../AuthProvider';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion'
 import { Logout } from '../../apis/logout';
 
-export const Dropdown = ({ handleClickDropdown, handleFlashMessage, handleClickLogin, handleClickSignup, isOpen }) => {
-  const { setLoading, isSignedIn, setIsSignedIn, currentUser, setCurrentUser, setLogoutMessage } = useContext(AuthContext);
+export const Dropdown = ({
+  handleClickDropdown,
+  handleFlashMessage,
+  handleClickLogin,
+  handleClickSignup,
+  isOpen
+}) => {
+
+  const {
+    setLoading,
+    isSignedIn,
+    setIsSignedIn,
+    currentUser,
+    setCurrentUser,
+    setLogoutMessage
+  } = useContext(AuthContext);
 
   const handleLogout = async () => {
     try {
@@ -25,16 +39,6 @@ export const Dropdown = ({ handleClickDropdown, handleFlashMessage, handleClickL
     setLoading(false);
   };
 
-  const handleLoginWithDrodown = () => {
-    handleClickDropdown();
-    handleClickLogin();
-  };
-
-  const handleSignupWithDrodown = () => {
-    handleClickDropdown();
-    handleClickSignup();
-  };
-
   return (
     <AnimatePresence>
       {isOpen &&
@@ -51,15 +55,34 @@ export const Dropdown = ({ handleClickDropdown, handleFlashMessage, handleClickL
               {isSignedIn ?
                 <>
                   <div className='px-4 py-3 z-30 border-b'>{currentUser.name}</div>
-                  <Link to="/mypage" onClick={handleClickDropdown}><div className='p-4 hover:bg-gray-100 z-30 duration-200'>マイページ</div></Link>
-                  <Link to="/settings" onClick={handleClickDropdown}><div className='p-4 hover:bg-gray-100 duration-200'>アカウント設定</div></Link>
-                  <Link to="#" onClick={handleClickDropdown}><div className='p-4 hover:bg-gray-100 duration-200 rounded-b' onClick={handleLogout}>ログアウト</div></Link>
+                  <Link to="/mypage" onClick={handleClickDropdown}>
+                    <div className='p-4 hover:bg-gray-100 z-30 duration-200'>マイページ</div>
+                  </Link>
+                  <Link to="/settings" onClick={handleClickDropdown}>
+                    <div className='p-4 hover:bg-gray-100 duration-200'>アカウント設定</div>
+                  </Link>
+                  <div
+                    className='p-4 hover:bg-gray-100 duration-200 rounded-b hover:cursor-pointer'
+                    onClick={() => { handleLogout(); handleClickDropdown(); }}
+                  >
+                    ログアウト
+                  </div>
                 </>
                 :
                 <>
                   <div className='px-4 py-2.5 z-30 border-b'>ゲスト</div>
-                  <Link to="#" onClick={handleLoginWithDrodown}><div className='py-4 pl-4 pr-8 hover:bg-gray-100 duration-200'>ログイン</div></Link>
-                  <Link to="#" onClick={handleSignupWithDrodown}><div className='py-4 pl-4 pr-8 hover:bg-gray-100 duration-200 rounded-b'>新規登録</div></Link>
+                  <div
+                    className='py-4 pl-4 pr-8 hover:bg-gray-100 duration-200 hover:cursor-pointer'
+                    onClick={() => { handleClickDropdown(); handleClickLogin(); }}
+                  >
+                    ログイン
+                  </div>
+                  <div
+                    className='py-4 pl-4 pr-8 hover:bg-gray-100 duration-200 rounded-b hover:cursor-pointer'
+                    onClick={() => { handleClickDropdown(); handleClickSignup(); }}
+                  >
+                    新規登録
+                  </div>
                 </>
               }
             </div>

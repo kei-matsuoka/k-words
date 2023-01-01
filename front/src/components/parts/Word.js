@@ -2,15 +2,11 @@ import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../../AuthProvider';
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion'
-import { CommentButton } from '../buttons/CommentButton';
-import { CommentedButton } from '../buttons/CommentedButton';
-import { DestroyButton } from '../buttons/DestroyButton';
-import { FavoriteButton } from '../buttons/FavoriteButton';
-import { PatchButton } from '../buttons/PatchButton';
-import { UnFavoriteButton } from '../buttons/UnFavoriteButton';
 import { handleFavorite } from '../../apis/favorites';
 import { Comment } from './Comment';
 import { CommentForm } from '../forms/CommentForm';
+import { MdModeComment, MdOutlineModeComment, MdFavorite, MdFavoriteBorder, MdEdit } from 'react-icons/md';
+import { IoTrashSharp } from 'react-icons/io5';
 
 export const Word = ({ word, handleClickPatch, handleClickDestroy, handleClickLogin, handleFlashMessage, handleWords }) => {
   const { isSignedIn, currentUser, setLoading } = useContext(AuthContext);
@@ -90,12 +86,8 @@ export const Word = ({ word, handleClickPatch, handleClickDestroy, handleClickLo
     <article className='flex flex-col w-full px-8 pt-6 pb-5 mt-3 bg-white relative shadow rounded-sm'>
       {(path === '/mypage' || path === '/mypage/words') &&
         <div className='flex absolute top-4 right-6'>
-          <div className='mr-1'>
-            <PatchButton handleOnClickPatch={handleOnClickPatch} />
-          </div>
-          <div>
-            <DestroyButton handleOnClickDestroy={handleOnClickDestroy} />
-          </div>
+          <MdEdit className='button-gray-500 mr-1' onClick={handleOnClickPatch} />
+          <IoTrashSharp className='button-gray-500' onClick={handleOnClickDestroy} />
         </div>
       }
 
@@ -112,17 +104,17 @@ export const Word = ({ word, handleClickPatch, handleClickDestroy, handleClickLo
             <div className='flex items-center text-gray-500'>
               <div className='flex items-center mr-4'>
                 {commented ?
-                  <CommentedButton handleClickComment={handleClickComment} />
+                  <MdModeComment size="14" className="button-default text-gray-800 hover:scale-110 mt-[1px]" onClick={handleClickComment} />
                   :
-                  <CommentButton handleClickComment={handleClickComment} />
+                  <MdOutlineModeComment size="14" className="button-scale mt-[1px]" onClick={handleClickComment} />
                 }
                 <p className='ml-1'>{word.comments.length}</p>
               </div>
               <div className='flex items-center'>
                 {favorite ?
-                  <UnFavoriteButton handleOnFavorite={handleOnFavorite} />
+                  <MdFavorite size="15" className="button-default text-red-500 hover:scale-110 mt-[1px]" onClick={handleOnFavorite} />
                   :
-                  <FavoriteButton handleOnFavorite={handleOnFavorite} />
+                  <MdFavoriteBorder size="15" className="button-scale mt-[1px]" onClick={handleOnFavorite} />
                 }
                 <p className='ml-1'>{word.favorite_users.length}</p>
               </div>

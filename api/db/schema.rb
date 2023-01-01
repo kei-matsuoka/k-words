@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_29_031504) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_31_040715) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_29_031504) do
     t.index ["card_id", "word_id"], name: "index_connections_on_card_id_and_word_id", unique: true
     t.index ["card_id"], name: "index_connections_on_card_id"
     t.index ["word_id"], name: "index_connections_on_word_id"
+  end
+
+  create_table "contacts", force: :cascade do |t|
+    t.string "email"
+    t.string "category", null: false
+    t.text "text", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "favorites", force: :cascade do |t|
