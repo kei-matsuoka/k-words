@@ -9,7 +9,7 @@ export const PasswordResetForm = ({ id, email }) => {
   const [state, setState] = useState(false);
   const { setLoading, setIsSignedIn, setCurrentUser, setLogoutMessage } = useContext(AuthContext);
   const { register, handleSubmit, formState: { errors, isDirty, isValid }, getValues } = useForm({
-    mode: 'onBlur',
+    mode: 'onChange',
     criteriaMode: 'all',
   });
 
@@ -33,8 +33,8 @@ export const PasswordResetForm = ({ id, email }) => {
 
   return (
     <div>
-      { state === true && <Navigate to='/' /> }
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-[480px] sp:w-full px-8 py-10 rounded-sm bg-white">
+      {state === true && <Navigate to='/' />}
+      <form onSubmit={handleSubmit(onSubmit)} className="form">
         <h2 className='text-lg font-bold mb-8'>パスワード変更</h2>
         <input hidden autoComplete='username' />
         <input
@@ -89,16 +89,7 @@ export const PasswordResetForm = ({ id, email }) => {
           <ValidationError message={errors.password_confirmation.types.validate} />
         )}
 
-        <input className="button-color
-                          button-color:hover
-                        text-white
-                          w-full
-                          py-3
-                          mt-6
-                          rounded-sm
-                          duration-300
-                        disabled:bg-gray-200"
-          type="submit" value="更新" disabled={!isDirty || !isValid} />
+        <input className="button-form" type="submit" value="更新" disabled={!isDirty || !isValid} />
       </form>
     </div>
   );

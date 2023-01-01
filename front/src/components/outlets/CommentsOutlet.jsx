@@ -3,10 +3,12 @@ import { AuthContext } from '../../AuthProvider';
 import { useOutletContext } from "react-router-dom";
 import { getCommentedWords } from '../../apis/comments';
 import { Words } from "../groups/Words";
+import { Skeltons } from "../groups/Skeltons";
 
 export const CommentsOutlet = () => {
   const [commentedWords, setCommentedWords] = useState([]);
-  const { setLoading, currentUser } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
+  const { currentUser } = useContext(AuthContext);
   const [handleFlashMessage] = useOutletContext();
 
   // 重複を取り除く処理
@@ -19,6 +21,7 @@ export const CommentsOutlet = () => {
 
   const handleGetCommentedWords = async () => {
     try {
+      setLoading(true);
       const res = await getCommentedWords(currentUser.id);
       if (res?.status === 200) {
         const filtered_words = filterWords(res.words);
@@ -40,10 +43,10 @@ export const CommentsOutlet = () => {
 
   return (
     <>
-      {commentedWords[0] ?
+      {loading ? <Skeltons /> : commentedWords[0] ?
         <Words words={commentedWords} handleWords={handleGetCommentedWords} handleFlashMessage={handleFlashMessage} />
         :
-        <p className="text-white text-sm mt-3">お気に入りの用語がありません。</p>
+        <p className="text-sm mt-3 p-4 bg-white rounded-sm">お気に入りの用語がありません。</p>
       }
     </>
   );

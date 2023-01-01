@@ -1,22 +1,19 @@
+import { Link } from "react-router-dom";
+
 export const Footer = () => {
   return (
-    <>
-    <div className="w-full h-[2px] bg-gray-50 border-b"></div>
-    <div className="flex flex-col items-center w-learn h-96 pt-4 ml-[76px] sp:w-full sp:ml-0">
-      <div className="text-sm m-2">サービス一覧</div>
-      <div className="text-sm m-2">サービス一覧</div>
-      <div className="text-sm m-2">サービス一覧</div>
-      <div className="text-sm m-2">サービス一覧</div>
-      <div className="text-sm m-2">サービス一覧</div>
-      <div className="text-sm m-2">サービス一覧</div>
-      <div className="text-sm m-2">サービス一覧</div>
-      <div className="text-sm m-2">サービス一覧</div>
-      <div className="text-sm m-2">サービス一覧</div>
-      <div className="text-sm m-2">サービス一覧</div>
+    <div className="flex flex-col justify-center w-learn sp:w-full ml-[76px] sp:ml-0 border-t">
+      <div className="flex flex-col justify-center bg-white pt-6 pb-4">
+        <div className="flex jb:flex-col justify-center items-center text-sm jb:text-xs">
+          <Link to={'/policy'} className="my-1 mx-3">利用規約</Link>
+          <Link to={'/privacy'} className="my-1 mx-3">プライバシーポリシー</Link>
+          <Link to={'/contact'} className="my-1 mx-3">お問い合わせ</Link>
+          <Link to={'/about'} className="my-1 mx-3">運営情報</Link>
+        </div>
+        <div className="flex justify-center items-center m-4 text-xs">
+          © 2023 霞が関用語辞典 All Right Reserved.
+        </div>
+      </div>
     </div>
-    <div className="flex justify-center items-center w-learn h-12 bg-gray-800 text-white ml-[76px] sp:ml-0 sp:w-full text-sm">
-    霞が関用語辞典
-    </div>
-    </>
   );
 }

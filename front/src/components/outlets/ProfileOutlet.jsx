@@ -9,7 +9,7 @@ export const ProfileOutlet = () => {
   const { setLoading, setCurrentUser, currentUser } = useContext(AuthContext);
   const [handleFlashMessage] = useOutletContext();
   const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
-    mode: 'onBlur',
+    mode: 'onChange',
     criteriaMode: 'all',
     defaultValues: {
       name: currentUser.name,

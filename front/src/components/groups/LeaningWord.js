@@ -2,7 +2,7 @@ export const LearningWord = ({ word_id, state, handleOnClick }) => {
   return (
     <>
       <div
-        className="absolute right-0 w-1/2 h-96  hover:cursor-pointer"
+        className="absolute right-0 w-1/2 h-96 hover:cursor-pointer"
         onClick={() => handleOnClick(1)}>
       </div>
       <div

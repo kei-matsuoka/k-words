@@ -32,6 +32,9 @@ Rails.application.routes.draw do
   post '/users/:id/comments', to: 'comments#create'
   delete '/users/:id/comments/', to: 'comments#destroy'
 
+  # お問い合わせ
+  post '/contacts', to: 'contacts#create'
+
   # アカウントの有効化
   resources :account_activations, only: [:edit]
   patch '/account_activations', to: 'account_activations#update'

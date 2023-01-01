@@ -9,7 +9,7 @@ export const TokenResetOutlet= () => {
   const { setLoading } = useContext(AuthContext);
   const [handleFlashMessage] = useOutletContext();
   const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
-    mode: 'onBlur',
+    mode: 'onChange',
     criteriaMode: 'all',
   });
   
@@ -32,6 +32,7 @@ export const TokenResetOutlet= () => {
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-[480px] sb:w-full">
         <h2 className='text-lg font-bold mb-8'>パスワード変更</h2>
+        <p className='text-xs mb-6'>入力したメールアドレス宛にパスワード変更用のリンクを送付します。</p>
         <input hidden autoComplete='username' />
         <input
           className="border p-3 text-sm"

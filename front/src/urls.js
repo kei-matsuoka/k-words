@@ -24,6 +24,9 @@ export const userFavoriteUrl = (id) => `${HOST}/users/${id}/favorites`
 // コメント
 export const userCommentUrl = (id) => `${HOST}/users/${id}/comments`
 
+// お問い合わせ
+export const contactUrl = `${HOST}/contacts`
+
 // アカウントの有効化
 export const activationUrl = `${HOST}/account_activations`
 

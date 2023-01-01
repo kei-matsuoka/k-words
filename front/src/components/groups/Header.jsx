@@ -7,14 +7,13 @@ import { Modal } from "../modals/Modal";
 import { SideBarModal } from '../modals/SideBarModal';
 import { SearchInputModal } from '../modals/SearchInputModal';
 import { WordForm } from "../forms/WordForm";
-import { SideBarButton } from '../buttons/SideBarButton';
-import { SearchButton } from '../buttons/SearchButton';
-import { AddButton } from '../buttons/AddButton';
-import { DropdownButton } from '../buttons/DropdownButton';
+import { MdViewHeadline, MdSearch, MdAddBox } from 'react-icons/md';
+import { FaUserCircle } from 'react-icons/fa';
 import { HeaderLogo } from '../parts/HeaderLogo';
 import { SearchInput } from '../parts/SearchInput';
 
-export const Header = ({ handleGetWords,
+export const Header = ({
+  handleGetWords,
   handleOnInput,
   handleClickSignup,
   handleClickLogin,
@@ -27,9 +26,6 @@ export const Header = ({ handleGetWords,
     sideBarIsOpen: false,
     dropdownIsOpen: false,
     searchInputIsOpen: false,
-    signupModalIsOpen: false,
-    loginModalIsOpen: false,
-    passwordModalIsOpen: false,
     wordModalIsOpen: false,
   };
 
@@ -60,7 +56,7 @@ export const Header = ({ handleGetWords,
     <>
       <nav className='flex items-center justify-between fixed top-0 left-0 z-20 px-6 py-2 bg-white w-full h-[57px] border-b'>
         <div className='flex'>
-          <SideBarButton handleClickSideBar={handleClickSideBar} />
+          <MdViewHeadline size={28} className="button-gray-800" onClick={handleClickSideBar} />
           <div className="ml-6 sp:ml-2">
             <HeaderLogo resetWords={resetWords} />
           </div>
@@ -71,15 +67,15 @@ export const Header = ({ handleGetWords,
               <SearchInput handleOnInput={handleOnInput} searchKeyword={searchKeyword} />
             </div>
             <div className='hidden sp:flex items-center'>
-              <SearchButton handleClickSearchInput={handleClickSearchInput} />
+              <MdSearch size="22" className="button-gray-800" onClick={handleClickSearchInput} />
             </div>
           </>
         }
         <div className='flex'>
           {path === '/' &&
-            <AddButton handleClickWord={handleClickWord} />
+            <MdAddBox size="24" className="button-gray-800" onClick={handleClickWord} />
           }
-          <DropdownButton handleClickDropdown={handleClickDropdown} />
+          <FaUserCircle size="24" className="button-gray-800 ml-4" onClick={handleClickDropdown} />
         </div>
       </nav>
 
@@ -99,14 +95,24 @@ export const Header = ({ handleGetWords,
       </Modal>
 
       <SideBarModal onClick={handleClickSideBar} isOpen={state.sideBarIsOpen}>
-        <SideBar handleFlashMessage={handleFlashMessage} handleClickLogin={handleClickLogin} handleClickSideBar={handleClickSideBar} />
+        <SideBar
+          handleFlashMessage={handleFlashMessage}
+          handleClickLogin={handleClickLogin}
+          handleClickSideBar={handleClickSideBar}
+        />
       </SideBarModal>
 
       <div className='sp:hidden'>
         <SideBar handleFlashMessage={handleFlashMessage} handleClickLogin={handleClickLogin} />
       </div>
 
-      <Dropdown handleClickDropdown={handleClickDropdown} handleFlashMessage={handleFlashMessage} handleClickLogin={handleClickLogin} handleClickSignup={handleClickSignup} isOpen={state.dropdownIsOpen} />
+      <Dropdown
+        handleClickSignup={handleClickSignup}
+        handleClickLogin={handleClickLogin}
+        handleClickDropdown={handleClickDropdown}
+        handleFlashMessage={handleFlashMessage}
+        isOpen={state.dropdownIsOpen}
+      />
     </>
   );
 }

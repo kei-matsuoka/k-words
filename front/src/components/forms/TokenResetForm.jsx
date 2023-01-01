@@ -1,19 +1,21 @@
 import { useContext } from 'react';
-import { useLocation } from "react-router-dom";
 import { AuthContext } from '../../AuthProvider';
 import { useForm } from "react-hook-form";
 import { createResetToken } from '../../apis/resetPassword';
 import { ValidationError } from '../parts/ValidationError';
+import { Spinner } from '../parts/Spinner';
+import { MdClear } from 'react-icons/md';
 
 export const TokenResetForm = ({ handleClickPassword, handleFlashMessage }) => {
-  const { setLoading } = useContext(AuthContext);
+  const { loading, setLoading } = useContext(AuthContext);
   const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
-    mode: 'onBlur',
+    mode: 'onChange',
     criteriaMode: 'all',
   });
 
   const onSubmit = async (data) => {
     try {
+      setLoading(true);
       const res = await createResetToken(data.email);
       if (res?.status === 201) {
         handleClickPassword();
@@ -30,9 +32,11 @@ export const TokenResetForm = ({ handleClickPassword, handleFlashMessage }) => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-[480px] sb:w-full px-8 py-10 rounded-sm bg-white relative">
+      <form onSubmit={handleSubmit(onSubmit)} className="form relative">
         <h2 className='text-lg font-bold mb-8'>パスワード変更</h2>
-        <p className='absolute top-3 right-4 text-sm hover:cursor-pointer' onClick={handleClickPassword}>×</p>
+        <p className='text-xs mb-6'>入力したメールアドレス宛にパスワード更新用のリンクを送付します。</p>
+        <MdClear className='absolute top-4 right-4 button-gray-500' onClick={handleClickPassword} />
+        {/* <p >×</p> */}
         <input hidden autoComplete='username' />
         <input
           className="border p-3 text-sm"
@@ -58,17 +62,9 @@ export const TokenResetForm = ({ handleClickPassword, handleFlashMessage }) => {
           <ValidationError message={errors.email.message} />
         )}
 
-        <input className="button-color
-                        button-color:hover
-                      text-white
-                        w-full
-                        py-3
-                        mt-6
-                        rounded-sm
-                        duration-300
-                      disabled:bg-gray-200"
-          type="submit" value="送信" disabled={!isDirty || !isValid} />
+        <input className="button-form" type="submit" value="送信" disabled={!isDirty || !isValid} />
       </form>
+      {loading && <Spinner />}
     </div>
   );
 }
