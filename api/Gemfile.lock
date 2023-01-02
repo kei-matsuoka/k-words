@@ -66,36 +66,6 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
-    aws-eventstream (1.2.0)
-    aws-partitions (1.674.0)
-    aws-record (2.9.0)
-      aws-sdk-dynamodb (~> 1.18)
-    aws-sdk-core (3.168.4)
-      aws-eventstream (~> 1, >= 1.0.2)
-      aws-partitions (~> 1, >= 1.651.0)
-      aws-sigv4 (~> 1.5)
-      jmespath (~> 1, >= 1.6.1)
-    aws-sdk-dynamodb (1.80.0)
-      aws-sdk-core (~> 3, >= 3.165.0)
-      aws-sigv4 (~> 1.1)
-    aws-sdk-rails (3.6.4)
-      aws-record (~> 2)
-      aws-sdk-ses (~> 1)
-      aws-sdk-sqs (~> 1)
-      aws-sessionstore-dynamodb (~> 2)
-      concurrent-ruby (~> 1)
-      railties (>= 5.2.0)
-    aws-sdk-ses (1.48.0)
-      aws-sdk-core (~> 3, >= 3.165.0)
-      aws-sigv4 (~> 1.1)
-    aws-sdk-sqs (1.52.1)
-      aws-sdk-core (~> 3, >= 3.165.0)
-      aws-sigv4 (~> 1.1)
-    aws-sessionstore-dynamodb (2.0.1)
-      aws-sdk-dynamodb (~> 1)
-      rack (~> 2)
-    aws-sigv4 (1.5.2)
-      aws-eventstream (~> 1, >= 1.0.2)
     bcrypt (3.1.18)
     bootsnap (1.13.0)
       msgpack (~> 1.2)
@@ -120,8 +90,6 @@ GEM
     io-console (0.5.11)
     irb (1.4.1)
       reline (>= 0.3.0)
-    jmespath (1.6.2)
-    kgio (2.11.4)
     loofah (2.18.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -186,7 +154,6 @@ GEM
       rake (>= 12.2)
       thor (~> 1.0)
       zeitwerk (~> 2.5)
-    raindrops (0.20.0)
     rake (13.0.6)
     redis (4.8.0)
     redis-actionpack (5.3.0)
@@ -223,9 +190,6 @@ GEM
     timeout (0.3.0)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
-    unicorn (6.1.0)
-      kgio (~> 2.6)
-      raindrops (~> 0.7)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -236,7 +200,6 @@ PLATFORMS
   arm64-darwin-21
 
 DEPENDENCIES
-  aws-sdk-rails
   bcrypt (~> 3.1.7)
   bootsnap
   debug
@@ -250,7 +213,6 @@ DEPENDENCIES
   rspec-rails
   spring
   tzinfo-data
-  unicorn
 
 RUBY VERSION
    ruby 3.1.2p20
