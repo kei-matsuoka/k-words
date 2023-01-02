@@ -50,7 +50,6 @@ export const Top = () => {
       const res = await getWords();
       if (res?.status === 200) {
         setWords(res?.words);
-        console.log(res.words)
       } else {
         handleFlashMessage("red", "用語がありません");
       }
@@ -104,7 +103,7 @@ export const Top = () => {
   useEffect(() => {
     handleGetWords();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [setWords]);
 
   return (
     <>

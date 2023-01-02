@@ -25,7 +25,7 @@ export const Valid = ({handleFlashMessage}) => {
   useEffect(() => {
     handleSubmit();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setCurrentUser]);
+  }, []);
 
   return (
     <>

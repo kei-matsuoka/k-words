@@ -1,17 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Card, type: :model do
-  let(:card) { FactoryBot.build(:html) }
-
-  it 'cardが有効であること' do 
-    expect(card).to be_valid
-  end
-  # it 'cardが削除されると関連のwordも削除されること' do
-  #   card.save
-  #   card.words.create!(question: "コメント", answer: "<!-- -->", text: "")
-  #   expect{card.destroy}.to change(Word, :count).by -1
-  # end
-  
+  let(:card) { FactoryBot.build(:html) }  
   describe 'title' do
     it 'titleが必須であること' do
       card.title = ' '

@@ -61,7 +61,7 @@ export const WordsOutlet = () => {
   useEffect(() => {
     handleGetUserWords();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setUserWords]);
+  }, []);
 
   console.log(userWords)
 

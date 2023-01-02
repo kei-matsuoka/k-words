@@ -24,7 +24,7 @@ export const Dashboard = ({setTitle}) => {
     handleGetCards();
     setTitle("単語カード一覧");
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setCards]);
+  }, []);
 
   return (
     <>

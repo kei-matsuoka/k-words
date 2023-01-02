@@ -27,7 +27,7 @@ export const MyPage = ({ handleFlashMessage, setTitle }) => {
     setTitle("マイページ");
     handleLocation();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setTitle]);
+  }, []);
 
   return (
     <>

@@ -44,7 +44,7 @@ export const Router = () => {
   useEffect(() => {
     handleGetCurrentUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setCurrentUser]);
+  }, []);
 
   const PrivateRoute = ({ children }) => {
     if (!loading) {
