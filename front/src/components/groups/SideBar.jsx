@@ -5,6 +5,7 @@ import { SideBarLink } from '../parts/SideBarLink';
 
 export const SideBar = ({ handleFlashMessage, handleClickLogin, handleClickSideBar }) => {
   const { isSignedIn } = useContext(AuthContext);
+  
   const handleLoginWithMessage = () => {
     handleClickSideBar && handleClickSideBar();
     handleClickLogin();
