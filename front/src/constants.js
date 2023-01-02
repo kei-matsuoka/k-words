@@ -1,9 +1,3 @@
-export const REQUEST_STATE = {
-  INITIAL: 'INITIAL',
-  LOADING: 'LOADING',
-  OK: 'OK'
-}
-
 export const j_column_list = ["あ", "か", "さ", "た", "な", "は", "ま", "や", "ら", "わ"];
 
 export const reg_list = ["^あ|^い|^う|^え|^お|^ぁ|^ぃ|^ぅ|^ぇ|^ぉ",
