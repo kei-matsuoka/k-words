@@ -1,7 +1,6 @@
 import { useEffect, useContext } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthContext } from './AuthProvider';
-import { getCurrentUser } from './apis/login';
 import { Top } from './components/pages/Top';
 import { CardIndex } from './components/pages/CardIndex';
 import { Dashboard } from './components/pages/Dashboard';
@@ -10,18 +9,19 @@ import { Settings } from './components/pages/Settings';
 import { Valid } from './components/pages/Valid';
 import { Password } from './components/pages/Password';
 import { MyPage } from './components/pages/MyPage';
-import { DefaultPage } from './components/pages/DefaultPage';
-import { ProfileOutlet } from "./components/outlets/ProfileOutlet";
-import { AccountDestroyOutlet } from './components/outlets/AccountDestroyOutlet';
-import { TokenResetOutlet } from './components/outlets/TokenResetOutlet';
 import { NotFoundPage } from './components/pages/NotFoundPage';
-import { WordsOutlet } from './components/outlets/WordsOutlet';
-import { FavoritesOutlet } from './components/outlets/FavoritesOutlet';
-import { CommentsOutlet } from './components/outlets/CommentsOutlet';
+import { DefaultPage } from './components/pages/DefaultPage';
 import { Policy } from './components/pages/Policy';
 import { Privacy } from './components/pages/Privacy';
 import { About } from './components/pages/About';
 import { Contact } from './components/pages/Contact';
+import { ProfileOutlet } from "./components/outlets/ProfileOutlet";
+import { AccountDestroyOutlet } from './components/outlets/AccountDestroyOutlet';
+import { TokenResetOutlet } from './components/outlets/TokenResetOutlet';
+import { WordsOutlet } from './components/outlets/WordsOutlet';
+import { FavoritesOutlet } from './components/outlets/FavoritesOutlet';
+import { CommentsOutlet } from './components/outlets/CommentsOutlet';
+import { getCurrentUser } from './apis/login';
 
 export const Router = () => {
   const { loading, setLoading, isSignedIn, setIsSignedIn, setCurrentUser, logoutMessage, setLogoutMessage } = useContext(AuthContext);
