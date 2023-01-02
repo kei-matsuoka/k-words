@@ -4,6 +4,7 @@ import { Link, Outlet } from 'react-router-dom';
 export const Settings = ({ handleFlashMessage, setTitle }) => {
   useEffect(() => {
     setTitle("アカウント設定");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

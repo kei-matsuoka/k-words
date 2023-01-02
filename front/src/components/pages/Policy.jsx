@@ -3,7 +3,8 @@ import { Link } from "react-router-dom"
 
 export const Policy = ({ setTitle }) => {
   useEffect(() => {
-    setTitle("利用規約")
+    setTitle("利用規約");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className="bg-white px-8 py-6 -m-4">

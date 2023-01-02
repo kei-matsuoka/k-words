@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useOutletContext } from "react-router-dom";
 import { createResetToken } from '../../apis/resetPassword';
 import { ValidationError } from '../parts/ValidationError';
+import { email_reg } from '../../constants';
 
 export const TokenResetOutlet= () => {
   const { setLoading } = useContext(AuthContext);
@@ -45,7 +46,7 @@ export const TokenResetOutlet= () => {
               message: '入力してください'
             },
             pattern: {
-              value: /[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+/i,
+              value: email_reg,
               message: '有効なメールアドレスを入力してください'
             }
           })}

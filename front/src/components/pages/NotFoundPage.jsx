@@ -3,7 +3,8 @@ import { Link } from "react-router-dom"
 
 export const NotFoundPage = ({ setTitle }) => {
   useEffect(() => {
-    setTitle("ページが見つかりません")
+    setTitle("ページが見つかりません");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className="flex flex-col justify-center items-center bg-white p-8 -m-4">

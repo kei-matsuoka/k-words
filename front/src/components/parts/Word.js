@@ -80,7 +80,8 @@ export const Word = ({ word, handleClickPatch, handleClickDestroy, handleClickLo
   useEffect(() => {
     isFavorite();
     isCommented();
-  }, [setFavorite, isSignedIn]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSignedIn]);
 
   return (
     <article className='flex flex-col w-full px-8 pt-6 pb-5 mt-3 bg-white relative shadow rounded-sm'>

@@ -3,6 +3,7 @@ import { AuthContext } from '../../AuthProvider';
 import { useForm } from "react-hook-form";
 import { ValidationError } from '../parts/ValidationError';
 import { createContact } from '../../apis/contacts';
+import { email_reg } from '../../constants';
 
 export const ContactForm = ({ handleFlashMessage }) => {
   const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
@@ -36,7 +37,7 @@ export const ContactForm = ({ handleFlashMessage }) => {
         autoComplete='email'
         {...register("email", {
           pattern: {
-            value: /[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+/i,
+            value: email_reg,
             message: '有効なメールアドレスを入力してください'
           }
         })}

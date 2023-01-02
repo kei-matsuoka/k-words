@@ -6,6 +6,7 @@ import { ValidationError } from '../parts/ValidationError';
 import { Link } from 'react-router-dom';
 import { Spinner } from '../parts/Spinner';
 import { MdClear } from 'react-icons/md';
+import { email_reg } from '../../constants';
 
 export const SignupForm = ({ handleClickSignup, handleClickLogin, handleFlashMessage }) => {
   const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
@@ -83,7 +84,7 @@ export const SignupForm = ({ handleClickSignup, handleClickLogin, handleFlashMes
               message: '入力してください'
             },
             pattern: {
-              value: /[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+/i,
+              value: email_reg,
               message: '有効なメールアドレスを入力してください'
             }
           })}

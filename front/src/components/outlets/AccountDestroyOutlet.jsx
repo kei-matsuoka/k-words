@@ -5,7 +5,7 @@ import { destroyUser } from '../../apis/users';
 
 export const AccountDestroyOutlet = () => {
   const { setLoading, setCurrentUser, currentUser, setIsSignedIn, setLogoutMessage } = useContext(AuthContext);
-  const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
+  const { handleSubmit, formState: { isDirty, isValid } } = useForm({
     mode: 'onChange',
     criteriaMode: 'all',
   });
@@ -16,7 +16,7 @@ export const AccountDestroyOutlet = () => {
       if (res?.status === 200) {
         setCurrentUser(null);
         setIsSignedIn(false);
-        setLogoutMessage({color: "rgb(48, 200, 214)", message: res.message});
+        setLogoutMessage({ color: "rgb(48, 200, 214)", message: res.message });
       } else {
         setLogoutMessage({ color: "red", message: res.message });
       }
@@ -39,7 +39,7 @@ export const AccountDestroyOutlet = () => {
                         mt-6
                         rounded-sm
                         duration-300"
-          type="submit" value="削除"/>
+          type="submit" value="削除" disabled={!isDirty || !isValid} />
       </form>
     </div>
   );

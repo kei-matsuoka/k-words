@@ -64,7 +64,7 @@ export const Top = () => {
   const filterWords = (i) => {
     const array = [];
     const reg = new RegExp(reg_list[i]);
-    words.map((word) => {
+    words.forEach((word) => {
       if (reg.test(word.kana)) {
         array.push(word);
         setFilteredWords(array);
@@ -104,7 +104,7 @@ export const Top = () => {
   useEffect(() => {
     handleGetWords();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setWords]);
+  }, []);
 
   return (
     <>

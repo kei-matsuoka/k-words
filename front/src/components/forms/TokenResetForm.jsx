@@ -5,6 +5,7 @@ import { createResetToken } from '../../apis/resetPassword';
 import { ValidationError } from '../parts/ValidationError';
 import { Spinner } from '../parts/Spinner';
 import { MdClear } from 'react-icons/md';
+import { email_reg } from '../../constants';
 
 export const TokenResetForm = ({ handleClickPassword, handleFlashMessage }) => {
   const { loading, setLoading } = useContext(AuthContext);
@@ -49,7 +50,7 @@ export const TokenResetForm = ({ handleClickPassword, handleFlashMessage }) => {
               message: '入力してください'
             },
             pattern: {
-              value: /[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+/i,
+              value: email_reg,
               message: '有効なメールアドレスを入力してください'
             }
           })}

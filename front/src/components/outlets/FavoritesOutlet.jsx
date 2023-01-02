@@ -30,7 +30,7 @@ export const FavoritesOutlet = () => {
   useEffect(() => {
     handleGetUserFavorites();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setUserFavorites]);
+  }, []);
 
   return (
     <>

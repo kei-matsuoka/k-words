@@ -3,7 +3,8 @@ import { Link } from "react-router-dom"
 
 export const Privacy = ({ setTitle }) => {
   useEffect(() => {
-    setTitle("プライバシーポリシー")
+    setTitle("プライバシーポリシー");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className="bg-white px-8 py-6 -m-4">

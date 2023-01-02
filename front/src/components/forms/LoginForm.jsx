@@ -4,6 +4,7 @@ import { AuthContext } from '../../AuthProvider';
 import { Login } from '../../apis/login';
 import { ValidationError } from '../parts/ValidationError';
 import { MdClear } from 'react-icons/md';
+import { email_reg } from '../../constants';
 
 export const LoginForm = ({ handleClickLogin, handleClickSignup, handleClickPassword, handleFlashMessage }) => {
   const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
@@ -47,7 +48,7 @@ export const LoginForm = ({ handleClickLogin, handleClickSignup, handleClickPass
             message: '入力してください'
           },
           pattern: {
-            value: /[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+/i,
+            value: email_reg,
             message: '正しいメールアドレスを入力してください'
           }
         })}
