@@ -18,10 +18,6 @@ html {
     background-color: #F9FBFD
   }
 
-  .top-color-yellow {
-    background-color: #F7EDAD
-  }
-
   /* フォーム */
   .form {
     @apply flex flex-col w-[480px] sp:w-full px-8 py-10 rounded-sm bg-white;
