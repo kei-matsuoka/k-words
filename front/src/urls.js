@@ -1,4 +1,4 @@
-const HOST = process.env.REACT_APP_URL
+const HOST = "https://api.k-words.net"
 
 // 新規登録
 export const signupUrl = `${HOST}/signup`
