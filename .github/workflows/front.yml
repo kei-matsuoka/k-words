@@ -36,7 +36,7 @@ jobs:
 
       - name: Deploy
         run:
-          aws s3 cp ./build/ s3://k-words-bucket/ --recursive
+          aws s3 sync ./build/ s3://k-words-bucket/ --delete
           
       - name: Clear Cache
         run:
