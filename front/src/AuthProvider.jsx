@@ -6,7 +6,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState();
-  const [logoutMessage, setLogoutMessage] = useState({color: "rgb(48, 200, 214)", message: ""});
+  const [logoutMessage, setLogoutMessage] = useState({color: "", message: ""});
 
   return (
     <AuthContext.Provider
