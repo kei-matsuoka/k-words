@@ -35,4 +35,6 @@
 /.env
 
 /config/credentials*
-/dump.rdb
+
+.DS_Store
+.gitignore
