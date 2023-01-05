@@ -3,13 +3,13 @@ resource "aws_ecs_cluster" "ecs_cluster" {
 }
 
 resource "aws_ecs_task_definition" "ecs_task_definition" {
-  family                   = "k-words"
+  family                   = "${var.r_prefix}"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
   execution_role_arn       = "arn:aws:iam::${var.aws_account_id}:role/ecsTaskExecutionRole"
   cpu                      = 256
   memory                   = 512
-  container_definitions    = "${file("./task_definition.json")}"
+  container_definitions    = "${file("./task-definition.json")}"
 }
 
 resource "aws_ecs_service" "ecs_service" {
@@ -17,7 +17,7 @@ resource "aws_ecs_service" "ecs_service" {
   launch_type                        = "FARGATE"
   deployment_minimum_healthy_percent = 100
   deployment_maximum_percent         = 200
-  name                               = "k-words-service"
+  name                               = "${var.r_prefix}-service"
   task_definition                    = "${aws_ecs_task_definition.ecs_task_definition.arn}"
   desired_count                      = 1
 
