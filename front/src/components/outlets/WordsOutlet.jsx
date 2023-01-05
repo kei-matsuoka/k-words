@@ -63,8 +63,6 @@ export const WordsOutlet = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(userWords)
-
   return (
     <>
       {loading ? <Skeltons /> :
