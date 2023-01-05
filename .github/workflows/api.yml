@@ -16,7 +16,6 @@ env:
   ECS_TASK_DEFINITION: api/task-definition.json
   CONTAINER_NAME_API: api
   CONTAINER_NAME_NGINX: nginx
-  RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
 
 jobs:
   deploy:
@@ -48,6 +47,7 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE_TAG: ${{ github.sha }}
+        RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
       run: |
         docker build -f prd/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG
