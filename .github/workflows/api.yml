@@ -1,4 +1,4 @@
-name: Deploy api to ECS
+name: Deploy Api to ECS
 
 on:
   push:
@@ -49,7 +49,7 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE_TAG: ${{ github.sha }}
       run: |
-        docker build --build-arg RAILS_MASTER_KEY=${RAILS_MASTER_KEY} -f prd/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG .
+        docker build -f prd/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG
         echo "image-api=$ECR_REGISTRY/$ECR_REPOSITORY_API:$IMAGE_TAG" >> $GITHUB_OUTPUT
         docker build -f prd/nginx/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY_NGINX:$IMAGE_TAG .
