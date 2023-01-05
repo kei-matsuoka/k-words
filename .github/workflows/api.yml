@@ -8,13 +8,14 @@ on:
       - 'api/**'
 
 env:
-  AWS_REGION: "ap-northeast-1"
-  ECR_REPOSITORY_API : "k-words-ecr-repository-api"    
-  ECR_REPOSITORY_NGINX : "k-words-ecr-repository-nginx"
-  ECS_SERVICE: "k-words-service"
-  ECS_CLUSTER: "k-words-ecs-cluster"
-  CONTAINER_NAME_API: "api"
-  CONTAINER_NAME_NGINX: "nginx"
+  AWS_REGION: ap-northeast-1
+  ECR_REPOSITORY_API : k-words-ecr-repository-api 
+  ECR_REPOSITORY_NGINX : k-words-ecr-repository-nginx
+  ECS_SERVICE: k-words-service
+  ECS_CLUSTER: k-words-ecs-cluster
+  ECS_TASK_DEFINITION: api/task-definition.json
+  CONTAINER_NAME_API: api
+  CONTAINER_NAME_NGINX: nginx
 
 jobs:
   deploy:
@@ -63,7 +64,7 @@ jobs:
       id: task-def-api
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
-        task-definition: ./api/task-defintion.json
+        task-definition: ${{ env.ECS_TASK_DEFINITION }}
         container-name: ${{ env.CONTAINER_NAME_API }}
         image: ${{ steps.build-image.outputs.image-api }}
     
