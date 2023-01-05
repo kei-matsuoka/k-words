@@ -70,7 +70,7 @@ jobs:
       id: task-def-nginx
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
-        task-definition: task_definition.json
+        task-definition: ${{ steps.task-def-api.outputs.task-definition }}
         container-name: ${{ env.CONTAINER_NAME_NGINX }}
         image: ${{ steps.build-image.outputs.image-nginx }}
 
