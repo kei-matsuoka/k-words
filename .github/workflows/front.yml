@@ -40,7 +40,7 @@ jobs:
           
       - name: Clear Cache
         run:
-          aws cloudfront create-invalidation --distribution-id ${{ secrets.DISTRIBUTION_ID }} --paths "/*"
+          aws cloudfront create-invalidation --distribution-id "ERZMAWTMHYUXX" --paths "/*"
           
           
           
