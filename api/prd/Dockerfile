@@ -1,4 +1,8 @@
 FROM ruby:3.1.2
+
+ARG RAILS_MASTER_KEY
+ENV RAILS_MASTER_KEY ${RAILS_MASTER_KEY}
+
 RUN apt-get update -qq && \
     apt-get install -y build-essential \
     libpq-dev \
