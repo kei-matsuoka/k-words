@@ -3,7 +3,7 @@ import { AuthContext } from '../../AuthProvider';
 import { Header } from "../groups/Header";
 import { JColumnBar } from "../groups/JColumnBar";
 import { Words } from "../groups/Words";
-import { escapeStringRegexp } from "../../helper";
+import { escapeStringRegexp, setPageTitle } from "../../helper";
 import { reg_list } from "../../constants";
 import { FlashMessage } from "../parts/FlashMessage";
 import { LogoutMessage } from "../parts/LogoutMessage";
@@ -102,6 +102,7 @@ export const Top = () => {
 
   useEffect(() => {
     handleGetWords();
+    setPageTitle("ホーム");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setWords]);
 

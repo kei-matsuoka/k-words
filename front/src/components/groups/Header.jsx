@@ -63,7 +63,7 @@ export const Header = ({
         </div>
         {path === '/' &&
           <>
-            <div className='sp:hidden ml-10 mr-4 w-full'>
+            <div className='sp:hidden ml-10 w-full'>
               <SearchInput handleOnInput={handleOnInput} searchKeyword={searchKeyword} />
             </div>
             <div className='hidden sp:flex items-center'>
@@ -71,11 +71,11 @@ export const Header = ({
             </div>
           </>
         }
-        <div className='flex'>
+        <div className='flex ml-8 sp:ml-2'>
           {path === '/' &&
             <MdAddBox size="24" className="button-gray-800" onClick={handleClickWord} />
           }
-          <FaUserCircle size="24" className="button-gray-800 ml-4" onClick={handleClickDropdown} />
+          <FaUserCircle size="24" className="button-gray-800 ml-4 sp:ml-2" onClick={handleClickDropdown} />
         </div>
       </nav>
 

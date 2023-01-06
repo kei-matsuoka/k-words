@@ -11,4 +11,4 @@ export const reg_list = ["^あ|^い|^う|^え|^お|^ぁ|^ぃ|^ぅ|^ぇ|^ぉ",
   "^ら|^り|^る|^れ|^ろ",
   "^わ|^を|^ん"];
 
-  export const email_reg = /[\w+.]+@[a-z\d]+(\.[a-z\d]+)*\.[a-z]+/i
+export const email_reg = /[\w+.]+@[a-z\d]+(\.[a-z\d]+)*\.[a-z]+/i
