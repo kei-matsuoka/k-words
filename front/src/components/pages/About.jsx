@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom"
+import { setPageTitle } from "../../helper";
 
 export const About = ({ setTitle }) => {
   useEffect(() => {

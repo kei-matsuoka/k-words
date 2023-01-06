@@ -23,3 +23,7 @@ export const escapeStringRegexp = (string) => {
     .replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
     .replace(/-/g, '\\x2d');
 };
+
+export const setPageTitle = (page_title) => {
+  document.title = "霞が関用語辞典 | " + page_title;
+};
