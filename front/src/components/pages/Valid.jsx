@@ -2,6 +2,7 @@ import { useContext, useEffect } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../../AuthProvider';
 import { patchActivation } from '../../apis/activation';
+import { flash_blue, flash_red } from '../../constants';
 
 export const Valid = ({handleFlashMessage}) => {
   const { isSignedIn, setIsSignedIn, setCurrentUser, setLogoutMessage } = useContext(AuthContext);
@@ -12,13 +13,13 @@ export const Valid = ({handleFlashMessage}) => {
       if (res?.status === 200) {
         setIsSignedIn(true);
         setCurrentUser(res?.user);
-        setLogoutMessage({ color: "rgb(48, 200, 214)", message: res.message });
+        setLogoutMessage({ color: flash_blue, message: res.message });
       } else {
-        handleFlashMessage("red", res.message);
+        handleFlashMessage(flash_red, res.message);
       }
     } catch (e) {
       console.error(e);
-      handleFlashMessage("red", e.message);
+      handleFlashMessage(flash_red, e.message);
     }
   };
 

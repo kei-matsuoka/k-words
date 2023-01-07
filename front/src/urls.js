@@ -1,4 +1,4 @@
-const HOST = "https://api.k-words.net"
+const HOST = process.env.REACT_APP_HOST
 
 // 新規登録
 export const signupUrl = `${HOST}/signup`
@@ -12,17 +12,21 @@ export const logoutUrl = `${HOST}/logout`
 
 // ワード
 export const wordsUrl = `${HOST}/words`
-export const userWordUrl = (id) => `${HOST}/users/${id}/words`
-export const cardWordUrl = (id) => `${HOST}/cards/${id}/words`
+export const userWordsUrl = `${HOST}/user_words/`
+export const userWordUrl = (id) => `${HOST}/user_words/${id}`
+export const cardWordsUrl = (id) => `${HOST}/cards/${id}/words`
+export const favoriteWordsUrl = `${HOST}/favorite_words`
+export const commentedWordsUrl = `${HOST}/commented_words`
 
 // カード
 export const cardsUrl = `${HOST}/cards`
 
 // お気に入り
-export const userFavoriteUrl = (id) => `${HOST}/users/${id}/favorites`
+export const favoriteUrl = `${HOST}/favorites`
 
 // コメント
-export const userCommentUrl = (id) => `${HOST}/users/${id}/comments`
+export const commentsUrl = `${HOST}/comments`
+export const commentUrl = (id) => `${HOST}/comments/${id}`
 
 // お問い合わせ
 export const contactUrl = `${HOST}/contacts`

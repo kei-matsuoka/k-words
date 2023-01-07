@@ -1,19 +1,5 @@
 class FavoritesController < ApplicationController
-  before_action :logged_in_user, only: [:show, :create, :destroy]
-
-  def show
-    favorite_words = current_user.favorite_words
-    render json: { status: 200,
-                   words: favorite_words.as_json(:include => [
-                    :user => { :only => :name },
-                    :favorite_users => { :only => :id },
-                    :commenters => { :only => :id },
-                    :comments => { :include => [
-                      :user => { :only => [:id, :name] }
-                    ] }
-                   ])
-                 }
-  end
+  before_action :logged_in_user, only: [:favorite]
 
   def favorite
     @favorite = Favorite.find_by(favorite_params)

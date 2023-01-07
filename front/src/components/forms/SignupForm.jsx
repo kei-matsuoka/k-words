@@ -1,19 +1,24 @@
 import { useContext } from 'react';
 import { AuthContext } from '../../AuthProvider';
-import { useForm } from "react-hook-form";
-import { Signup } from '../../apis/signup';
-import { ValidationError } from '../parts/ValidationError';
 import { Link } from 'react-router-dom';
+import { useForm } from "react-hook-form";
+import { ValidationError } from '../parts/ValidationError';
 import { Spinner } from '../parts/Spinner';
+import { Signup } from '../../apis/signup';
 import { MdClear } from 'react-icons/md';
-import { email_reg } from '../../constants';
+import { email_reg, flash_blue, flash_red } from '../../constants';
 
-export const SignupForm = ({ handleClickSignup, handleClickLogin, handleFlashMessage }) => {
+export const SignupForm = ({
+  handleClickSignup,
+  handleClickLogin,
+  handleFlashMessage
+}) => {
+
+  const { loading, setLoading } = useContext(AuthContext);
   const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
     mode: 'onChange',
     criteriaMode: 'all',
   });
-  const { loading, setLoading } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
     try {
@@ -21,15 +26,15 @@ export const SignupForm = ({ handleClickSignup, handleClickLogin, handleFlashMes
       const res = await Signup(data.name, data.email, data.password);
       if (res?.status === 201) {
         handleClickSignup();
-        handleFlashMessage("rgb(48, 200, 214)", res.message);
+        handleFlashMessage(flash_blue, res.message);
       } else if (res.status === 400) {
-        handleFlashMessage("red", res.message);
+        handleFlashMessage(flash_red, res.message);
       } else {
-        handleFlashMessage("red", res.message);
+        handleFlashMessage(flash_red, res.message);
       }
     } catch (e) {
       console.error(e);
-      handleFlashMessage("red", e.message);
+      handleFlashMessage(flash_red, e.message);
     }
     setLoading(false);
   };
@@ -37,18 +42,19 @@ export const SignupForm = ({ handleClickSignup, handleClickLogin, handleFlashMes
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="form relative">
-        <MdClear className='absolute top-4 right-4 button-gray-500' onClick={handleClickSignup} />
+        <MdClear className='button-clear' onClick={handleClickSignup} />
         <h2 className='text-lg font-bold mb-6'>アカウント作成</h2>
         <p className='text-xs mb-6'>アカウントを作成することにより、
-          <Link to={"/policy"} target="_blank" className="text-sky-600">
+          <Link to={"/policy"} target="_blank" className="link">
             利用規約
           </Link>
           および
-          <Link to={"/privacy"} target="_blank" className="text-sky-600">
+          <Link to={"/privacy"} target="_blank" className="link">
             プライバシポリシー
           </Link>
           に同意するものとします。
         </p>
+
         <input
           className="border p-3 text-sm"
           type="text"
@@ -120,12 +126,19 @@ export const SignupForm = ({ handleClickSignup, handleClickLogin, handleFlashMes
         {errors.password?.types.minLength && (
           <ValidationError message={errors.password.message} />
         )}
-        <input className="button-form" type="submit" value="新規登録" disabled={!isDirty || !isValid} />
+
+        <input
+          className="button-form"
+          type="submit"
+          value="新規登録"
+          disabled={!isDirty || !isValid}
+        />
+
         <div className='flex justify-center mt-6'>
           <p className='text-sm'>
             <span>既にアカウントをお持ちの場合 </span>
             <span
-              className='text-sky-600 hover:cursor-pointer'
+              className='link'
               onClick={() => { handleClickSignup(); handleClickLogin(); }}>
               ログイン
             </span>

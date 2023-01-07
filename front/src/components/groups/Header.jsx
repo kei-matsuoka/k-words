@@ -11,6 +11,7 @@ import { MdViewHeadline, MdSearch, MdAddBox } from 'react-icons/md';
 import { FaUserCircle } from 'react-icons/fa';
 import { HeaderLogo } from '../parts/HeaderLogo';
 import { SearchInput } from '../parts/SearchInput';
+import { flash_red } from '../../constants';
 
 export const Header = ({
   handleGetWords,
@@ -48,7 +49,7 @@ export const Header = ({
       setState(state.wordModalIsOpen ? { wordModalIsOpen: false } : { wordModalIsOpen: true });
     } else {
       handleClickLogin();
-      handleFlashMessage("green", "用語を追加するにはログインが必要です");
+      handleFlashMessage(flash_red, "用語を追加するにはログインが必要です");
     }
   };
 
@@ -75,7 +76,7 @@ export const Header = ({
           {path === '/' &&
             <MdAddBox size="24" className="button-gray-800" onClick={handleClickWord} />
           }
-          <FaUserCircle size="24" className="button-gray-800 ml-4 sp:ml-2" onClick={handleClickDropdown} />
+          <FaUserCircle size="24" className="button-gray-800 ml-4" onClick={handleClickDropdown} />
         </div>
       </nav>
 

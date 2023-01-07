@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { patchPassword } from '../../apis/resetPassword';
 import { ValidationError } from '../parts/ValidationError';
 import { Navigate } from 'react-router-dom';
+import { flash_blue, flash_red } from '../../constants';
 
 export const PasswordResetForm = ({ id, email }) => {
   const [state, setState] = useState(false);
@@ -20,22 +21,23 @@ export const PasswordResetForm = ({ id, email }) => {
         setIsSignedIn(true);
         setCurrentUser(res?.user);
         setState(true);
-        setLogoutMessage({ color: "rgb(48, 200, 214)", message: res.message });
+        setLogoutMessage({ color: flash_blue, message: res.message });
       } else {
-        setLogoutMessage({ color: "red", message: res.message });
+        setLogoutMessage({ color: flash_red, message: res.message });
       }
     } catch (e) {
       console.error(e);
-      setLogoutMessage({ color: "red", message: e.message });
+      setLogoutMessage({ color: flash_red, message: e.message });
     }
     setLoading(false);
   };
 
   return (
-    <div>
-      {state === true && <Navigate to='/' />}
-      <form onSubmit={handleSubmit(onSubmit)} className="form">
-        <h2 className='text-lg font-bold mb-8'>パスワード変更</h2>
+    <>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col w-[480px] sb:w-full"
+      >
         <input hidden autoComplete='username' />
         <input
           className="border p-3 text-sm"
@@ -89,8 +91,14 @@ export const PasswordResetForm = ({ id, email }) => {
           <ValidationError message={errors.password_confirmation.types.validate} />
         )}
 
-        <input className="button-form" type="submit" value="更新" disabled={!isDirty || !isValid} />
+        <input
+          className="button-form"
+          type="submit"
+          value="更新"
+          disabled={!isDirty || !isValid}
+        />
       </form>
-    </div>
+      {state && <Navigate to='/' />}
+    </>
   );
 }

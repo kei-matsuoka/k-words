@@ -14,23 +14,23 @@ Rails.application.routes.draw do
 
   # ワード
   get '/words', to: 'words#index'
-  get '/users/:id/words', to: 'words#show'
-  get '/cards/:id/words', to: 'words#show_card_words'
-  post '/users/:id/words', to: 'words#create'
-  patch '/users/:id/words/', to: 'words#update'
-  delete '/users/:id/words/', to: 'words#destroy'
-
+  get '/user_words', to: 'words#show'
+  post '/user_words', to: 'words#create'
+  patch '/user_words/:id', to: 'words#update'
+  delete '/user_words/:id', to: 'words#destroy'
+  get '/cards/:id/words', to: 'words#card_words'
+  get '/favorite_words', to: 'words#favorite_words'
+  get '/commented_words', to: 'words#commented_words'
+  
   # カード
   get '/cards', to: 'cards#index'
 
   # お気に入り
-  get '/users/:id/favorites', to: 'favorites#show'
-  post '/users/:id/favorites', to: 'favorites#favorite'
+  post '/favorites', to: 'favorites#favorite'
 
   # コメント
-  get '/users/:id/comments', to: 'comments#show'
-  post '/users/:id/comments', to: 'comments#create'
-  delete '/users/:id/comments/', to: 'comments#destroy'
+  post '/comments', to: 'comments#create'
+  delete '/comments/:id', to: 'comments#destroy'
 
   # お問い合わせ
   post '/contacts', to: 'contacts#create'

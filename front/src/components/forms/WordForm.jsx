@@ -1,38 +1,35 @@
-import { useContext } from 'react';
-import { AuthContext } from '../../AuthProvider';
 import { useForm } from "react-hook-form";
-import { createWord } from '../../apis/words';
 import { ValidationError } from '../parts/ValidationError';
+import { createWord } from '../../apis/words';
 import { MdClear } from 'react-icons/md';
+import { flash_blue, flash_red } from "../../constants";
 
 export const WordForm = ({ handleGetWords, handleClickWord, handleFlashMessage }) => {
   const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
     mode: 'onChange',
     criteriaMode: 'all',
   });
-  const { setLoading, currentUser } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
     try {
-      const res = await createWord(data, currentUser.id);
+      const res = await createWord(data);
       if (res?.status === 201) {
         handleClickWord();
         handleGetWords();
-        handleFlashMessage("rgb(48, 200, 214)", res.message);
+        handleFlashMessage(flash_blue, res.message);
       } else {
-        handleFlashMessage("red", res.message);
+        handleFlashMessage(flash_red, res.message);
       }
     } catch (e) {
       console.error(e);
-      handleFlashMessage("red", e.message);
+      handleFlashMessage(flash_red, e.message);
     }
-    setLoading(false);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form relative">
       <h2 className='text-lg font-bold mb-8'>用語を作成する</h2>
-      <MdClear className='absolute top-4 right-4 button-gray-500' onClick={handleClickWord} />
+      <MdClear className='button-clear' onClick={handleClickWord} />
       <input
         className="border p-3 text-sm"
         type="text"
@@ -125,7 +122,12 @@ export const WordForm = ({ handleGetWords, handleClickWord, handleFlashMessage }
           <ValidationError message={errors.text.message} />
         )}
       </div>
-      <input className="button-form" type="submit" value="新規作成" disabled={!isDirty || !isValid} />
+      <input
+        className="button-form"
+        type="submit"
+        value="新規作成"
+        disabled={!isDirty || !isValid}
+      />
     </form>
   );
 }

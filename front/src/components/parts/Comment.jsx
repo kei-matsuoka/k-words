@@ -1,31 +1,9 @@
 import { useContext } from 'react';
 import { AuthContext } from '../../AuthProvider';
-import { destroyComment } from '../../apis/comments';
 import { IoTrashSharp } from 'react-icons/io5';
 
-export const Comment = ({ comment, handleFlashMessage, handleWords, handleClickLogin }) => {
-  const { setLoading, isSignedIn, currentUser } = useContext(AuthContext);
-
-  const handleCommentDestroy = async () => {
-    if (isSignedIn) {
-      try {
-        const res = await destroyComment(comment.id);
-        if (res?.status === 200) {
-          handleWords();
-          handleFlashMessage("rgb(48, 200, 214)", res.message);
-        } else {
-          handleFlashMessage("red", res.message);
-        }
-      } catch (e) {
-        console.error(e);
-        handleFlashMessage("red", e.message);
-      }
-      setLoading(false);
-    } else {
-      handleFlashMessage("red", "この機能を使用するにはログインが必要です");
-      handleClickLogin();
-    }
-  };
+export const Comment = ({ comment, handleWarning }) => {
+  const { isSignedIn, currentUser } = useContext(AuthContext);
 
   return (
     <div className="flex justify-between py-3 border-b">
@@ -37,8 +15,11 @@ export const Comment = ({ comment, handleFlashMessage, handleWords, handleClickL
           by {comment.user.name}
         </div>
       </div>
-      {comment.user.id === currentUser.id &&
-        <IoTrashSharp className='button-gray-500' onClick={handleCommentDestroy} />
+      {isSignedIn && (comment.user.id === currentUser.id) &&
+        <IoTrashSharp
+          className='button-gray-500'
+          onClick={() => handleWarning("コメント", comment.id)}
+        />
       }
     </div>
   );

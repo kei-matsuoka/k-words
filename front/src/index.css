@@ -13,13 +13,17 @@ html {
 }
 
 @layer utilities {
-  .top-color {
-    background-color: #F9FBFD
+  /* レイアウト */
+  .flex-center {
+    @apply flex flex-col items-center justify-center;
   }
 
   /* フォーム */
   .form {
     @apply flex flex-col w-[480px] sp:w-full px-8 py-10 rounded-sm bg-white;
+  }
+  .form-comment-input {
+    @apply text-sm px-2 py-1 w-full border rounded-sm shadow-inner;
   }
 
   /* ボタン */
@@ -44,27 +48,23 @@ html {
   }
 
   .button-form {
-    @apply button-bg-default py-3 mt-6 disabled:bg-gray-200 disabled:hover:bg-gray-200 w-full;
+    @apply button-bg-default py-3 mt-6 disabled:bg-gray-200 disabled:hover:bg-gray-200;
   }
 
   .button-comment-form {
     @apply button-bg-default px-3 ml-1 disabled:bg-gray-200 disabled:hover:bg-gray-200;
   }
 
+  .button-danger {
+    @apply button-default text-white bg-red-600 hover:bg-red-700 mt-6 py-2.5 rounded-sm
+  }
+
   .button-learn {
     @apply button-bg-default text-sm py-2.5 px-6;
   }
 
-  .button-color {
-    background-color: rgb(48, 200, 214);
-  }
-
-  .button-color:hover {
-    background-color: #23A4B0
-  }
-
-  .text-color {
-    color: #2B546A
+  .button-clear {
+    @apply absolute top-4 right-4 button-gray-500;
   }
 
   .transition-right {
@@ -118,6 +118,10 @@ html {
     list-style-type: disc;
     list-style: inside;
     margin: 6px;
+  }
+
+  .link {
+    @apply text-sky-600 hover:cursor-pointer;
   }
 
 }
