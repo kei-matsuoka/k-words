@@ -18,6 +18,14 @@ html {
     @apply flex flex-col items-center justify-center;
   }
 
+  .w-learn {
+    width: calc(100% - 76px);
+  }
+
+  .w-learn-half {
+    width: calc((100% - 76px)/2);
+  }
+
   /* フォーム */
   .form {
     @apply flex flex-col w-[480px] sp:w-full px-8 py-10 rounded-sm bg-white;
@@ -67,20 +75,13 @@ html {
     @apply absolute top-4 right-4 button-gray-500;
   }
 
+/* アニメーション */
   .transition-right {
     transform: translateX(-100%);
   }
 
   .transition-left {
     transform: translateX(50px);
-  }
-
-  .w-learn {
-    width: calc(100% - 76px);
-  }
-
-  .w-learn-half {
-    width: calc((100% - 76px)/2);
   }
 
   /* テキスト */
