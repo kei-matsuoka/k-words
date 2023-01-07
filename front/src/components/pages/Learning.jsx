@@ -6,6 +6,7 @@ import { getCardWords } from '../../apis/cards';
 import { getNewWords } from '../../helper';
 import { LearningWord } from '../groups/LeaningWord';
 import { LearningBar } from '../groups/LearningBar';
+import { flash_red } from '../../constants';
 
 export const Learning = ({ handleFlashMessage, setTitle }) => {
   const [state, setState] = useState({ card: {}, words: [], length: 0 });
@@ -29,7 +30,7 @@ export const Learning = ({ handleFlashMessage, setTitle }) => {
       }
     } catch (e) {
       console.error(e);
-      handleFlashMessage("red", e.message);
+      handleFlashMessage(flash_red, e.message);
     }
     setLoading(false);
   };

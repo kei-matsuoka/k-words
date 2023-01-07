@@ -1,17 +1,23 @@
 import { useContext } from 'react';
-import { useForm } from "react-hook-form";
 import { AuthContext } from '../../AuthProvider';
-import { Login } from '../../apis/login';
+import { useForm } from "react-hook-form";
 import { ValidationError } from '../parts/ValidationError';
+import { Login } from '../../apis/login';
+import { email_reg, flash_blue, flash_red } from '../../constants';
 import { MdClear } from 'react-icons/md';
-import { email_reg } from '../../constants';
 
-export const LoginForm = ({ handleClickLogin, handleClickSignup, handleClickPassword, handleFlashMessage }) => {
+export const LoginForm = ({
+  handleClickLogin,
+  handleClickSignup,
+  handleClickPassword,
+  handleFlashMessage
+}) => {
+
+  const { setLoading, setIsSignedIn, setCurrentUser } = useContext(AuthContext);
   const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
     mode: 'onChange',
     criteriaMode: 'all',
   });
-  const { setLoading, setIsSignedIn, setCurrentUser } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
     try {
@@ -20,15 +26,15 @@ export const LoginForm = ({ handleClickLogin, handleClickSignup, handleClickPass
         handleClickLogin();
         setIsSignedIn(true);
         setCurrentUser(res.user);
-        handleFlashMessage("rgb(48, 200, 214)", "ログインしました");
+        handleFlashMessage(flash_blue, "ログインしました");
       } else if (res?.status === 401) {
-        handleFlashMessage("red", res.message);
+        handleFlashMessage(flash_red, res.message);
       } else {
-        handleFlashMessage("red", res.message);
+        handleFlashMessage(flash_red, res.message);
       }
     } catch (e) {
       console.error(e);
-      handleFlashMessage("red", e.message);
+      handleFlashMessage(flash_red, e.message);
     }
     setLoading(false);
   };
@@ -36,7 +42,7 @@ export const LoginForm = ({ handleClickLogin, handleClickSignup, handleClickPass
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form relative">
       <h2 className='text-lg font-bold mb-8'>ログイン</h2>
-      <MdClear className='absolute top-4 right-4 button-gray-500' onClick={handleClickLogin} />
+      <MdClear className='button-clear' onClick={handleClickLogin} />
       <input
         className="border p-3 text-sm"
         type="email"
@@ -94,18 +100,29 @@ export const LoginForm = ({ handleClickLogin, handleClickSignup, handleClickPass
         />
         <p className='text-sm'>次回から自動でログインする</p>
       </div>
-      <input className="button-form" value="ログイン" type="submit" disabled={!isDirty || !isValid} />
-      <div className='flex flex-col items-center justify-center text-sm mt-6'>
+      <input
+        className="button-form"
+        value="ログイン"
+        type="submit"
+        disabled={!isDirty || !isValid}
+      />
+      <div className='flex-center text-sm mt-6'>
         <p>
           <span>パスワードを忘れた場合 </span>
-          <span className='text-sky-600 hover:cursor-pointer' onClick={() => { handleClickLogin(); handleClickPassword(); }}>
+          <span
+            className='link'
+            onClick={() => { handleClickLogin(); handleClickPassword(); }}
+          >
             こちら
           </span>
         </p>
         <p className='my-1'>or</p>
         <p>
           <span>アカウントをお持ちでない場合 </span>
-          <span className='text-sky-600 hover:cursor-pointer' onClick={() => { handleClickLogin(); handleClickSignup(); }}>
+          <span
+            className='link'
+            onClick={() => { handleClickLogin(); handleClickSignup(); }}
+          >
             新規登録
           </span>
         </p>

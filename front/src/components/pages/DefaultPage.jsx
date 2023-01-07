@@ -47,10 +47,13 @@ export const DefaultPage = ({ children }) => {
         handleClickPassword={handleClickPassword}
         handleFlashMessage={handleFlashMessage}
       />
+      
       <PageTitle title={title} />
+
       <div className="mt-[97px] ml-[76px] sp:ml-0 bg-gray-50 p-4">
         {childrenWithProps}
       </div>
+
       {location.pathname.indexOf('learning') === -1 && <Footer />}
       <FlashMessage ref={ref} />
       <LogoutMessage />

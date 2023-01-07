@@ -1,16 +1,24 @@
 import { useContext } from 'react';
 import { AuthContext } from '../../AuthProvider';
 import { useForm } from "react-hook-form";
-import { createComment } from '../../apis/comments';
 import { ValidationError } from '../parts/ValidationError';
+import { createComment } from '../../apis/comments';
 import { MdSend } from 'react-icons/md';
+import { flash_blue, flash_red } from '../../constants';
 
-export const CommentForm = ({ word, handleWords, handleFlashMessage, handleClickLogin }) => {
+export const CommentForm = ({
+  word,
+  handleWords,
+  handleFlashMessage,
+  handleClickLogin,
+  setCommented
+}) => {
+
+  const { setLoading, isSignedIn, currentUser } = useContext(AuthContext);
   const { register, handleSubmit, reset, formState: { errors, isDirty, isValid } } = useForm({
     mode: 'onChange',
     criteriaMode: 'all',
   });
-  const { setLoading, isSignedIn, currentUser } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
     if (isSignedIn) {
@@ -19,17 +27,18 @@ export const CommentForm = ({ word, handleWords, handleFlashMessage, handleClick
         if (res?.status === 201) {
           reset();
           handleWords();
-          handleFlashMessage("rgb(48, 200, 214)", res.message);
+          setCommented(true);
+          handleFlashMessage(flash_blue, res.message);
         } else {
-          handleFlashMessage("red", res.message);
+          handleFlashMessage(flash_red, res.message);
         }
       } catch (e) {
         console.error(e);
-        handleFlashMessage("red", e.message);
+        handleFlashMessage(flash_red, e.message);
       }
       setLoading(false);
     } else {
-      handleFlashMessage("red", "この機能を使用するにはログインが必要です");
+      handleFlashMessage(flash_red, "この機能はログインが必要です");
       handleClickLogin();
     }
   };
@@ -37,11 +46,12 @@ export const CommentForm = ({ word, handleWords, handleFlashMessage, handleClick
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col rounded-sm">
+      className="flex flex-col rounded-sm"
+    >
 
       <div className='flex'>
         <input
-          className="text-sm px-2 py-1 w-full border rounded-sm shadow-inner"
+          className="form-comment-input"
           type="textarea"
           placeholder="コメント"
           {...register("text", {
@@ -56,7 +66,11 @@ export const CommentForm = ({ word, handleWords, handleFlashMessage, handleClick
           })}
         />
 
-        <button className="button-comment-form" type="submit" disabled={!isDirty || !isValid}>
+        <button
+          className="button-comment-form"
+          type="submit"
+          disabled={!isDirty || !isValid}
+        >
           <MdSend />
         </button>
       </div>

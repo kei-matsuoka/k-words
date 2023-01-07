@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { patchUser } from '../../apis/users';
 import { ValidationError } from '../parts/ValidationError';
 import { useOutletContext } from "react-router-dom";
+import { email_reg, flash_blue, flash_red } from '../../constants';
 
 export const ProfileOutlet = () => {
   const { setLoading, setCurrentUser, currentUser } = useContext(AuthContext);
@@ -23,20 +24,23 @@ export const ProfileOutlet = () => {
       if (res?.status === 200) {
         // フラッシュメッセージが出た後にページをレンダリングする
         setTimeout(() => setCurrentUser(res.user), 4000);
-        handleFlashMessage("rgb(48, 200, 214)", res.message);
+        handleFlashMessage(flash_blue, res.message);
       } else {
-        handleFlashMessage("red", res.message);
+        handleFlashMessage(flash_red, res.message);
       }
     } catch (e) {
       console.error(e);
-      handleFlashMessage("red", e.message);
+      handleFlashMessage(flash_red, e.message);
     }
     setLoading(false);
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-[480px] sb:w-full">
+    <>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col w-[480px] sb:w-full"
+      >
         <h2 className='text-lg font-bold mb-8'>プロフィール編集</h2>
         <input
           className="border p-3 text-sm"
@@ -73,7 +77,7 @@ export const ProfileOutlet = () => {
               message: '入力してください'
             },
             pattern: {
-              value: /[\w+\-.]+@[a-z\d-]+(\.[a-z\d-]+)*\.[a-z]+/i,
+              value: email_reg,
               message: '有効なメールアドレスを入力してください'
             }
           })}
@@ -86,17 +90,13 @@ export const ProfileOutlet = () => {
           <ValidationError message={errors.email.message} />
         )}
 
-        <input className="bg-gray-800
-                        hover:bg-gray-600
-                      text-white
-                        w-full
-                        py-3
-                        mt-6
-                        rounded-sm
-                        duration-300
-                      disabled:bg-gray-200"
-          type="submit" value="修正" disabled={!isDirty || !isValid} />
+        <input
+          className="button-form"
+          type="submit"
+          value="修正"
+          disabled={!isDirty || !isValid}
+        />
       </form>
-    </div>
+    </>
   );
 }

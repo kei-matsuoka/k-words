@@ -3,6 +3,7 @@ import { AuthContext } from '../../AuthProvider';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion'
 import { Logout } from '../../apis/logout';
+import { flash_blue, flash_red } from '../../constants';
 
 export const Dropdown = ({
   handleClickDropdown,
@@ -27,14 +28,14 @@ export const Dropdown = ({
       if (res?.status === 200) {
         setIsSignedIn(false);
         setCurrentUser(null);
-        setLogoutMessage({ color: "rgb(48, 200, 214)", message: res.message });
+        setLogoutMessage({ color: flash_blue, message: res.message });
         handleClickDropdown();
       } else {
-        handleFlashMessage("red", res.message);
+        handleFlashMessage(flash_red, res.message);
       }
     } catch (e) {
       console.error(e.message);
-      handleFlashMessage("red", e.message);
+      handleFlashMessage(flash_red, e.message);
     }
     setLoading(false);
   };

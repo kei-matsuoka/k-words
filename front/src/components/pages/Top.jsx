@@ -1,19 +1,19 @@
 import { useState, useEffect, useContext, useRef } from "react";
 import { AuthContext } from '../../AuthProvider';
-import { Header } from "../groups/Header";
 import { JColumnBar } from "../groups/JColumnBar";
-import { Words } from "../groups/Words";
-import { escapeStringRegexp, setPageTitle } from "../../helper";
-import { reg_list } from "../../constants";
-import { FlashMessage } from "../parts/FlashMessage";
-import { LogoutMessage } from "../parts/LogoutMessage";
-import { getWords } from "../../apis/words";
+import { Header } from "../groups/Header";
 import { Footer } from "../groups/Footer";
+import { Words } from "../groups/Words";
+import { Skeltons } from "../groups/Skeltons";
+import { LogoutMessage } from "../parts/LogoutMessage";
+import { FlashMessage } from "../parts/FlashMessage";
 import { Modal } from "../modals/Modal";
+import { TokenResetForm } from "../forms/TokenResetForm";
 import { SignupForm } from "../forms/SignupForm";
 import { LoginForm } from "../forms/LoginForm";
-import { TokenResetForm } from "../forms/TokenResetForm";
-import { Skeltons } from "../groups/Skeltons";
+import { getWords } from "../../apis/words";
+import { flash_red, reg_list } from "../../constants";
+import { escapeStringRegexp, setPageTitle } from "../../helper";
 
 export const Top = () => {
   const initialState = {
@@ -51,11 +51,11 @@ export const Top = () => {
       if (res?.status === 200) {
         setWords(res?.words);
       } else {
-        handleFlashMessage("red", "用語がありません");
+        handleFlashMessage(flash_red, "用語がありません");
       }
     } catch (e) {
       console.error(e);
-      handleFlashMessage("red", e.message);
+      handleFlashMessage(flash_red, e.message);
     }
     setLoading(false);
   };

@@ -12,3 +12,6 @@ export const reg_list = ["^あ|^い|^う|^え|^お|^ぁ|^ぃ|^ぅ|^ぇ|^ぉ",
   "^わ|^を|^ん"];
 
 export const email_reg = /[\w+.]+@[a-z\d]+(\.[a-z\d]+)*\.[a-z]+/i
+
+export const flash_blue = "#30C8D6"
+export const flash_red = "#DD0000"

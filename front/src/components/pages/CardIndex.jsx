@@ -4,8 +4,9 @@ import { getCardWords } from '../../apis/cards';
 import { Words } from '../groups/Words';
 import { LearningBar } from '../groups/LearningBar';
 import { Skeltons } from '../groups/Skeltons';
+import { flash_red } from '../../constants';
 
-export const CardIndex = ({ handleFlashMessage, setTitle }) => {
+export const CardIndex = ({ handleFlashMessage }) => {
   const [state, setState] = useState({ card: {}, words: [], length: 0 });
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
@@ -21,7 +22,7 @@ export const CardIndex = ({ handleFlashMessage, setTitle }) => {
       }
     } catch (e) {
       console.error(e);
-      handleFlashMessage("red", e.message);
+      handleFlashMessage(flash_red, e.message);
     }
     setLoading(false);
   };

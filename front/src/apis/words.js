@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { wordsUrl, userWordUrl } from '../urls';
+import { wordsUrl, userWordsUrl, userWordUrl, favoriteWordsUrl, commentedWordsUrl } from '../urls';
 
 export const getWords = () => {
   return axios.get(wordsUrl, { withCredentials: true }
@@ -10,8 +10,8 @@ export const getWords = () => {
   })
 };
 
-export const getUserWords = (user_id) => {
-  return axios.get(userWordUrl(user_id), { withCredentials: true }
+export const getUserWords = () => {
+  return axios.get(userWordsUrl, { withCredentials: true }
   ).then(res => {
     return res.data
   }).catch(e => {
@@ -19,8 +19,8 @@ export const getUserWords = (user_id) => {
   });
 };
 
-export const createWord = (data, user_id) => {
-  return axios.post(userWordUrl(user_id), {
+export const createWord = (data) => {
+  return axios.post(userWordsUrl, {
     title: data.title,
     kana: data.kana,
     meaning: data.meaning,
@@ -54,4 +54,22 @@ export const destroyWord = (word_id) => {
   }).catch(e => {
     throw e;
   })
+};
+
+export const getFavoriteWords = () => {
+  return axios.get(favoriteWordsUrl, { withCredentials: true }
+  ).then(res => {
+    return res.data
+  }).catch(e => {
+    throw e;
+  });
+};
+
+export const getCommentedWords = () => {
+  return axios.get(commentedWordsUrl, { withCredentials: true }
+  ).then(res => {
+    return res.data
+  }).catch(e => {
+    throw e;
+  });
 };

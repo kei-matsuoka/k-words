@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 import { AuthContext } from '../../AuthProvider';
 import { useForm } from "react-hook-form";
-import { createResetToken } from '../../apis/resetPassword';
 import { ValidationError } from '../parts/ValidationError';
 import { Spinner } from '../parts/Spinner';
+import { createResetToken } from '../../apis/resetPassword';
 import { MdClear } from 'react-icons/md';
-import { email_reg } from '../../constants';
+import { email_reg, flash_blue, flash_red } from '../../constants';
 
 export const TokenResetForm = ({ handleClickPassword, handleFlashMessage }) => {
   const { loading, setLoading } = useContext(AuthContext);
@@ -20,24 +20,24 @@ export const TokenResetForm = ({ handleClickPassword, handleFlashMessage }) => {
       const res = await createResetToken(data.email);
       if (res?.status === 201) {
         handleClickPassword();
-        handleFlashMessage("rgb(48, 200, 214)", res.message);
+        handleFlashMessage(flash_blue, res.message);
       } else {
-        handleFlashMessage("red", res.message);
+        handleFlashMessage(flash_red, res.message);
       }
     } catch (e) {
       console.error(e);
-      handleFlashMessage("red", e.message);
+      handleFlashMessage(flash_red, e.message);
     }
     setLoading(false);
   };
 
   return (
-    <div>
+    <>
       <form onSubmit={handleSubmit(onSubmit)} className="form relative">
         <h2 className='text-lg font-bold mb-8'>パスワード変更</h2>
         <p className='text-xs mb-6'>入力したメールアドレス宛にパスワード更新用のリンクを送付します。</p>
-        <MdClear className='absolute top-4 right-4 button-gray-500' onClick={handleClickPassword} />
-        {/* <p >×</p> */}
+        <MdClear className='button-clear' onClick={handleClickPassword} />
+
         <input hidden autoComplete='username' />
         <input
           className="border p-3 text-sm"
@@ -63,9 +63,14 @@ export const TokenResetForm = ({ handleClickPassword, handleFlashMessage }) => {
           <ValidationError message={errors.email.message} />
         )}
 
-        <input className="button-form" type="submit" value="送信" disabled={!isDirty || !isValid} />
+        <input
+          className="button-form"
+          type="submit"
+          value="送信"
+          disabled={!isDirty || !isValid}
+        />
       </form>
       {loading && <Spinner />}
-    </div>
+    </>
   );
 }

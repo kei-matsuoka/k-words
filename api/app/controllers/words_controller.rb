@@ -1,20 +1,13 @@
 class WordsController < ApplicationController
-  before_action :logged_in_user, only: [:show, :create, :update, :destroy]
+  before_action :logged_in_user, only: [
+    :show, :create, :update, :destroy, :card_words, :favorite_words, :commented_words
+  ]
   before_action :correct_user, only: [:update, :destroy]
 
   def index
     words = Word.all
     if words
-      render json: { status: 200,
-                     words: words.as_json(:include => [ 
-                      :user => { :only => :name },
-                      :favorite_users => { :only => :id },
-                      :commenters => { :only => :id },
-                      :comments => { :include => [
-                        :user => { :only => [:id, :name] }
-                      ] }
-                     ])
-                   }
+      render json: common_json(words)
     else
       render json: { status: 401, message: '用語がありません' }
     end
@@ -22,22 +15,7 @@ class WordsController < ApplicationController
 
   def show
     words = @current_user.words
-    render json: { status: 200,
-                   words: words.as_json(:include => [ 
-                    :user => { :only => :name },
-                    :favorite_users => { :only => :id },
-                    :commenters => { :only => :id },
-                    :comments => { :include => [
-                      :user => { :only => [:id, :name] }
-                    ] }
-                   ])
-                  }
-  end
-
-  def show_card_words
-    card = Card.find(params[:id])
-    words = card.words
-    render json: { status: 200, card: card, words: words }
+    render json: common_json(words)
   end
 
   def create
@@ -63,6 +41,36 @@ class WordsController < ApplicationController
     else
       render json: { status: 500, message: '用語を削除できません' }
     end
+  end
+
+  def card_words
+    card = Card.find(params[:id])
+    words = card.words
+    render json: { status: 200, card: card, words: words }
+  end
+
+  def favorite_words
+    words = current_user.favorite_words
+    render json: common_json(words)
+  end
+
+  def commented_words
+    words = current_user.commented_words
+    render json: common_json(words)
+  end
+
+  def common_json(words)
+    return {
+      status: 200,
+      words: words.as_json(:include => [ 
+       :user => { :only => [:id, :name] },
+       :favorite_users => { :only => :id },
+       :commenters => { :only => :id },
+       :comments => { :include => [
+         :user => { :only => [:id, :name] }
+       ] }
+      ])
+    }
   end
 
   private

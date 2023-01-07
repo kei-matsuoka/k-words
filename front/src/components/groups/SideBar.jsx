@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../../AuthProvider';
 import { MdHome, MdPerson, MdArticle, MdSettings, MdViewHeadline } from 'react-icons/md';
 import { SideBarLink } from '../parts/SideBarLink';
+import { flash_red } from '../../constants';
 
 export const SideBar = ({ handleFlashMessage, handleClickLogin, handleClickSideBar }) => {
   const { isSignedIn } = useContext(AuthContext);
@@ -9,7 +10,7 @@ export const SideBar = ({ handleFlashMessage, handleClickLogin, handleClickSideB
   const handleLoginWithMessage = () => {
     handleClickSideBar && handleClickSideBar();
     handleClickLogin();
-    handleFlashMessage("green", "ログインしてください");
+    handleFlashMessage(flash_red, "この機能はログインが必要です");
   };
 
   return (

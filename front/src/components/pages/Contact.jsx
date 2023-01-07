@@ -5,7 +5,8 @@ export const Contact = ({ handleFlashMessage, setTitle }) => {
   useEffect(() => {
     setTitle("お問い合わせ");
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
+
   return (
     <div className="flex justify-center bg-white px-8 pt-2 pb-2 -m-4">
       <ContactForm handleFlashMessage={handleFlashMessage} />

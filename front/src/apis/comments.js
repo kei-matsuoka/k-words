@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { userCommentUrl } from '../urls';
+import { commentsUrl, commentUrl } from '../urls';
 
 export const createComment = (user_id, word_id, text) => {
-  return axios.post(userCommentUrl(user_id), {
+  return axios.post(commentsUrl, {
     user_id: user_id,
     word_id: word_id,
     text: text,
@@ -15,19 +15,10 @@ export const createComment = (user_id, word_id, text) => {
 };
 
 export const destroyComment = (comment_id) => {
-  return axios.delete(userCommentUrl(comment_id), { withCredentials: true }
+  return axios.delete(commentUrl(comment_id), { withCredentials: true }
   ).then(res => {
     return res.data
   }).catch(e => {
     throw e;
   })
-};
-
-export const getCommentedWords = (id) => {
-  return axios.get(userCommentUrl(id), { withCredentials: true }
-  ).then(res => {
-    return res.data
-  }).catch(e => {
-    throw e;
-  });
 };

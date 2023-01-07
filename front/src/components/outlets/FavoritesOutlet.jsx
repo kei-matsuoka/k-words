@@ -1,41 +1,44 @@
-import { useState, useEffect, useContext } from "react";
-import { AuthContext } from '../../AuthProvider';
+import { useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
-import { getUserFavorites } from '../../apis/favorites';
+import { getFavoriteWords } from '../../apis/words';
 import { Words } from "../groups/Words";
 import { Skeltons } from "../groups/Skeltons";
+import { flash_red } from "../../constants";
 
 export const FavoritesOutlet = () => {
-  const [userFavorites, setUserFavorites] = useState([]);
+  const [favoriteWords, setFavoriteWords] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { currentUser } = useContext(AuthContext);
   const [handleFlashMessage] = useOutletContext();
 
-  const handleGetUserFavorites = async () => {
+  const handleGetFavoriteWords = async () => {
     try {
       setLoading(true);
-      const res = await getUserFavorites(currentUser.id);
+      const res = await getFavoriteWords();
       if (res?.status === 200) {
-        setUserFavorites(res.words);
+        setFavoriteWords(res.words);
       } else {
         console.log(res.message);
       }
     } catch (e) {
       console.error(e);
-      handleFlashMessage("red", e.message);
+      handleFlashMessage(flash_red, e.message);
     }
     setLoading(false);
   };
 
   useEffect(() => {
-    handleGetUserFavorites();
+    handleGetFavoriteWords();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
-      {loading ? <Skeltons /> : userFavorites[0] ?
-        <Words words={userFavorites} handleWords={handleGetUserFavorites} handleFlashMessage={handleFlashMessage} />
+      {loading ? <Skeltons /> : favoriteWords[0] ?
+        <Words
+          words={favoriteWords}
+          handleWords={handleGetFavoriteWords}
+          handleFlashMessage={handleFlashMessage}
+        />
         :
         <p className="text-sm mt-3 p-4 bg-white rounded-sm">お気に入りの用語がありません。</p>
       }

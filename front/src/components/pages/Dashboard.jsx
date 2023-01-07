@@ -6,6 +6,7 @@ import { Cards } from '../groups/Cards';
 export const Dashboard = ({setTitle}) => {
   const { setLoading } = useContext(AuthContext);
   const [cards, setCards] = useState();
+
   const handleGetCards = async () => {
     try {
       const res = await getCards();
@@ -33,7 +34,7 @@ export const Dashboard = ({setTitle}) => {
           おすすめ
         </button>
         <button className='flex justify-center items-center w-1/2 h-12 bg-white border-t border-r rounded-t'>
-          マイカード（未実装）
+          マイカード（作成中）
         </button>
       </div>
       <div className="w-full bg-gray-800 rounded-b shadow-sm px-4 pb-4">

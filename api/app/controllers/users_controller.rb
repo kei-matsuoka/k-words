@@ -18,7 +18,7 @@ class UsersController < ApplicationController
 
   def update
     if @current_user.update!(user_params)
-      render json: { status: 200, user: user, message:'プロフィールを修正しました' }
+      render json: { status: 200, user: @current_user, message:'プロフィールを修正しました' }
     else 
       render json: { status: 500, message: 'プロフィールを修正できません'  }
     end

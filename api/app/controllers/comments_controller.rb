@@ -1,20 +1,6 @@
 class CommentsController < ApplicationController
-  before_action :logged_in_user, only: [:show, :create, :destroy]
+  before_action :logged_in_user, only: [:create, :destroy]
   before_action :correct_user, only: [:destroy]
-
-  def show
-    commented_words = current_user.commented_words
-    render json: { status: 200,
-                   words: commented_words.as_json(:include => [
-                    :user => { :only => :name },
-                    :favorite_users => { :only => :id },
-                    :commenters => { :only => :id },
-                    :comments => { :include => [
-                      :user => { :only => [:id, :name] }
-                    ] }
-                   ])
-                  }
-  end
 
   def create
     comment = current_user.comments.build(comment_params)
