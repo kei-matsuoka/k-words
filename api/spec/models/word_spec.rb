@@ -39,8 +39,8 @@ RSpec.describe Word, type: :model do
       word.meaning = ' '
       expect(word).to_not be_valid
     end
-    it 'meaningが50文字以内であること' do
-      word.meaning = 'a' * 51
+    it 'meaningが255文字以内であること' do
+      word.meaning = 'a' * 256
       expect(word).to_not be_valid
     end
   end

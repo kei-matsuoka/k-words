@@ -49,7 +49,7 @@ export const Top = () => {
       setLoading(true);
       const res = await getWords();
       if (res?.status === 200) {
-        setWords(res?.words);
+        setWords(res?.words.sort((word, next_word) => word.kana.localeCompare(next_word.kana), 'ja'));
       } else {
         handleFlashMessage(flash_red, "用語がありません");
       }
@@ -61,24 +61,24 @@ export const Top = () => {
   };
 
   const filterWords = (i) => {
-    const array = [];
+    const filtered_words = [];
     const reg = new RegExp(reg_list[i]);
     words.forEach((word) => {
       if (reg.test(word.kana)) {
-        array.push(word);
-        setFilteredWords(array);
+        filtered_words.push(word);
+        setFilteredWords(filtered_words.sort((word, next_word) => word.kana.localeCompare(next_word.kana), 'ja'));
       }
     });
-    if (array.length === 0) {
+    if (filtered_words.length === 0) {
       setFilteredWords();
     }
   };
 
-  const searchWords = words.filter((word) => {
+  const searched_words = words.filter((word) => {
     const escapedText = escapeStringRegexp(searchKeyword);
     const searchReg = new RegExp(escapedText)
     return searchReg.test(word.kana) || searchReg.test(word.title);
-  });
+  }).sort((word, next_word) => word.kana.localeCompare(next_word.kana), 'ja');
 
   const handleOnClick = (i) => {
     setIndex(i);
@@ -122,24 +122,26 @@ export const Top = () => {
       <div className="mt-[94px] ml-[76px] p-4 sp:ml-0 jb:mt-[142px] h-full bg-gray-50">
         {loading ? <Skeltons /> :
           <>
-            {!filtered && (searchWords.length !== 0) &&
+            {!filtered && ((searched_words.length !== 0) ?
               <Words
-                words={searchWords}
+                words={searched_words}
                 handleClickLogin={handleClickLogin}
                 handleFlashMessage={handleFlashMessage}
                 handleWords={handleGetWords}
               />
-            }
-            {filtered && filteredWords &&
+              :
+              <p className="pt-2">該当する用語がありません。</p>
+            )}
+            {filtered && (filteredWords ?
               <Words
                 words={filteredWords}
                 handleClickLogin={handleClickLogin}
                 handleFlashMessage={handleFlashMessage}
                 handleWords={handleGetWords}
               />
-            }
-            {!filtered && searchWords.length === 0 && <p className="pt-2">該当する用語がありません。</p>}
-            {filtered && !filteredWords && <p className="pt-2">該当する用語がありません。</p>}
+              :
+              <p className="pt-2">該当する用語がありません。</p>
+            )}
           </>
         }
       </div>

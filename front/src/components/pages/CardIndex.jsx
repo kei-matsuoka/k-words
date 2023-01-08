@@ -16,7 +16,7 @@ export const CardIndex = ({ handleFlashMessage }) => {
       setLoading(true);
       const res = await getCardWords(id);
       if (res?.status === 200) {
-        setState({ card: res.card, words: res.words, length: res.words.length });
+        setState({ card: res.card, words: res.words.sort((word, next_word) => word.kana.localeCompare(next_word.kana), 'ja'), length: res.words.length });
       } else {
         console.log(res.message);
       }

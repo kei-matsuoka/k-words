@@ -15,7 +15,7 @@ export const WordsOutlet = () => {
       setLoading(true)
       const res = await getUserWords();
       if (res?.status === 200) {
-        setUserWords(res.words);
+        setUserWords(res.words.sort((word, next_word) => word.kana.localeCompare(next_word.kana), 'ja'));
       } else {
         console.log(res.message);
       }
