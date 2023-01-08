@@ -23,7 +23,7 @@ export const Learning = ({ handleFlashMessage, setTitle }) => {
     try {
       const res = await getCardWords(id);
       if (res?.status === 200) {
-        const new_words = getNewWords(res.words);
+        const new_words = getNewWords(res.words.sort((word, next_word) => word.kana.localeCompare(next_word.kana), 'ja'));
         setState({ card: res.card, words: new_words, length: new_words.length });
       } else {
         console.log(res.message);

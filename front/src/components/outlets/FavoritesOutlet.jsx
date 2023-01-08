@@ -15,7 +15,7 @@ export const FavoritesOutlet = () => {
       setLoading(true);
       const res = await getFavoriteWords();
       if (res?.status === 200) {
-        setFavoriteWords(res.words);
+        setFavoriteWords(res.words.sort((word, next_word) => word.kana.localeCompare(next_word.kana), 'ja'));
       } else {
         console.log(res.message);
       }

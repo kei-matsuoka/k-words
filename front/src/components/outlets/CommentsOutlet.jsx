@@ -23,7 +23,7 @@ export const CommentsOutlet = () => {
       setLoading(true);
       const res = await getCommentedWords();
       if (res?.status === 200) {
-        const filtered_words = filterWords(res.words);
+        const filtered_words = filterWords(res.words.sort((word, next_word) => word.kana.localeCompare(next_word.kana), 'ja'));
         setCommentedWords(filtered_words);
       } else {
         console.log(res.message);

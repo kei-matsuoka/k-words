@@ -7,10 +7,8 @@ class Word < ApplicationRecord
   has_many :favorite_users, through: :favorites, source: :user
   has_many :commenters, through: :comments, source: :user
 
-  default_scope -> { order(:kana) }
-
   validates :title, presence: true, length: {maximum: 20}
   validates :kana, presence: true, length: {maximum: 30}
-  validates :meaning, presence: true, length: {maximum: 50}
+  validates :meaning, presence: true, length: {maximum: 255}
   validates :text, length: {maximum: 255}
 end
