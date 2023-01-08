@@ -21,7 +21,7 @@ export const ContactForm = ({ handleFlashMessage }) => {
       const res = await createContact(data);
       if (res?.status === 201) {
         setState(true);
-        setLogoutMessage({ flash_blue, message: res.message });
+        setLogoutMessage({ color: flash_blue, message: res.message });
       } else {
         handleFlashMessage(flash_red, res.message);
       }
