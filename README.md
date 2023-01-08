@@ -25,7 +25,7 @@ URL：[https://k-words.net/](https://k-words.net/)
 ## インフラ構成図
 ![AWS構成図](https://user-images.githubusercontent.com/46675472/211208244-5ae04ed1-297e-4468-b910-a0f5c62fadc0.png)
 ## ER図
-![ER図](https://user-images.githubusercontent.com/46675472/211209377-43d3508c-2f6c-4218-bd83-7299203bb91b.png)
+![ER図](https://user-images.githubusercontent.com/46675472/211209453-1e1b7431-6ebd-4488-9a2a-3e0e7b235887.png)
 ## 機能一覧
 - アカウント登録 / 認証
 - 用語検索（部分一致 / 五十音絞り込み）
