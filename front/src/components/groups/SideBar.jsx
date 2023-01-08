@@ -6,7 +6,7 @@ import { flash_red } from '../../constants';
 
 export const SideBar = ({ handleFlashMessage, handleClickLogin, handleClickSideBar }) => {
   const { isSignedIn } = useContext(AuthContext);
-  
+
   const handleLoginWithMessage = () => {
     handleClickSideBar && handleClickSideBar();
     handleClickLogin();
@@ -18,16 +18,16 @@ export const SideBar = ({ handleFlashMessage, handleClickLogin, handleClickSideB
       <button onClick={handleClickSideBar} className="pt-3.5 pb-4 button-gray-800">
         <MdViewHeadline size={28} className="mx-auto" />
       </button>
-      
+
       <SideBarLink handleOnClick={handleClickSideBar} url="/" title="ホーム">
         <MdHome size={24} />
+      </SideBarLink>
+      <SideBarLink handleOnClick={handleClickSideBar} url="/dashboard" title="単語カード">
+        <MdArticle size={24} />
       </SideBarLink>
 
       {isSignedIn ?
         <>
-          <SideBarLink handleOnClick={handleClickSideBar} url="/dashboard" title="単語カード">
-            <MdArticle size={24} />
-          </SideBarLink>
           <SideBarLink handleOnClick={handleClickSideBar} url="/mypage" title="マイページ">
             <MdPerson size={24} />
           </SideBarLink>
@@ -37,9 +37,6 @@ export const SideBar = ({ handleFlashMessage, handleClickLogin, handleClickSideB
         </>
         :
         <>
-          <SideBarLink handleOnClick={handleLoginWithMessage} url="#" title="単語カード">
-            <MdArticle size={24} />
-          </SideBarLink>
           <SideBarLink handleOnClick={handleLoginWithMessage} url="#" title="マイページ">
             <MdPerson size={24} />
           </SideBarLink>

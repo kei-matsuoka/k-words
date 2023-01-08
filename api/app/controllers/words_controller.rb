@@ -1,6 +1,6 @@
 class WordsController < ApplicationController
   before_action :logged_in_user, only: [
-    :show, :create, :update, :destroy, :card_words, :favorite_words, :commented_words
+    :show, :create, :update, :destroy, :favorite_words, :commented_words
   ]
   before_action :correct_user, only: [:update, :destroy]
 

@@ -63,9 +63,9 @@ export const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route index element={<Top />} />
-        <Route path='/dashboard' element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-        <Route path='/cards/:id' element={<PrivateRoute><CardIndex /></PrivateRoute>} />
-        <Route path='/cards/:id/learning' element={<PrivateRoute><Learning /></PrivateRoute>} />
+        <Route path='/dashboard' element={<DefaultPage><Dashboard /></DefaultPage>} />
+        <Route path='/cards/:id' element={<DefaultPage><CardIndex /></DefaultPage>} />
+        <Route path='/cards/:id/learning' element={<DefaultPage><Learning /></DefaultPage>} />
         <Route path='/mypage' element={<PrivateRoute><MyPage /></PrivateRoute>} >
           <Route path='' element={<WordsOutlet />} />
           <Route path='words' element={<WordsOutlet />} />
