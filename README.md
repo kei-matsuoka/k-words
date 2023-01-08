@@ -5,6 +5,8 @@ URL：[https://k-words.net/](https://k-words.net/)
 |ゲスト用メールアドレス|ゲスト用パスワード|
 |----------------|-------------|
 |     t@t.t      |    tttttt   |
+
+![霞が関用語辞典](https://user-images.githubusercontent.com/46675472/211211095-87499e97-cf8b-4027-a468-dd932d8a5d42.png)
 ## 主な使用技術
 - フロントエンド
   - HTML / CSS（Tailwind CSS）
