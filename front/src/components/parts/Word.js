@@ -103,7 +103,7 @@ export const Word = ({
 
       <div className='flex items-center'>
         <p className="mb-1">{word.title}</p>
-        <p className="mb-1 text-sm">（{word.kana}）</p>
+        <p className="mb-1 text-sm sp:text-xs">（{word.kana}）</p>
       </div>
       <div className="text-sm">
         <p>{word.meaning}</p>
