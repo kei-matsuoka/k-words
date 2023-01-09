@@ -5,10 +5,11 @@ import { patchPassword } from '../../apis/resetPassword';
 import { ValidationError } from '../parts/ValidationError';
 import { Navigate } from 'react-router-dom';
 import { flash_blue, flash_red } from '../../constants';
+import { Spinner } from '../parts/Spinner';
 
-export const PasswordResetForm = ({ id, email }) => {
+export const PasswordResetForm = ({ id, email, handleFlashMessage }) => {
   const [state, setState] = useState(false);
-  const { setLoading, setIsSignedIn, setCurrentUser, setLogoutMessage } = useContext(AuthContext);
+  const { loading, setLoading, setIsSignedIn, setCurrentUser, setLogoutMessage } = useContext(AuthContext);
   const { register, handleSubmit, formState: { errors, isDirty, isValid }, getValues } = useForm({
     mode: 'onChange',
     criteriaMode: 'all',
@@ -16,6 +17,7 @@ export const PasswordResetForm = ({ id, email }) => {
 
   const onSubmit = async (data) => {
     try {
+      setLoading(true);
       const res = await patchPassword(id, email, data.password);
       if (res?.status === 200) {
         setIsSignedIn(true);
@@ -23,11 +25,11 @@ export const PasswordResetForm = ({ id, email }) => {
         setState(true);
         setLogoutMessage({ color: flash_blue, message: res.message });
       } else {
-        setLogoutMessage({ color: flash_red, message: res.message });
+        handleFlashMessage(flash_red, res.message);
       }
     } catch (e) {
       console.error(e);
-      setLogoutMessage({ color: flash_red, message: e.message });
+      handleFlashMessage(flash_red, e.message);
     }
     setLoading(false);
   };
@@ -99,6 +101,7 @@ export const PasswordResetForm = ({ id, email }) => {
         />
       </form>
       {state && <Navigate to='/' />}
+      {loading && <Spinner />}
     </>
   );
 }

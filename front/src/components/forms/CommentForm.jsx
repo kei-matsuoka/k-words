@@ -23,6 +23,7 @@ export const CommentForm = ({
   const onSubmit = async (data) => {
     if (isSignedIn) {
       try {
+        setLoading(true);
         const res = await createComment(currentUser.id, word.id, data.text);
         if (res?.status === 201) {
           reset();

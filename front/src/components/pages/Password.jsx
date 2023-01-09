@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { PasswordResetForm } from "../forms/PasswordResetForm";
 
-export const Password = ({setTitle}) => {
+export const Password = ({setTitle, handleFlashMesage}) => {
   const { id, email } = useParams();
 
   useEffect(() => {
@@ -11,8 +11,10 @@ export const Password = ({setTitle}) => {
   }, []);
   
   return (
+    <>
     <div className='flex justify-center bg-white rounded-sm shadow w-full px-8 py-10'>
-      <PasswordResetForm id={id} email={email} />
+      <PasswordResetForm id={id} email={email} handleFlashMessage={handleFlashMesage} />
     </div>
+    </>
   );
 }
